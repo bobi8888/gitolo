@@ -1,10 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\1stBuild\\Desktop\\sfmlTemplate - Copy\\",
+  "WorkspaceRootPath": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|C:\\Users\\1stBuild\\Desktop\\sfmlTemplate - Copy\\sfmlTemplate\\sfmlTemplate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|solutionrelative:sfmlTemplate\\sfmlTemplate.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\olo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|solutionrelative:sfmlTemplate\\olo.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B568F57C-6D84-49E0-940C-811A3A983195}|sfmlTemplate\\sfmlTemplate.vcxproj|solutionrelative:sfmlTemplate\\utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,13 +66,26 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "utils.h",
+              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\utils.h",
+              "RelativeDocumentMoniker": "sfmlTemplate\\utils.h",
+              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\utils.h",
+              "RelativeToolTip": "sfmlTemplate\\utils.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-12T18:38:38.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "sfmlTemplate.cpp",
-              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\sfmlTemplate - Copy\\sfmlTemplate\\sfmlTemplate.cpp",
-              "RelativeDocumentMoniker": "sfmlTemplate\\sfmlTemplate.cpp",
-              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\sfmlTemplate - Copy\\sfmlTemplate\\sfmlTemplate.cpp",
-              "RelativeToolTip": "sfmlTemplate\\sfmlTemplate.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
+              "Title": "olo.cpp",
+              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\olo.cpp",
+              "RelativeDocumentMoniker": "sfmlTemplate\\olo.cpp",
+              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\olo\\sfmlTemplate\\olo.cpp",
+              "RelativeToolTip": "sfmlTemplate\\olo.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-12T17:52:46.479Z",
               "EditorCaption": ""
