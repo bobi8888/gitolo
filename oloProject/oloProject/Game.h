@@ -1,12 +1,6 @@
 #pragma once
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
-#include <SFML/Audio.hpp>
-#ifndef GAME_H
-#define GAME_H
 
+#include "GameState.h"
 
 class Game
 {
@@ -15,8 +9,14 @@ private:
 	sf::RenderWindow *window;
 	sf::Event Event;
 
+	sf::Clock deltaTimeClock;
+	float deltaTime = 0.f;
+
+	std::stack<State*> States;
+
 	//Initialization
 	void initWindow();
+	void initStates();
 
 public:
 	//Constructors/Destructors
@@ -24,10 +24,9 @@ public:
 	virtual ~Game();
 
 	//Methods
+	void updateDeltaTime();
 	void updateSFMLEvents();
 	void update();
 	void render();
 	void run();
 };
-
-#endif // !GAME_H
