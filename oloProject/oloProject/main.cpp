@@ -1,26 +1,18 @@
-# include "utils.h"
+# include "Game.h"
 
-#include <SFML/Graphics.hpp>
+//CLASSES
+//game: holds all infor
+//states: divide up the game, menu, shop, battle, etc
+//player:
+//editor state:
 
+//game loop
+//calls game.run
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    Game game;
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    game.run();
 
     return 0;
 }

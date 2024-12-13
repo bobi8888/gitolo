@@ -1,4 +1,4 @@
-﻿  main.cpp
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\utils.h(3,10): error C1083: Cannot open include file: 'SFML/System.hpp': No such file or directory
-  (compiling source file 'main.cpp')
-  
+﻿  Game.cpp
+  main.cpp
+  Generating Code...
+  oloProject.vcxproj -> C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\x64\Debug\oloProject.exe
