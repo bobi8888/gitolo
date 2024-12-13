@@ -24,9 +24,16 @@ public:
 	virtual ~Game();
 
 	//Methods
+	void endApplication();
+
+	//Update
 	void updateDeltaTime();
 	void updateSFMLEvents();
 	void update();
+
+	//Render
 	void render();
+
+	//Core
 	void run();
 };

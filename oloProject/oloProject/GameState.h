@@ -9,8 +9,9 @@ public:
 	GameState(sf::RenderWindow* window);
 	virtual ~GameState();
 
-	//Functions
+	//Methods
 	void endState();
+	void updateKeybinds(const float& deltaTime);
 	void update(const float& deltaTime);
 	void render(sf::RenderTarget* target = nullptr);
 };

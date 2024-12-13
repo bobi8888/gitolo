@@ -50,15 +50,22 @@ Game::~Game()
         this->States.pop();
     }
 }
+
+void Game::endApplication()
+{
+    std::cout << "ending application" << "\n";
+    this->window->close();
+}
+
+//Methods
 void Game::updateDeltaTime()
 {
     //updates deltaTime variable with the time it takes to update and render 1 frame
     this->deltaTime = this->deltaTimeClock.restart().asSeconds();
 
-    system("cls");
-    std::cout << this->deltaTime << "\n";
+    //system("cls");
+    //std::cout << this->deltaTime << "\n";
 }
-//Methods
 void Game::updateSFMLEvents()
 {
     while (this->window->pollEvent(this->Event))
@@ -72,13 +79,27 @@ void Game::update()
     this->updateSFMLEvents();   
     
     if (!this->States.empty())
+    {
         this->States.top()->update(this->deltaTime);
+
+        if (this->States.top()->getQuit())
+        {
+            //Save game before quit
+            this->States.top()->endState();
+            delete this->States.top();
+            this->States.pop();
+        }
+    }
+    //Application End
+    else {
+        this->endApplication();
+    }
 }
 void Game::render()
 {
     this->window->clear();
 
-    //render items
+    //Rendering
     if (!this->States.empty())
         this->States.top()->render(this->window);
 
