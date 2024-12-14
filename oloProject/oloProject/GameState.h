@@ -4,15 +4,20 @@
 class GameState : public State
 {
 private:
+	Entity Entity;
 
+	//Methods
+	void initKeybinds();
 public:
-	GameState(sf::RenderWindow* window);
+	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
 	virtual ~GameState();
 
 	//Methods
 	void endState();
-	void updateKeybinds(const float& deltaTime);
+
+	void updateKeyInput(const float& deltaTime);
 	void update(const float& deltaTime);
-	void render(sf::RenderTarget* target = nullptr);
+
+	void render(sf::RenderTarget* target = NULL);
 };
 

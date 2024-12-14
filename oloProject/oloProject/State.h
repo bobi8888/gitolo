@@ -1,29 +1,27 @@
 #pragma once
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
-#include <SFML/Audio.hpp>
-
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<vector>
-#include<stack>
-#include<map>
+#include "Entity.h"
 
 class State
 {
 private:
+
+protected:
 	sf::RenderWindow* Window;
-	std::vector<sf::Texture> Textures;	
+	std::map<std::string, int>* SupportedKeys;
+	std::map<std::string, int> Keybinds;
 	bool Quit = false;
+
+	//Resources
+	std::vector<sf::Texture> Textures;
+
+	//Methods
+	virtual void initKeybinds() = 0;
 
 public:
 	//Constructors/Destructors
 	State();
-	State(sf::RenderWindow* window);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
 	virtual ~State();
 
 	//Methods
@@ -31,8 +29,8 @@ public:
 	virtual void checkForQuit();
 	virtual void endState() = 0;
 
-	virtual void updateKeybinds(const float& deltaTime) = 0;
+	virtual void updateKeyInput(const float& deltaTime) = 0;
 	//virtual void endState() = 0;
 	virtual void update(const float& deltaTime) = 0;
-	virtual void render(sf::RenderTarget* target = nullptr) = 0;
+	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };

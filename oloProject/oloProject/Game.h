@@ -14,9 +14,12 @@ private:
 
 	std::stack<State*> States;
 
+	std::map<std::string, int> SupportedKeys;
+
 	//Initialization
 	void initWindow();
 	void initStates();
+	void initKeys();
 
 public:
 	//Constructors/Destructors

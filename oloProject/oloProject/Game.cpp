@@ -1,8 +1,9 @@
 #include "Game.h"
+ 
 
 //static methods
 
-//Initializer methods
+//Initialization methods
 void Game::initWindow()
 {
 	//for gameplay
@@ -27,16 +28,39 @@ void Game::initWindow()
     this->window->setFramerateLimit(framerateLimit);
     this->window->setVerticalSyncEnabled(verticalSyncEnabled);
 }
+void Game::initKeys()
+{
+    std::ifstream ifs("Config/supportedKeys.txt");
 
+    if (ifs.is_open())
+    {
+        std::string key = "";
+        int keyValue = 0;
+
+        while (ifs >> key >> keyValue)
+        {
+            this->SupportedKeys[key] = keyValue;
+        }
+    }
+
+    ifs.close();
+
+    //DEBUGGING
+    for (auto i : this->SupportedKeys)
+    {
+        std::cout << i.first << " : " << i.second << "\n";
+    }
+}
 void Game::initStates()
 {
-    this->States.push(new GameState(this->window));
+    this->States.push(new GameState(this->window, &this->SupportedKeys));
 }
 
 //Constructors/Destructions
 Game::Game()
 {
     this->initWindow();
+    this->initKeys();
     this->initStates();
 }
 
