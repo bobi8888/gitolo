@@ -25,10 +25,11 @@ void GameState::initKeybinds()
 	//this->Keybinds["MOVE_UP"] = this->SupportedKeys->at("W");
 }
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys)
+GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
+	: State(window, supportedKeys, statesStack)
 {
 	this->initKeybinds();
+	this->StatesStack = statesStack;
 }
 
 GameState::~GameState()
@@ -56,6 +57,7 @@ void GameState::updateKeyInput(const float& deltaTime)
 
 void GameState::update(const float& deltaTime)
 {
+	this->updateMousePositions();
 	this->updateKeyInput(deltaTime);
 	this->Entity.update(deltaTime);
 }

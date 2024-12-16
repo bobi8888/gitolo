@@ -1,22 +1,25 @@
 #pragma once
 
-#include "GameState.h"
+#include "MainMenuState.h"
 
 class Game
 {
 private:
 	//Variables
-	sf::RenderWindow *window;
+	sf::RenderWindow *Window;
 	sf::Event Event;
-
+	std::vector<sf::VideoMode> VideoModes;
+	sf::ContextSettings windowSettings;
+	bool isFullscreen;
 	sf::Clock deltaTimeClock;
-	float deltaTime = 0.f;
+	float deltaTime;
 
-	std::stack<State*> States;
+	std::stack<State*> StatesStack;
 
 	std::map<std::string, int> SupportedKeys;
 
 	//Initialization
+	void initVariables();
 	void initWindow();
 	void initStates();
 	void initKeys();

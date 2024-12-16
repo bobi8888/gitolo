@@ -5,12 +5,17 @@
 class State
 {
 private:
-
+	
 protected:
+	std::stack<State*>* StatesStack;
 	sf::RenderWindow* Window;
 	std::map<std::string, int>* SupportedKeys;
 	std::map<std::string, int> Keybinds;
 	bool Quit = false;
+
+	sf::Vector2i MousePositionScreen;
+	sf::Vector2i MousePositionWindow;
+	sf::Vector2f MousePositionView;
 
 	//Resources
 	std::vector<sf::Texture> Textures;
@@ -21,7 +26,7 @@ protected:
 public:
 	//Constructors/Destructors
 	State();
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* StatesStack);
 	virtual ~State();
 
 	//Methods
@@ -29,6 +34,7 @@ public:
 	virtual void checkForQuit();
 	virtual void endState() = 0;
 
+	virtual void updateMousePositions();
 	virtual void updateKeyInput(const float& deltaTime) = 0;
 	//virtual void endState() = 0;
 	virtual void update(const float& deltaTime) = 0;

@@ -4,29 +4,45 @@
 //static methods
 
 //Initialization methods
+void Game::initVariables()
+{
+    this->Window = nullptr;
+    this->isFullscreen = false;
+    this->deltaTime = 0.f;
+}
 void Game::initWindow()
 {
-	//for gameplay
-	// sf::RenderWindow window(sf::VideoMode(900, 900), "olo", sf::Style::None);
-	
     std::ifstream ifs("Config/windowinit.txt");
-    std::string title = "windowinit.txt not found";
-    sf::VideoMode windowBounds(500, 500);
-    unsigned framerateLimit = 120;
-    bool verticalSyncEnabled = false;
+    //what is this vector doing/used for?
+    this->VideoModes = sf::VideoMode::getFullscreenModes();
 
-    if (ifs.is_open()) {
+    std::string title = "windowinit.txt not found";
+    sf::VideoMode window_Bounds = sf::VideoMode::getDesktopMode();;
+    unsigned framerate_Limit = 120;
+    bool vertical_Sync_Enabled = false;
+    unsigned antialiasing_Level = 0;
+
+    if (ifs.is_open()) 
+    {
         std::getline(ifs, title);
-        ifs >> windowBounds.width >> windowBounds.height;
-        ifs >> framerateLimit;
-        ifs >> verticalSyncEnabled;
+        ifs >> window_Bounds.width >> window_Bounds.height;
+        ifs >> this->isFullscreen;
+        ifs >> framerate_Limit;
+        ifs >> vertical_Sync_Enabled;
+        ifs >> antialiasing_Level;
     }
 
     ifs.close();
 
-	this->window = new sf::RenderWindow(windowBounds, title, sf::Style::Default);
-    this->window->setFramerateLimit(framerateLimit);
-    this->window->setVerticalSyncEnabled(verticalSyncEnabled);
+    this->windowSettings.antialiasingLevel = antialiasing_Level;
+
+    if(isFullscreen)
+	    this->Window = new sf::RenderWindow(window_Bounds, title, sf::Style::Fullscreen, windowSettings);
+    else
+        this->Window = new sf::RenderWindow(window_Bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+
+    this->Window->setFramerateLimit(framerate_Limit);
+    this->Window->setVerticalSyncEnabled(vertical_Sync_Enabled);
 }
 void Game::initKeys()
 {
@@ -53,32 +69,27 @@ void Game::initKeys()
 }
 void Game::initStates()
 {
-    this->States.push(new GameState(this->window, &this->SupportedKeys));
+    this->StatesStack.push(new MainMenuState(this->Window, &this->SupportedKeys, &this->StatesStack));
+
 }
 
 //Constructors/Destructions
 Game::Game()
 {
+    this->initVariables();
     this->initWindow();
     this->initKeys();
     this->initStates();
 }
-
 Game::~Game()
 {
-	delete this->window;
+	delete this->Window;
 
-    while (!this->States.empty())
+    while (!this->StatesStack.empty())
     {
-        delete this->States.top();
-        this->States.pop();
+        delete this->StatesStack.top();
+        this->StatesStack.pop();
     }
-}
-
-void Game::endApplication()
-{
-    std::cout << "ending application" << "\n";
-    this->window->close();
 }
 
 //Methods
@@ -92,26 +103,26 @@ void Game::updateDeltaTime()
 }
 void Game::updateSFMLEvents()
 {
-    while (this->window->pollEvent(this->Event))
+    while (this->Window->pollEvent(this->Event))
     {
         if (this->Event.type == sf::Event::Closed)
-            this->window->close();
+            this->Window->close();
     }
 }
 void Game::update()
 {
     this->updateSFMLEvents();   
     
-    if (!this->States.empty())
+    if (!this->StatesStack.empty())
     {
-        this->States.top()->update(this->deltaTime);
+        this->StatesStack.top()->update(this->deltaTime);
 
-        if (this->States.top()->getQuit())
+        if (this->StatesStack.top()->getQuit())
         {
             //Save game before quit
-            this->States.top()->endState();
-            delete this->States.top();
-            this->States.pop();
+            this->StatesStack.top()->endState();
+            delete this->StatesStack.top();
+            this->StatesStack.pop();
         }
     }
     //Application End
@@ -121,20 +132,25 @@ void Game::update()
 }
 void Game::render()
 {
-    this->window->clear();
+    this->Window->clear();
 
     //Rendering
-    if (!this->States.empty())
-        this->States.top()->render(this->window);
+    if (!this->StatesStack.empty())
+        this->StatesStack.top()->render(this->Window);
 
-    this->window->display();
+    this->Window->display();
 }
 void Game::run()
 {
-    while (this->window->isOpen())
+    while (this->Window->isOpen())
     {
         this->updateDeltaTime();
         this->update();
         this->render();
     }
+}
+void Game::endApplication()
+{
+    std::cout << "ending application" << "\n";
+    this->Window->close();
 }
