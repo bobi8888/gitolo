@@ -62,6 +62,9 @@ void MainMenuState::initButtons()
 	this->Buttons["NEW_GAME_BTN"] = new Button(100, 100, 150, 50, &this->Font, "New Game",
 		sf::Color(70,70,70,200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
+	this->Buttons["SETTINGS_BTN"] = new Button(100, 250, 150, 50, &this->Font, "Settings",
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+
 	this->Buttons["EXIT_BTN"] = new Button(100, 400, 150, 50, &this->Font, "Quit",
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 }
@@ -84,20 +87,14 @@ MainMenuState::~MainMenuState()
 	}
 }
 
-void MainMenuState::endState()
-{
-	std::cout << "ending main_menu state" << "\n";
-}
-
 void MainMenuState::updateKeyInput(const float& deltaTime)
 {
-	this->checkForQuit();
 
 	//for debugging?
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
+/*	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) 
 	{
 	void;
-	}		
+	}*/		
 }
 
 void MainMenuState::updateButtons()
@@ -106,13 +103,6 @@ void MainMenuState::updateButtons()
 	{
 		it->second->update(this->MousePositionView);
 	}
-}
-
-void MainMenuState::update(const float& deltaTime)
-{
-	this->updateMousePositions();
-	this->updateKeyInput(deltaTime);
-	this->updateButtons();
 
 	//New game
 	if (this->Buttons["NEW_GAME_BTN"]->isPressed())
@@ -123,8 +113,15 @@ void MainMenuState::update(const float& deltaTime)
 	//Quit the game
 	if (this->Buttons["EXIT_BTN"]->isPressed())
 	{
-		this->Quit = true;
+		this->endState();
 	}
+}
+
+void MainMenuState::update(const float& deltaTime)
+{
+	this->updateMousePositions();
+	this->updateKeyInput(deltaTime);
+	this->updateButtons();
 
 	//Debug
 	//system("cls");

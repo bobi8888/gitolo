@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.h"
+#include "Player.h"
 
 class State
 {
@@ -18,7 +18,7 @@ protected:
 	sf::Vector2f MousePositionView;
 
 	//Resources
-	std::vector<sf::Texture> Textures;
+	std::map<std::string, sf::Texture> TexturesMap;
 
 	//Methods
 	virtual void initKeybinds() = 0;
@@ -31,12 +31,11 @@ public:
 
 	//Methods
 	const bool& getQuit() const;
-	virtual void checkForQuit();
-	virtual void endState() = 0;
+	virtual void endState();
 
 	virtual void updateMousePositions();
 	virtual void updateKeyInput(const float& deltaTime) = 0;
-	//virtual void endState() = 0;
 	virtual void update(const float& deltaTime) = 0;
+	
 	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };

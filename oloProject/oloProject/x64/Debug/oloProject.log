@@ -1,5 +1,2 @@
-﻿  Game.cpp
-  MainMenuState.cpp
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MainMenuState.cpp(99,2): warning C4091: '': ignored on left of 'void' when no variable is declared
-  Generating Code...
+﻿  GameState.cpp
   oloProject.vcxproj -> C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\x64\Debug\oloProject.exe

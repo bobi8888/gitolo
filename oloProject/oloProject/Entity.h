@@ -1,24 +1,17 @@
 #pragma once
-
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-//#include <SFML/OpenGL.hpp>
-
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<vector>
-#include<stack>
-#include<map>
+#include "MovementComponent.h"
 
 class Entity
 {
 private:
+	//Initializer Methods
+	void initVariables();
+	void initComponents();
 
 protected:
-	sf::RectangleShape Rectangle;
+	sf::Texture* Texture;
+	sf::Sprite* EntitySprite;
+
 	float moveSpeed;
 
 public:
@@ -26,7 +19,11 @@ public:
 	Entity();
 	virtual ~Entity();
 
+	//Component Methods
+	void createSprite(sf::Texture* texture);
+
 	//Methods
+	virtual void setPosition(const float x, const float y);
 	virtual void move(const float& deltaTime, const float xDir, const float yDir);
 	virtual void update(const float& deltaTime);
 	virtual void render(sf::RenderTarget* target);

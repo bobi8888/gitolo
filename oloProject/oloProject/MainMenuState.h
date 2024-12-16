@@ -26,8 +26,6 @@ public:
 	virtual ~MainMenuState();
 
 	//Methods
-	void endState();
-
 	void updateKeyInput(const float& deltaTime);
 	void updateButtons();
 	void update(const float& deltaTime);

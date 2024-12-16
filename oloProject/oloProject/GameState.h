@@ -4,17 +4,19 @@
 class GameState : public State
 {
 private:
-	Entity Entity;
+	Player* GameStatePlayer;
 
-	//Methods
+	//Initializer Methods
 	void initKeybinds();
+	void initTextures();
+	void initPlayers();
+
 public:
+	//Constructors & Destructors
 	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
 	virtual ~GameState();
 
 	//Methods
-	void endState();
-
 	void updateKeyInput(const float& deltaTime);
 	void update(const float& deltaTime);
 
