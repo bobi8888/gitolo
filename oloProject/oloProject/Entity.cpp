@@ -3,9 +3,7 @@
 //Initializer Methods
 void Entity::initVariables()
 {
-	this->Texture = nullptr;
-	this->EntitySprite = nullptr;
-	this->moveSpeed = 100.f;
+	this->EntityMovementComponent = nullptr;
 }
 
 void Entity::initComponents()
@@ -21,36 +19,41 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	delete this->EntitySprite;
+	delete this->EntityMovementComponent;
 }
 
 //Component Methods
-void Entity::createSprite(sf::Texture* texture)
+void Entity::setTexture(sf::Texture& texture)
 {
-	this->Texture = texture;
-	this->EntitySprite = new sf::Sprite(*this->Texture);
+	this->EntitySprite.setTexture(texture);
+}
+
+void Entity::createMovementComponent(const float maxVelo, const float acceleration, const float deceleration)
+{
+	this->EntityMovementComponent = new MovementComponent(this->EntitySprite, maxVelo, acceleration, deceleration);
 }
 
 //Methods
 void Entity::setPosition(const float x, const float y)
 {
-	if (this->EntitySprite)
-		this->EntitySprite->setPosition(x, y);
+	this->EntitySprite.setPosition(x, y);
 }
 
-void Entity::move(const float& deltaTime, const float xDir, const float yDir)
+void Entity::move(const float xDir, const float yDir, const float& deltaTime)
 {
-	if (this->EntitySprite)
-		this->EntitySprite->move(xDir * moveSpeed * deltaTime, yDir * moveSpeed * deltaTime);
+	if (this->EntityMovementComponent)
+	{
+		this->EntityMovementComponent->move(xDir, yDir, deltaTime);//sets velo
+	}
 }
 
 void Entity::update(const float& deltaTime)
 {
-
+	if (this->EntityMovementComponent)
+		this->EntityMovementComponent->update(deltaTime);
 }
 
 void Entity::render(sf::RenderTarget* target)
 {
-	if (this->EntitySprite)
-		target->draw(*this->EntitySprite);
+	target->draw(this->EntitySprite);
 }

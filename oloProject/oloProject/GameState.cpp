@@ -27,13 +27,13 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (this->TexturesMap["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Fish/fish.png"))
+	if (!this->TexturesMap["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Fish/fish.png"))
 		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE");
 }
 
 void GameState::initPlayers()
 {
-	this->GameStatePlayer = new Player(&this->TexturesMap["PLAYER_IDLE"], 0, 0);
+	this->GameStatePlayer = new Player(this->TexturesMap["PLAYER_IDLE"], 0, 0);
 }
 
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
@@ -53,13 +53,13 @@ GameState::~GameState()
 void GameState::updateKeyInput(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_LEFT"))))
-		this->GameStatePlayer->move(deltaTime, -1.f, 0.f);
+		this->GameStatePlayer->move(-1.f, 0.f, deltaTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_DOWN"))))
-		this->GameStatePlayer->move(deltaTime, 0.f, 1.f);
+		this->GameStatePlayer->move(0.f, 1.f, deltaTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_RIGHT"))))
-		this->GameStatePlayer->move(deltaTime, 1.f, 0.f);
+		this->GameStatePlayer->move(1.f, 0.f, deltaTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_UP"))))
-		this->GameStatePlayer->move(deltaTime, 0.f, -1.f);
+		this->GameStatePlayer->move(0.f, -1.f, deltaTime);
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
 		this->endState();

@@ -9,22 +9,21 @@ private:
 	void initComponents();
 
 protected:
-	sf::Texture* Texture;
-	sf::Sprite* EntitySprite;
+	sf::Sprite EntitySprite;
 
-	float moveSpeed;
-
+	MovementComponent* EntityMovementComponent;
 public:
 	//Constructors & Destructors
 	Entity();
 	virtual ~Entity();
 
 	//Component Methods
-	void createSprite(sf::Texture* texture);
+	void setTexture(sf::Texture& texture);
+	void createMovementComponent(const float maxVelo, const float acceleration, const float deceleration);
 
 	//Methods
 	virtual void setPosition(const float x, const float y);
-	virtual void move(const float& deltaTime, const float xDir, const float yDir);
+	virtual void move(const float xDir, const float yDir, const float& deltaTime);
 	virtual void update(const float& deltaTime);
 	virtual void render(sf::RenderTarget* target);
 };
