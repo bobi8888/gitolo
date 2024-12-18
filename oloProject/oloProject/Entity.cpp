@@ -4,6 +4,7 @@
 void Entity::initVariables()
 {
 	this->EntityMovementComponent = nullptr;
+	this->EntityAnimationComponent = nullptr;
 }
 
 void Entity::initComponents()

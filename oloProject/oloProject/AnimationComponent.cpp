@@ -2,7 +2,7 @@
 
 //Constructors & Destructors
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& textureSheet)
-	:Sprite(sprite), TextureSheet(textureSheet)
+	:Sprite(sprite), TextureSheet(textureSheet), LastAnimation(NULL)
 {
 	
 }
@@ -14,8 +14,6 @@ AnimationComponent::~AnimationComponent()
 		delete i.second;
 	}
 }
-
-
 
 //Methods
 void AnimationComponent::addAnimation(
@@ -40,9 +38,21 @@ void AnimationComponent::pauseAnimation(const std::string animation)
 
 void AnimationComponent::resetAnimation(const std::string animation)
 {
+
 }
 
 void AnimationComponent::play(const std::string key, const float& deltaTime)
 {
+	if (this->LastAnimation != this->AnimationSheets[key])
+	{
+		if (this->LastAnimation == NULL)
+			this->LastAnimation = this->AnimationSheets[key];
+		else
+		{
+			this->LastAnimation->reset();
+			this->LastAnimation = this->AnimationSheets[key];
+		}
+	}
+
 	this->AnimationSheets[key]->play(deltaTime);
 }

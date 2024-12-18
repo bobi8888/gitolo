@@ -16,16 +16,41 @@ MovementComponent::~MovementComponent()
 
 }
 
+//Methods
 const sf::Vector2f& MovementComponent::getVelo() const
 {
 	return this->Velocity;
 }
 
-const bool MovementComponent::isIdle() const
+const bool MovementComponent::getState(const short unsigned state) const
 {
-	if (this->Velocity.x == 0.f && this->Velocity.y == 0)
-		return true;
-	
+	switch (state)
+	{
+		case IDLE:
+			if (this->Velocity.x == 0.f && this->Velocity.y == 0)
+				return true;
+			break;
+		case MOVING:
+			if (this->Velocity.x != 0.f || this->Velocity.y != 0)
+				return true;
+			break;
+		case MOVING_LEFT:
+			if (this->Velocity.x <= 0.f)
+				return true;
+			break;
+		case MOVING_RIGHT:
+			if (this->Velocity.x >= 0.f)
+				return true;
+			break;
+		case MOVING_UP:
+			if (this->Velocity.y <= 0.f)
+				return true;
+			break;
+		case MOVING_DOWN:
+			if (this->Velocity.y >= 0.f)
+				return true;
+			break;
+	}
 	return false;
 }
 
@@ -45,8 +70,6 @@ void MovementComponent::move(const float xDir, const float yDir, const float& de
 	}
 
 	this->Velocity.y += this->Acceleration * yDir;
-
-
 }
 
 void MovementComponent::update(const float& deltaTime)

@@ -79,6 +79,7 @@ private:
 	sf::Sprite& Sprite;
 	sf::Texture& TextureSheet;
 	std::map<std::string, Animation*> AnimationSheets;
+	Animation* LastAnimation;
 
 public:
 	//Constructors & Destructors

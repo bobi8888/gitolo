@@ -67,18 +67,24 @@ void MainMenuState::initButtons()
 		&this->Font, "New Game", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+	
+	this->Buttons["EDITOR_BTN"] = new Button(100, 250, 150, 50,
+		&this->Font, "Editor", 20,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
-	this->Buttons["SETTINGS_BTN"] = new Button(100, 250, 150, 50, 
+	this->Buttons["SETTINGS_BTN"] = new Button(100, 500, 150, 50, 
 		&this->Font, "Settings", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
-	this->Buttons["EXIT_BTN"] = new Button(100, 400, 150, 50, 
+	this->Buttons["EXIT_BTN"] = new Button(100, 600, 150, 50, 
 		&this->Font, "Quit", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 }
 
+//Constructors & Destructor
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
 	: State(window, supportedKeys, statesStack)
 {
@@ -99,6 +105,7 @@ MainMenuState::~MainMenuState()
 	}
 }
 
+//Update Methods
 void MainMenuState::updateKeyInput(const float& deltaTime)
 {
 
@@ -122,6 +129,14 @@ void MainMenuState::updateButtons()
 		this->StatesStack->push(new GameState(this->Window, this->SupportedKeys, this->StatesStack));
 	}
 
+	//Editor
+	if (this->Buttons["EDITOR_BTN"]->isPressed())
+	{
+		this->StatesStack->push(new EditorState(this->Window, this->SupportedKeys, this->StatesStack));
+	}
+
+	//Settings
+
 	//Quit the game
 	if (this->Buttons["EXIT_BTN"]->isPressed())
 	{
@@ -143,6 +158,7 @@ void MainMenuState::update(const float& deltaTime)
 	//std::cout << this->MousePositionView.x << " " << this->MousePositionView.y;
 }
 
+//Render Methods
 void MainMenuState::renderButtons(sf::RenderTarget* target)
 {
 	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
