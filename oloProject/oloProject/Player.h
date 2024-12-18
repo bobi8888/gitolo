@@ -9,14 +9,14 @@ private:
 
     //Initializer Methods
     void initVariables();
-    void initComponents();
 
 public:
     //Constructors/Destructors
     Player();
-    Player(sf::Texture& texture, float x, float y);
+    Player(sf::Texture& texture_sheet, float x, float y);
     virtual ~Player();
 
     //Methods
+    virtual void update(const float& deltaTime);
 };
 

@@ -34,6 +34,7 @@ public:
 	//Accessors
 	const sf::Vector2f& getVelo() const;
 	//Methods
+	const bool isIdle() const;
 	void move(const float xDir, const float yDir, const float& deltaTime);
 	void update(const float &deltaTime);
 };

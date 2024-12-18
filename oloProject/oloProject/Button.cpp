@@ -4,26 +4,34 @@ Button::Button()
 {
 }
 
-Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text, sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
+Button::Button(float x, float y, float width, float height, 
+	sf::Font* font, std::string text, unsigned character_size,
+	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+	sf::Color idle_color, sf::Color hover_color, sf::Color active_color)
 {
 	this->ButtonState = BTN_IDLE;
 
 	this->Rectangle.setSize(sf::Vector2f(width, height));
 	this->Rectangle.setOrigin(sf::Vector2f(width / 2.f, height / 2.f));
 	this->Rectangle.setPosition(sf::Vector2f(x, y));
+	this->Rectangle.setFillColor(idle_color);
 
 	this->Font = font;
 
-	this->Text.setFont(*this->Font);
-	this->Text.setString(text);
-	this->Text.setCharacterSize(12);
-	this->Text.setOrigin(sf::Vector2f(this->Text.getGlobalBounds().width / 2.f, this->Text.getGlobalBounds().height / 2.f));
-	this->Text.setPosition(this->Rectangle.getPosition());
+	this->text.setFont(*this->Font);
+	this->text.setString(text);
+	this->text.setFillColor(text_idle_color);
+	this->text.setCharacterSize(character_size);
+	this->text.setOrigin(sf::Vector2f(this->text.getGlobalBounds().width / 2, this->text.getCharacterSize() / 2));
+	this->text.setPosition(this->Rectangle.getPosition());
 
-	this->IdleColor = idleColor;
-	this->HoverColor = hoverColor;
-	this->ActiveColor = ActiveColor;
-	this->Rectangle.setFillColor(this->IdleColor);
+	this->TextIdleColor = text_idle_color;
+	this->TextHoverColor = text_hover_color;
+	this->TextActiveColor = text_active_color;
+
+	this->IdleColor = idle_color;
+	this->HoverColor = hover_color;
+	this->ActiveColor = active_color;
 }
 
 Button::~Button()
@@ -59,15 +67,19 @@ void Button::update(const sf::Vector2f mousePos)
 	{
 		case BTN_IDLE:
 			this->Rectangle.setFillColor(this->IdleColor);
+			this->text.setFillColor(this->TextIdleColor);
 			break;
 		case BTN_HOVER:
 			this->Rectangle.setFillColor(this->HoverColor);
+			this->text.setFillColor(this->TextHoverColor);
 			break;
 		case BTN_ACTIVE:
 			this->Rectangle.setFillColor(this->ActiveColor);
+			this->text.setFillColor(this->TextActiveColor);
 			break;
 		default:
 			this->Rectangle.setFillColor(sf::Color::Red);
+			this->text.setFillColor(sf::Color::Black);
 			break;
 	}
 }
@@ -75,5 +87,5 @@ void Button::update(const sf::Vector2f mousePos)
 void Button::render(sf::RenderTarget* target)
 {
 	target->draw(this->Rectangle);
-	target->draw(this->Text);
+	target->draw(this->text);
 }

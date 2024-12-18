@@ -27,22 +27,23 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!this->TexturesMap["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Fish/fish.png"))
-		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE");
+	if (!this->TexturesMap["KNIGHT_SHEET"].loadFromFile("Resources/Images/Sprites/Knight/KNIGHT_SHEET.png"))
+
+		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_TEXTURE");
 }
 
 void GameState::initPlayers()
 {
-	this->GameStatePlayer = new Player(this->TexturesMap["PLAYER_IDLE"], 0, 0);
+	this->GameStatePlayer = new Player(this->TexturesMap["KNIGHT_SHEET"], 0, 0);
 }
 
+//Constructors & Destructors
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
 	: State(window, supportedKeys, statesStack)
 {
 	this->initKeybinds();
 	this->initTextures();
 	this->initPlayers();
-	//this->StatesStack = statesStack;
 }
 
 GameState::~GameState()

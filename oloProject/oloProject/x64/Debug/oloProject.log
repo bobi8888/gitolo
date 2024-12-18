@@ -1,2 +1,10 @@
-﻿  MovementComponent.cpp
+﻿  AnimationComponent.cpp
+  Entity.cpp
+  Game.cpp
+  GameState.cpp
+  MainMenuState.cpp
+  Player.cpp
+  State.cpp
+  main.cpp
+  Generating Code...
   oloProject.vcxproj -> C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\x64\Debug\oloProject.exe

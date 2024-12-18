@@ -21,6 +21,14 @@ const sf::Vector2f& MovementComponent::getVelo() const
 	return this->Velocity;
 }
 
+const bool MovementComponent::isIdle() const
+{
+	if (this->Velocity.x == 0.f && this->Velocity.y == 0)
+		return true;
+	
+	return false;
+}
+
 //Methods
 void MovementComponent::move(const float xDir, const float yDir, const float& deltaTime)
 {

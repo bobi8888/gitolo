@@ -58,14 +58,24 @@ void MainMenuState::initKeybinds()
 }
 
 void MainMenuState::initButtons()
-{
-	this->Buttons["NEW_GAME_BTN"] = new Button(100, 100, 150, 50, &this->Font, "New Game",
-		sf::Color(70,70,70,200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
-
-	this->Buttons["SETTINGS_BTN"] = new Button(100, 250, 150, 50, &this->Font, "Settings",
+{	
+	//xPos, yPos, width, height,
+	//font, textString, char_size, 
+	//text idle color, text hover color, text active color,
+	//idle color, hover color, active color
+	this->Buttons["NEW_GAME_BTN"] = new Button(100, 100, 150, 50, 
+		&this->Font, "New Game", 20,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
-	this->Buttons["EXIT_BTN"] = new Button(100, 400, 150, 50, &this->Font, "Quit",
+	this->Buttons["SETTINGS_BTN"] = new Button(100, 250, 150, 50, 
+		&this->Font, "Settings", 20,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+
+	this->Buttons["EXIT_BTN"] = new Button(100, 400, 150, 50, 
+		&this->Font, "Quit", 20,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 }
 
@@ -74,9 +84,11 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 {
 	this->initVariables();
 	this->initBackground();
-	this->initButtons();
 	this->initFonts();
+	this->initButtons();
 	this->initKeybinds();
+
+	//DEBUG
 }
 
 MainMenuState::~MainMenuState()
@@ -122,6 +134,9 @@ void MainMenuState::update(const float& deltaTime)
 	this->updateMousePositions();
 	this->updateKeyInput(deltaTime);
 	this->updateButtons();
+
+	//DEBUG
+
 
 	//Debug
 	//system("cls");

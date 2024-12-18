@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
-//#include <SFML/OpenGL.hpp>
+#include <SFML/OpenGL.hpp>
 
 #include<iostream>
 
@@ -17,7 +17,11 @@ private:
 
 	sf::RectangleShape Rectangle;
 	sf::Font* Font;
-	sf::Text Text;
+	sf::Text text;
+
+	sf::Color TextIdleColor;
+	sf::Color TextHoverColor;
+	sf::Color TextActiveColor;
 
 	sf::Color IdleColor;
 	sf::Color HoverColor;
@@ -25,7 +29,10 @@ private:
 
 public:	
 	Button();
-	Button(float x, float y, float width, float height, sf::Font* font, std::string text, sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor);
+	Button(float x, float y, float width, float height,
+		sf::Font* font, std::string text, unsigned character_size,
+		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+		sf::Color idle_color, sf::Color hover_color, sf::Color active_color);
 	virtual ~Button();
 
 	//Accessors
@@ -34,5 +41,6 @@ public:
 	//Methods
 	void update(const sf::Vector2f mousePos);
 	void render(sf::RenderTarget* target);
+
 };
 
