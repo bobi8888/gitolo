@@ -19,6 +19,7 @@ private:
 			sf::Texture& TextureSheet;
 			float AnimationTimer;
 			float Timer;
+			bool IsDone;
 			int TextureWidth;
 			int TextureHeight;
 			sf::IntRect StartRect;
@@ -31,7 +32,10 @@ private:
 				float animation_timer, 
 				int start_frame_x, int start_frame_y, int frames_x, int frames_y, 
 				int width, int height)
-					: Sprite(sprite), TextureSheet(texture_sheet), AnimationTimer(animation_timer), TextureWidth(width), TextureHeight(height)
+					: Sprite(sprite), TextureSheet(texture_sheet), 
+						AnimationTimer(animation_timer), 
+						TextureWidth(width), TextureHeight(height),
+						Timer(0.f), IsDone(false)
 			{
 				this->Timer = 0.f;
 				this->StartRect = sf::IntRect(start_frame_x * width, start_frame_y * height, width, height);
@@ -46,33 +50,75 @@ private:
 			{
 			}
 
+			//Accessor Methods
+			//const bool& getIsDone() const
+			//{
+			//	return IsDone;
+			//}
+
 			//Methods
-			void play(const float& deltaTime)
+			//Update Timer
+			const bool& play(const float& deltaTime)
 			{
 				//Update Timer
+				this->IsDone = false;
 				this->Timer += 100.f * deltaTime;
 				if (this->Timer >= this->AnimationTimer)
 				{
 					//Reset Timer
 					this->Timer = 0.f;
 
+					//Animate
 					if (this->CurrentRect != this->EndRect)
 					{
-						this->CurrentRect.left  += this->TextureWidth;
+						this->CurrentRect.left += this->TextureWidth;
 					}
-					else
+					else //Reset
 					{
 						this->CurrentRect.left = this->StartRect.left;
+						this->IsDone = true;
 					}
 
 					this->Sprite.setTextureRect(this->CurrentRect);
 				}
+
+				return this->IsDone;
+			}
+
+			//Update Timer with modifier percentage
+			const bool& play(const float& deltaTime, float modifier)
+			{
+				//Update Timer
+				this->IsDone = false;
+				if (modifier < 0.5f)
+					modifier = 0.5f;
+				this->Timer += modifier * 100.f * deltaTime;
+				if (this->Timer >= this->AnimationTimer)
+				{
+					//Reset Timer
+					this->Timer = 0.f;
+
+					//Animate
+					if (this->CurrentRect != this->EndRect)
+					{
+						this->CurrentRect.left  += this->TextureWidth;
+					}
+					else //Reset
+					{
+						this->CurrentRect.left = this->StartRect.left;
+						this->IsDone = true;
+					}
+
+					this->Sprite.setTextureRect(this->CurrentRect);
+				}
+
+				return this->IsDone;
 			}
 
 			void reset()
 			{
 				this->CurrentRect = this->StartRect;
-				this->Timer = 0.f;
+				this->Timer = this->AnimationTimer;
 			}
 	};
 
@@ -80,11 +126,15 @@ private:
 	sf::Texture& TextureSheet;
 	std::map<std::string, Animation*> AnimationSheets;
 	Animation* LastAnimation;
+	Animation* PriorityAnimation;
 
 public:
 	//Constructors & Destructors
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& textureSheet);
 	virtual ~AnimationComponent();
+
+	//Accessor Methods
+	const bool& getIsDone(const std::string key);
 
 	//Methods
 	/*
@@ -106,6 +156,7 @@ public:
 	void pauseAnimation(const std::string animation);
 	void resetAnimation(const std::string animation);
 
-	void play(const std::string key, const float& deltaTime);
+	const bool& play(const std::string key, const float& deltaTime, const bool priority = false);
+	const bool& play(const std::string key, const float& deltaTime, const float& modifier, const float& modifier_max);
 };
 

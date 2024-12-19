@@ -4,8 +4,11 @@ C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\EditorState.
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Entity.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\Entity.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Game.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\Game.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\GameState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\GameState.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\HitboxComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\HitboxComponent.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\main.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\main.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MainMenuState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\MainMenuState.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MovementComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\MovementComponent.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\PauseMenu.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Player.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\Player.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\State.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\State.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Tile.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Debug\Tile.obj

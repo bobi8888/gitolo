@@ -27,11 +27,11 @@ public:
 	virtual ~MainMenuState();
 
 	//Methods
-	void updateKeyInput(const float& deltaTime);
+	void updatePlayerInput(const float& deltaTime);
 	void updateButtons();
 	void update(const float& deltaTime);
 
-	void renderButtons(sf::RenderTarget* target = NULL);
+	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 
 };

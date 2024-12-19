@@ -63,7 +63,7 @@ EditorState::~EditorState()
 	}
 }
 
-void EditorState::updateKeyInput(const float& deltaTime)
+void EditorState::updatePlayerInput(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
 		this->endState();
@@ -80,11 +80,11 @@ void EditorState::updateButtons()
 void EditorState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
-	this->updateKeyInput(deltaTime);
+	this->updatePlayerInput(deltaTime);
 	this->updateButtons();
 }
 
-void EditorState::renderButtons(sf::RenderTarget* target)
+void EditorState::renderButtons(sf::RenderTarget& target)
 {
 	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
 	{
@@ -97,7 +97,7 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->Window;
 
-	this->renderButtons(target);
+	this->renderButtons(*target);
 
 	//Debugging
 	sf::Text mouse_text;

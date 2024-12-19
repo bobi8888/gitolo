@@ -70,7 +70,6 @@ void Game::initKeys()
 void Game::initStates()
 {
     this->StatesStack.push(new MainMenuState(this->Window, &this->SupportedKeys, &this->StatesStack));
-
 }
 
 //Constructors/Destructions

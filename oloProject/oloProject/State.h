@@ -11,7 +11,8 @@ protected:
 	sf::RenderWindow* Window;
 	std::map<std::string, int>* SupportedKeys;
 	std::map<std::string, int> Keybinds;
-	bool Quit = false;
+	bool Quit;
+	bool IsPaused; 
 
 	sf::Vector2i MousePositionScreen;
 	sf::Vector2i MousePositionWindow;
@@ -31,10 +32,12 @@ public:
 
 	//Methods
 	const bool& getQuit() const;
-	virtual void endState();
+	void endState();
+	void pauseState();
+	void unpauseState();
 
 	virtual void updateMousePositions();
-	virtual void updateKeyInput(const float& deltaTime) = 0;
+	virtual void updatePlayerInput(const float& deltaTime) = 0;
 	virtual void update(const float& deltaTime) = 0;
 	
 	virtual void render(sf::RenderTarget* target = NULL) = 0;

@@ -8,6 +8,7 @@ State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys
 	this->SupportedKeys = supportedKeys;
 	this->StatesStack = statesStack;
 	this->Quit = false;
+	this->IsPaused = false;
 }
 
 State::~State()
@@ -22,6 +23,16 @@ const bool& State::getQuit() const
 void State::endState()
 {
 	this->Quit = true;
+}
+
+void State::pauseState()
+{
+	this->IsPaused = true;
+}
+
+void State::unpauseState()
+{
+	this->IsPaused = false;
 }
 
 void State::updateMousePositions()

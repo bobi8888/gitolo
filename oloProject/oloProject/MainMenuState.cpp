@@ -106,7 +106,7 @@ MainMenuState::~MainMenuState()
 }
 
 //Update Methods
-void MainMenuState::updateKeyInput(const float& deltaTime)
+void MainMenuState::updatePlayerInput(const float& deltaTime)
 {
 
 	//for debugging?
@@ -147,7 +147,7 @@ void MainMenuState::updateButtons()
 void MainMenuState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
-	this->updateKeyInput(deltaTime);
+	this->updatePlayerInput(deltaTime);
 	this->updateButtons();
 
 	//DEBUG
@@ -159,7 +159,7 @@ void MainMenuState::update(const float& deltaTime)
 }
 
 //Render Methods
-void MainMenuState::renderButtons(sf::RenderTarget* target)
+void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
 	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
 	{
@@ -174,7 +174,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 
 	target->draw(this->Background);
 
-	this->renderButtons(target);
+	this->renderButtons(*target);
 
 	//Debugging
 	sf::Text mouse_text;

@@ -1,7 +1,12 @@
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\AnimationComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\AnimationComponent.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Button.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\EditorState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\EditorState.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Entity.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Entity.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Game.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Game.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\GameState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\GameState.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\HitboxComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\HitboxComponent.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\main.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\main.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MainMenuState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\MainMenuState.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MovementComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\MovementComponent.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Player.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Player.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\State.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\State.obj

@@ -5,6 +5,7 @@ void Entity::initVariables()
 {
 	this->EntityMovementComponent = nullptr;
 	this->EntityAnimationComponent = nullptr;
+	this->EntityHitboxComponent = nullptr;
 }
 
 void Entity::initComponents()
@@ -22,12 +23,21 @@ Entity::~Entity()
 {
 	delete this->EntityMovementComponent;
 	delete this->EntityAnimationComponent;
+	delete this->EntityHitboxComponent;
 }
 
 //Component Methods
 void Entity::setTexture(sf::Texture& texture)
 {
 	this->EntitySprite.setTexture(texture);
+}
+
+void Entity::createHitboxComponent(sf::Sprite& sprite,
+float offset_x, float offset_y,
+float width, float height
+)
+{
+	this->EntityHitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 
 void Entity::createMovementComponent(const float maxVelo, const float acceleration, const float deceleration)
@@ -60,7 +70,11 @@ void Entity::update(const float& deltaTime)
 		this->EntityMovementComponent->update(deltaTime);
 }
 
-void Entity::render(sf::RenderTarget* target)
+void Entity::render(sf::RenderTarget& target)
 {
-	target->draw(this->EntitySprite);
+	target.draw(this->EntitySprite);
+
+	if (this->EntityHitboxComponent)
+		this->EntityHitboxComponent->render(target);
+		
 }
