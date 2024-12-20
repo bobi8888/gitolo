@@ -136,6 +136,10 @@ void MainMenuState::updateButtons()
 	}
 
 	//Settings
+	if (this->Buttons["SETTINGS_BTN"]->isPressed())
+	{
+		this->StatesStack->push(new SettingsState(this->Window, this->SupportedKeys, this->StatesStack));
+	}
 
 	//Quit the game
 	if (this->Buttons["EXIT_BTN"]->isPressed())

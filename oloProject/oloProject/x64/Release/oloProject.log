@@ -1,15 +1,43 @@
 ﻿  AnimationComponent.cpp
+  Button.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp(25,106): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp(25,106): warning C4244:         with
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp(25,106): warning C4244:         [
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp(25,106): warning C4244:             T=float
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp(25,106): warning C4244:         ]
   EditorState.cpp
   Entity.cpp
   Game.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'Game.cpp')
+  
   GameState.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'GameState.cpp')
+  
+  main.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'main.cpp')
+  
   MainMenuState.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'MainMenuState.cpp')
+  
+  PauseMenu.cpp
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'PauseMenu.cpp')
+  
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,37): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,37): warning C4244:         with
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,37): warning C4244:         [
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,37): warning C4244:             T=float
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,37): warning C4244:         ]
   Player.cpp
   State.cpp
-  main.cpp
+  Tile.cpp
   Generating code
-  5 of 796 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  93 of 829 functions (11.2%) were compiled, the rest were copied from previous compilation.
+    41 functions were new in current compilation
+    79 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   oloProject.vcxproj -> C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\x64\Release\oloProject.exe

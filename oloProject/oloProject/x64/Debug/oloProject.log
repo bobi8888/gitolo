@@ -1,15 +1,2 @@
-﻿  GameState.cpp
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'GameState.cpp')
-  
-  PauseMenu.cpp
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'PauseMenu.cpp')
-  
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,33): warning C4244: 'argument': conversion from 'unsigned int' to 'T', possible loss of data
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,33): warning C4244:         with
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,33): warning C4244:         [
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,33): warning C4244:             T=float
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp(52,33): warning C4244:         ]
-  Generating Code...
+﻿  SettingsState.cpp
   oloProject.vcxproj -> C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\x64\Debug\oloProject.exe

@@ -13,6 +13,8 @@ protected:
 	std::map<std::string, int> Keybinds;
 	bool Quit;
 	bool IsPaused; 
+	float Keytime;
+	float KeytimeMax;
 
 	sf::Vector2i MousePositionScreen;
 	sf::Vector2i MousePositionWindow;
@@ -30,13 +32,17 @@ public:
 	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* StatesStack);
 	virtual ~State();
 
-	//Methods
+	//Accessor Methods
 	const bool& getQuit() const;
+	const bool getKeyTime();
+
+	//Methods
 	void endState();
 	void pauseState();
 	void unpauseState();
 
 	virtual void updateMousePositions();
+	virtual void updateKeytime(const float& deltaTime);
 	virtual void updatePlayerInput(const float& deltaTime) = 0;
 	virtual void update(const float& deltaTime) = 0;
 	

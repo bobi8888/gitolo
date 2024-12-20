@@ -1,8 +1,9 @@
 #pragma once
 
-#include"GameState.h"
-#include"EditorState.h"
-#include"Button.h"
+#include "GameState.h"
+#include "EditorState.h"
+#include "SettingsState.h"
+#include "Button.h"
 
 class MainMenuState :
     public State
@@ -15,7 +16,7 @@ private:
 
 	std::map<std::string, Button*> Buttons;
 
-	//Methods
+	//Initializer Methods
 	void initBackground();
 	void initVariables();
 	void initFonts();
@@ -23,6 +24,7 @@ private:
 	void initButtons();
 
 public:
+	//Constructors & Destructor
 	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
 	virtual ~MainMenuState();
 

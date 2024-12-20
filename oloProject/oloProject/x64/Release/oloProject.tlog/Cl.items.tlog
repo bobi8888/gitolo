@@ -8,5 +8,7 @@ C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\HitboxCompon
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\main.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\main.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MainMenuState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\MainMenuState.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MovementComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\MovementComponent.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\PauseMenu.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Player.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Player.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\State.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\State.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Tile.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Tile.obj

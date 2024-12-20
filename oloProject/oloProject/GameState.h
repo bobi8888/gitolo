@@ -6,7 +6,7 @@ class GameState : public State
 {
 private:
 	sf::Font Font;
-	PauseMenu PauseMenu;
+	PauseMenu* GameStatePauseMenu;
 	Player* GameStatePlayer;
 	//Missing a texture here?
 
@@ -14,6 +14,7 @@ private:
 	void initKeybinds();
 	void initFonts();
 	void initTextures();
+	void initPauseMenu();
 	void initPlayers();
 
 public:
@@ -22,8 +23,9 @@ public:
 	virtual ~GameState();
 
 	//Methods
-	void updatePausedInput(const float& deltaTime);
+	void updateInput(const float& deltaTime);
 	void updatePlayerInput(const float& deltaTime);
+	void updatePauseMenuButtons();
 	void update(const float& deltaTime);
 
 	void render(sf::RenderTarget* target = NULL);
