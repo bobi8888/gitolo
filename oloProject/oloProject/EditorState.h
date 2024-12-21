@@ -1,6 +1,6 @@
 #pragma once
 #include "State.h"
-#include"Button.h"
+#include"GUI.h"
 
 class EditorState :
     public State
@@ -9,7 +9,7 @@ private:
 	//Variables
 	sf::Font Font;
 
-	std::map<std::string, Button*> Buttons;
+	std::map<std::string, gui::Button*> Buttons;
 
 	//Methods
 	void initBackground();

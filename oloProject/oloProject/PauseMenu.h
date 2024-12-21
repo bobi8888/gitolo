@@ -5,7 +5,7 @@
 #include <SFML/Audio.hpp>
 
 #include <map>
-#include "Button.h";
+#include "GUI.h";
 class PauseMenu
 {
 private:
@@ -13,7 +13,7 @@ private:
 	sf::Text MenuText;
 	sf::RectangleShape Background;
 	sf::RectangleShape Container;
-	std::map<std::string, Button*> Buttons;
+	std::map<std::string, gui::Button*> Buttons;
 
 	//Private Methods
 
@@ -23,7 +23,7 @@ public:
 	virtual ~PauseMenu();
 
 	//Accessor Methods
-	std::map<std::string, Button*>& getButtons();
+	std::map<std::string, gui::Button*>& getButtons();
 
 	//Methods
 	const bool isButtonPressed(const std::string key);

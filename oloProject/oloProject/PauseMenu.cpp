@@ -64,7 +64,7 @@ PauseMenu::~PauseMenu()
 	}
 }
 
-std::map<std::string, Button*>& PauseMenu::getButtons()
+std::map<std::string, gui::Button*>& PauseMenu::getButtons()
 {
 	return this->Buttons;
 }
@@ -83,7 +83,7 @@ void PauseMenu::addButton(const std::string key, const std::string text, float x
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-	this->Buttons[key] = new Button(
+	this->Buttons[key] = new gui::Button(
 		xPos, yPos, width, height,
 		&this->Font, text, 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,

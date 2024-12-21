@@ -63,10 +63,13 @@ void SettingsState::initButtons()
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 
-	this->Buttons["EXIT_BTN"] = new Button(100, 600, 150, 50,
+	this->Buttons["EXIT_BTN"] = new gui::Button(100, 600, 150, 50,
 		&this->Font, "Quit", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+
+	std::string li[] = {"fire", "water", "earth", "air", "void"};
+	this->ddl = new gui::DropdownList(200.f, 200.f, 75.f, 25.f, Font, li, 5);
 }
 
 //Constructors & Destructor
@@ -86,6 +89,8 @@ SettingsState::~SettingsState()
 	{
 		delete it->second;
 	}
+
+	delete this->ddl;
 }
 
 //Update Methods
@@ -106,7 +111,7 @@ void SettingsState::updateButtons()
 		it->second->update(this->MousePositionView);
 	}
 
-	//Quit State
+	//  Quit State
 	if (this->Buttons["EXIT_BTN"]->isPressed())
 	{
 		this->endState();
@@ -119,6 +124,7 @@ void SettingsState::update(const float& deltaTime)
 	this->updatePlayerInput(deltaTime);
 	this->updateButtons();
 
+	this->ddl->update(this->MousePositionView, deltaTime);
 	//DEBUG
 
 
@@ -144,6 +150,7 @@ void SettingsState::render(sf::RenderTarget* target)
 	target->draw(this->Background);
 
 	this->renderButtons(*target);
+	this->ddl->render(*target);
 
 	//Debugging
 	sf::Text mouse_text;

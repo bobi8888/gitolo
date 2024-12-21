@@ -63,22 +63,22 @@ void MainMenuState::initButtons()
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-	this->Buttons["NEW_GAME_BTN"] = new Button(100, 100, 150, 50, 
+	this->Buttons["NEW_GAME_BTN"] = new gui::Button(100, 100, 150, 50, 
 		&this->Font, "New Game", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 	
-	this->Buttons["EDITOR_BTN"] = new Button(100, 250, 150, 50,
+	this->Buttons["EDITOR_BTN"] = new  gui::Button(100, 250, 150, 50,
 		&this->Font, "Editor", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
-	this->Buttons["SETTINGS_BTN"] = new Button(100, 500, 150, 50, 
+	this->Buttons["SETTINGS_BTN"] = new  gui::Button(100, 500, 150, 50,
 		&this->Font, "Settings", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
 
-	this->Buttons["EXIT_BTN"] = new Button(100, 600, 150, 50, 
+	this->Buttons["EXIT_BTN"] = new  gui::Button(100, 600, 150, 50,
 		&this->Font, "Quit", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
