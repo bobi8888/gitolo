@@ -13,15 +13,14 @@ private:
 	sf::Font Font;
 
 	std::map<std::string, gui::Button*> Buttons;
-
-	gui::DropdownList* ddl;
+	std::map<std::string, gui::DropdownList*> DropdownMap;
 
 	//Methods
 	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
-	void initButtons();
+	void initGUI();
 
 public:
     //Constructors & Destructor
@@ -32,9 +31,9 @@ public:
 
     //Methods
 	void updatePlayerInput(const float& deltaTime);
-	void updateButtons();
+	void updateGUI(const float& deltaTime);
 	void update(const float& deltaTime);	
-	void renderButtons(sf::RenderTarget& target);
+	void renderGUI(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 };
 

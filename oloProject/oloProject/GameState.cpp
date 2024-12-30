@@ -132,5 +132,17 @@ void GameState::render(sf::RenderTarget* target)
 
 	if (this->IsPaused)
 		this->GameStatePauseMenu->render(*target);
+
+	//Debugging
+	sf::Text mouse_text;
+	mouse_text.setPosition(sf::Vector2f(this->MousePositionView.x, this->MousePositionView.y + 15));
+	mouse_text.setFont(this->Font);
+	mouse_text.setCharacterSize(18);
+	std::stringstream ss;
+	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
+	mouse_text.setString(ss.str());
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		target->draw(mouse_text);
 	
 }

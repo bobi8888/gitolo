@@ -146,6 +146,7 @@ void Game::run()
         this->updateDeltaTime();
         this->update();
         this->render();
+
     }
 }
 void Game::endApplication()

@@ -56,20 +56,35 @@ void SettingsState::initKeybinds()
 	//this->Keybinds["MOVE_UP"] = this->SupportedKeys->at("W");
 }
 
-void SettingsState::initButtons()
+void SettingsState::initGUI()
 {
 	//xPos, yPos, width, height,
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 
-	this->Buttons["EXIT_BTN"] = new gui::Button(100, 600, 150, 50,
-		&this->Font, "Quit", 20,
+	this->Buttons["BACK_BTN"] = new gui::Button(
+		this->Window->getSize().x / 2.f, 500.f, 150.f, 50.f,
+		&this->Font, "Back", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+		);
 
-	std::string li[] = {"fire", "water", "earth", "air", "void"};
-	this->ddl = new gui::DropdownList(200.f, 200.f, 75.f, 25.f, Font, li, 5);
+	this->Buttons["APPLY_BTN"] = new gui::Button(
+		this->Window->getSize().x / 2.f, 600.f, 150.f, 50.f,
+		&this->Font, "Apply", 20,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+	);
+
+	std::string li[] = {"1920x1080", "800x600", "640x480"};
+
+	this->DropdownMap["RESOLUTION"] = new gui::DropdownList(
+		this->Window->getSize().x / 2.f, 250.f, 150.f, 50.f, 
+		Font, li, 3
+	);
 }
 
 //Constructors & Destructor
@@ -79,7 +94,7 @@ SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
-	this->initButtons();
+	this->initGUI();
 	this->initKeybinds();
 }
 
@@ -90,7 +105,12 @@ SettingsState::~SettingsState()
 		delete it->second;
 	}
 
-	delete this->ddl;
+	for (auto it2 = this->DropdownMap.begin(); it2 != this->DropdownMap.end(); ++it2)
+	{
+		delete it2->second;
+	}
+
+	//delete this->ddl;
 }
 
 //Update Methods
@@ -104,41 +124,54 @@ void SettingsState::updatePlayerInput(const float& deltaTime)
 	}*/
 }
 
-void SettingsState::updateButtons()
+void SettingsState::updateGUI(const float& deltaTime)
 {
+	//Updates all the GUI elements in the state and handle their functionality
+	//Buttons
 	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
 	{
 		it->second->update(this->MousePositionView);
 	}
 
-	//  Quit State
-	if (this->Buttons["EXIT_BTN"]->isPressed())
+	//Button Functionality
+	//Quit State
+	if (this->Buttons["BACK_BTN"]->isPressed())
 	{
 		this->endState();
 	}
+
+	//DropdownList
+	for (auto it = this->DropdownMap.begin(); it != this->DropdownMap.end(); ++it)
+	{
+		it->second->update(this->MousePositionView, deltaTime);
+	}
+
+	//DropdownList Functionality
 }
 
 void SettingsState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
 	this->updatePlayerInput(deltaTime);
-	this->updateButtons();
+	this->updateGUI(deltaTime);
 
-	this->ddl->update(this->MousePositionView, deltaTime);
+	//this->ddl->update(this->MousePositionView, deltaTime);
 	//DEBUG
-
-
-	//Debug
 	//system("cls");
 	//std::cout << this->MousePositionView.x << " " << this->MousePositionView.y;
 }
 
 //Render Methods
-void SettingsState::renderButtons(sf::RenderTarget& target)
+void SettingsState::renderGUI(sf::RenderTarget& target)
 {
 	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
 	{
 		it->second->render(target);
+	}
+
+	for (auto it2 = this->DropdownMap.begin(); it2 != this->DropdownMap.end(); ++it2)
+	{
+		it2->second->render(target);
 	}
 }
 
@@ -149,8 +182,8 @@ void SettingsState::render(sf::RenderTarget* target)
 
 	target->draw(this->Background);
 
-	this->renderButtons(*target);
-	this->ddl->render(*target);
+	this->renderGUI(*target);
+	//this->ddl->render(*target);
 
 	//Debugging
 	sf::Text mouse_text;
@@ -158,7 +191,9 @@ void SettingsState::render(sf::RenderTarget* target)
 	mouse_text.setFont(this->Font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << " " << this->MousePositionView.y;
+	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
 	mouse_text.setString(ss.str());
-	target->draw(mouse_text);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		target->draw(mouse_text);
 }

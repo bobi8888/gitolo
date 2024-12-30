@@ -63,25 +63,37 @@ void MainMenuState::initButtons()
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-	this->Buttons["NEW_GAME_BTN"] = new gui::Button(100, 100, 150, 50, 
+	this->Buttons["NEW_GAME_BTN"] = new gui::Button(
+		this->Window->getSize().x / 2.f, 250.f, 150.f, 50.f,
 		&this->Font, "New Game", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+		);
 	
-	this->Buttons["EDITOR_BTN"] = new  gui::Button(100, 250, 150, 50,
+	this->Buttons["EDITOR_BTN"] = new  gui::Button(
+		this->Window->getSize().x / 2.f, 315.f, 150.f, 50.f,
 		&this->Font, "Editor", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+		);
 
-	this->Buttons["SETTINGS_BTN"] = new  gui::Button(100, 500, 150, 50,
+	this->Buttons["SETTINGS_BTN"] = new  gui::Button(
+		this->Window->getSize().x / 2.f, 380.f, 150.f, 50.f,
 		&this->Font, "Settings", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+		);
 
-	this->Buttons["EXIT_BTN"] = new  gui::Button(100, 600, 150, 50,
+	this->Buttons["EXIT_BTN"] = new  gui::Button(
+		this->Window->getSize().x / 2.f, 445.f, 150.f, 50.f,
 		&this->Font, "Quit", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200));
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+		);
 }
 
 //Constructors & Destructor
@@ -186,7 +198,9 @@ void MainMenuState::render(sf::RenderTarget* target)
 	mouse_text.setFont(this->Font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << " " << this->MousePositionView.y;
+	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
 	mouse_text.setString(ss.str());
-	target->draw(mouse_text);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		target->draw(mouse_text);
 }

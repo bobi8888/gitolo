@@ -17,6 +17,7 @@ namespace gui
 	{
 	private:
 		short unsigned ButtonState;
+		short unsigned ButtonId;
 
 		sf::RectangleShape Rectangle;
 		sf::Font* Font;
@@ -30,22 +31,33 @@ namespace gui
 		sf::Color HoverColor;
 		sf::Color ActiveColor;
 
+		sf::Color OutlineIdleColor;
+		sf::Color OutlineHoverColor;
+		sf::Color OutlineActiveColor;
+
 	public:	
 		Button();
 		Button(float x, float y, float width, float height,
 			sf::Font* font, std::string text, unsigned character_size,
-			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-			sf::Color idle_color, sf::Color hover_color, sf::Color active_color);
+			sf::Color text_idle, sf::Color text_hover, sf::Color text_active,
+			sf::Color idle, sf::Color hover, sf::Color active,
+			sf::Color outlineIdle = sf::Color::Transparent, 
+			sf::Color outlineHover = sf::Color::Transparent, 
+			sf::Color outlineActive = sf::Color::Transparent,
+			short unsigned buttonId = 0);
 		virtual ~Button();
 
 		//Accessors
 		const bool isPressed() const;
-		const std::string& getText() const;
+		const std::string getText() const;
+		const short unsigned& getId() const;
 
 		//Modifiers
 		void setText(const std::string text);
+		void setId(const short unsigned id);
 
 		//Methods
+		void centerText();
 		void update(const sf::Vector2f mousePos);
 		void render(sf::RenderTarget& target);
 

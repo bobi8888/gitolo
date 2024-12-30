@@ -105,7 +105,9 @@ void EditorState::render(sf::RenderTarget* target)
 	mouse_text.setFont(this->Font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << " " << this->MousePositionView.y;
+	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
 	mouse_text.setString(ss.str());
-	target->draw(mouse_text);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+		target->draw(mouse_text);
 }
