@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "EditorState.h"
 #include "SettingsState.h"
+#include "GraphicsSettings.h"
 #include "GUI.h"
 
 class MainMenuState :
@@ -11,6 +12,7 @@ class MainMenuState :
 private:
 	//Variables
 	sf::Texture BackgroundTexture;
+	GraphicsSettings& MainMenuGraphicsSettings;
 	sf::RectangleShape Background;
 	sf::Font Font;
 
@@ -25,7 +27,13 @@ private:
 
 public:
 	//Constructors & Destructor
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
+	MainMenuState(
+		sf::RenderWindow* window, 
+		GraphicsSettings& graphicsSettings,
+		std::map<std::string, 
+		int>* supportedKeys, 
+		std::stack<State*>* statesStack
+		);
 	virtual ~MainMenuState();
 
 	//Methods

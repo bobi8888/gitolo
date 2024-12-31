@@ -1,16 +1,16 @@
 #pragma once
 
 #include "MainMenuState.h"
+#include "GraphicsSettings.h" 
 
 class Game
 {
 private:
 	//Variables
+	GraphicsSettings GameGraphicSettings;
 	sf::RenderWindow *Window;
 	sf::Event Event;
-	std::vector<sf::VideoMode> VideoModes;
-	sf::ContextSettings windowSettings;
-	bool isFullscreen;
+
 	sf::Clock deltaTimeClock;
 	float deltaTime;
 
@@ -20,6 +20,7 @@ private:
 
 	//Initialization
 	void initVariables();
+	void initGraphicsSettings();
 	void initWindow();
 	void initStates();
 	void initKeys();

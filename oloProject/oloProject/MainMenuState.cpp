@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "MainMenuState.h"
 
 //Initializer Methods
@@ -97,8 +99,12 @@ void MainMenuState::initButtons()
 }
 
 //Constructors & Destructor
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
-	: State(window, supportedKeys, statesStack)
+MainMenuState::MainMenuState(
+	sf::RenderWindow* window, 
+	GraphicsSettings& graphicsSettings,
+	std::map<std::string, int>* supportedKeys, 
+	std::stack<State*>* statesStack
+	) : State(window, supportedKeys, statesStack), MainMenuGraphicsSettings(graphicsSettings)
 {
 	this->initVariables();
 	this->initBackground();
@@ -150,7 +156,7 @@ void MainMenuState::updateButtons()
 	//Settings
 	if (this->Buttons["SETTINGS_BTN"]->isPressed())
 	{
-		this->StatesStack->push(new SettingsState(this->Window, this->SupportedKeys, this->StatesStack));
+		this->StatesStack->push(new SettingsState(this->Window, this->MainMenuGraphicsSettings, this->SupportedKeys, this->StatesStack));
 	}
 
 	//Quit the game

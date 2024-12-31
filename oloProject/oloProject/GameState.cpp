@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "GameState.h"
 
 //Initializer Methods
@@ -127,6 +129,8 @@ void GameState::render(sf::RenderTarget* target)
 {	
 	if(!target)
 		target = this->Window;
+
+	this->TileMap.render(*target);
 
 	this->GameStatePlayer->render(*target);
 

@@ -1,5 +1,6 @@
-#include "Game.h"
- 
+#include "stdafx.h"
+
+#include "Game.h" 
 
 //static methods
 
@@ -7,42 +8,34 @@
 void Game::initVariables()
 {
     this->Window = nullptr;
-    this->isFullscreen = false;
+    this->GameGraphicSettings.IsFullscreen = false;
     this->deltaTime = 0.f;
 }
+void Game::initGraphicsSettings()
+{
+    this->GameGraphicSettings.loadFromFile("Config/graphics.txt");
+}
+
 void Game::initWindow()
 {
-    std::ifstream ifs("Config/windowinit.txt");
-    //what is this vector doing/used for?
-    this->VideoModes = sf::VideoMode::getFullscreenModes();
-
-    std::string title = "windowinit.txt not found";
-    sf::VideoMode window_Bounds = sf::VideoMode::getDesktopMode();;
-    unsigned framerate_Limit = 120;
-    bool vertical_Sync_Enabled = false;
-    unsigned antialiasing_Level = 0;
-
-    if (ifs.is_open()) 
-    {
-        std::getline(ifs, title);
-        ifs >> window_Bounds.width >> window_Bounds.height;
-        ifs >> this->isFullscreen;
-        ifs >> framerate_Limit;
-        ifs >> vertical_Sync_Enabled;
-        ifs >> antialiasing_Level;
-    }
-
-    ifs.close();
-
-    this->windowSettings.antialiasingLevel = antialiasing_Level;
-
-    if(isFullscreen)
-	    this->Window = new sf::RenderWindow(window_Bounds, title, sf::Style::Fullscreen, windowSettings);
+    if (this->GameGraphicSettings.IsFullscreen)
+	    this->Window = new sf::RenderWindow(
+            this->GameGraphicSettings.Resolution,
+            this->GameGraphicSettings.Title,
+            sf::Style::Fullscreen, 
+            this->GameGraphicSettings.ContextSettings
+            );
     else
-        this->Window = new sf::RenderWindow(window_Bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+        this->Window = new sf::RenderWindow(
+            this->GameGraphicSettings.Resolution,
+            this->GameGraphicSettings.Title,
+            sf::Style::Titlebar | sf::Style::Close, 
+            this->GameGraphicSettings.ContextSettings
+            );
 
-    this->Window->setFramerateLimit(framerate_Limit);
-    this->Window->setVerticalSyncEnabled(vertical_Sync_Enabled);
+    this->Window->setFramerateLimit(this->GameGraphicSettings.FramerateLimit);
+
+    this->Window->setVerticalSyncEnabled(this->GameGraphicSettings.VsyncEnabled);
 }
 void Game::initKeys()
 {
@@ -69,13 +62,14 @@ void Game::initKeys()
 }
 void Game::initStates()
 {
-    this->StatesStack.push(new MainMenuState(this->Window, &this->SupportedKeys, &this->StatesStack));
+    this->StatesStack.push(new MainMenuState(this->Window, this->GameGraphicSettings, &this->SupportedKeys, &this->StatesStack));
 }
 
 //Constructors/Destructions
 Game::Game()
 {
     this->initVariables();
+    this->initGraphicsSettings();
     this->initWindow();
     this->initKeys();
     this->initStates();

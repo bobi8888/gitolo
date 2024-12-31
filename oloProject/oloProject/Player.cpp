@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "Player.h"
 
 //Initializer Methods

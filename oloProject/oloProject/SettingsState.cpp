@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "SettingsState.h"
 
 //Initializer Methods
@@ -21,7 +23,7 @@ void SettingsState::initBackground()
 
 void SettingsState::initVariables()
 {
-	//this->BackgroundTexture;
+	this->VideoModes = sf::VideoMode::getFullscreenModes(); 
 }
 
 void SettingsState::initFonts()
@@ -79,23 +81,48 @@ void SettingsState::initGUI()
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 	);
 
-	std::string li[] = {"1920x1080", "800x600", "640x480"};
+	std::vector<std::string> videoModesStr;
+
+	for (auto& i : this->VideoModes)
+	{
+		videoModesStr.push_back(std::to_string(i.width) + " x " + std::to_string(i.width));
+	}
+	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 
 	this->DropdownMap["RESOLUTION"] = new gui::DropdownList(
-		this->Window->getSize().x / 2.f, 250.f, 150.f, 50.f, 
-		Font, li, 3
+		this->Window->getSize().x / 2.f, 150.f, 150.f, 20.f, 
+		Font, videoModesStr.data(), videoModesStr.size()
 	);
 }
 
+void SettingsState::initText()
+{
+	this->OptionsText.setFont(this->Font);
+
+	this->OptionsText.setPosition(sf::Vector2f(100.f, 400.f));
+
+	this->OptionsText.setCharacterSize(30.f);
+
+	this->OptionsText.setFillColor(sf::Color::Black);
+
+	this->OptionsText.setString("Resolution \nFullscreen \nVsync \nAntialiasing");
+}
+
 //Constructors & Destructor
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
-	:State(window, supportedKeys, statesStack)
+SettingsState::SettingsState(
+	sf::RenderWindow* window, 
+	GraphicsSettings& graphicsSettings,
+	std::map<std::string, 
+	int>* supportedKeys, 
+	std::stack<State*>* statesStack
+	) : State(window, supportedKeys, statesStack), SettingsGraphicsSettings(graphicsSettings)
 {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initGUI();
 	this->initKeybinds();
+	this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -109,19 +136,12 @@ SettingsState::~SettingsState()
 	{
 		delete it2->second;
 	}
-
-	//delete this->ddl;
 }
 
 //Update Methods
 void SettingsState::updatePlayerInput(const float& deltaTime)
 {
 
-	//for debugging?
-/*	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-	{
-	void;
-	}*/
 }
 
 void SettingsState::updateGUI(const float& deltaTime)
@@ -138,6 +158,16 @@ void SettingsState::updateGUI(const float& deltaTime)
 	if (this->Buttons["BACK_BTN"]->isPressed())
 	{
 		this->endState();
+	}
+
+	if (this->Buttons["APPLY_BTN"]->isPressed())
+	{
+		//for testing, remove later
+		//std::cout << this-> VideoModes[this->DropdownMap["RESOLUTION"]->getActiveElementId()];
+
+		this->SettingsGraphicsSettings.Resolution = this->VideoModes[this->DropdownMap["RESOLUTION"]->getActiveElementId()];
+
+		this->Window->create(this->SettingsGraphicsSettings.Resolution, "Spuh", sf::Style::Default);
 	}
 
 	//DropdownList
@@ -183,6 +213,8 @@ void SettingsState::render(sf::RenderTarget* target)
 	target->draw(this->Background);
 
 	this->renderGUI(*target);
+
+	target->draw(this->OptionsText);
 	//this->ddl->render(*target);
 
 	//Debugging

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.h"
+#include "GraphicsSettings.h"
 #include "GUI.h"
 
 class SettingsState :
@@ -8,12 +9,18 @@ class SettingsState :
 {
 private:
 	//Variables
+	GraphicsSettings& SettingsGraphicsSettings;
+
 	sf::Texture BackgroundTexture;
 	sf::RectangleShape Background;
+
 	sf::Font Font;
+	sf::Text OptionsText;
 
 	std::map<std::string, gui::Button*> Buttons;
 	std::map<std::string, gui::DropdownList*> DropdownMap;
+
+	std::vector<sf::VideoMode> VideoModes;
 
 	//Methods
 	void initBackground();
@@ -21,10 +28,17 @@ private:
 	void initFonts();
 	void initKeybinds();
 	void initGUI();
+	void initText();
 
 public:
     //Constructors & Destructor
-    SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
+    SettingsState(
+		sf::RenderWindow* window, 
+		GraphicsSettings& graphicsSettings,
+		std::map<std::string, 
+		int>* supportedKeys, 
+		std::stack<State*>* statesStack
+	);
     virtual ~SettingsState();
 
     //Accessor Methods

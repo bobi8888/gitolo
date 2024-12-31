@@ -1,14 +1,5 @@
 #pragma once
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/OpenGL.hpp>
-
-#include<iostream>
-#include<vector>
-
 enum button_states{BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
 
 namespace gui
@@ -77,6 +68,9 @@ namespace gui
 			//Constructors & Destructor
 			DropdownList(float xPos, float yPos, float width, float height, sf::Font& font, std::string list[],unsigned elementsNum, unsigned default_index = 0);
 			~DropdownList();
+
+			//Accessors
+			const unsigned short& getActiveElementId() const;
 
 			//Methods
 			const bool getKeytime();

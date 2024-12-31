@@ -1,4 +1,6 @@
-# include "Game.h"
+#include "stdafx.h"
+
+#include "Game.h"
 
 //give credit to Suraj Sharma for intial setup code for game loop
 

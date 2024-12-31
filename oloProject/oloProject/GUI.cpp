@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "GUI.h"
 
 gui::Button::Button()
@@ -134,8 +136,11 @@ void gui::Button::render(sf::RenderTarget& target)
 
 //Dropdown List
 //Constructors & Destructor
-gui::DropdownList::DropdownList(float xPos, float yPos, float width, float height, sf::Font& font, std::string list[], unsigned elementsNum, unsigned default_index)
-	: ListFont(font), ShowList(false), KeytimeMax(1.f), Keytime(KeytimeMax)
+gui::DropdownList::DropdownList(
+	float xPos, float yPos, float width, float height, 
+	sf::Font& font, std::string list[], 
+	unsigned elementsNum, unsigned default_index
+	) : ListFont(font), ShowList(false), KeytimeMax(1.f), Keytime(KeytimeMax)
 {
 	this->ActiveElement = new Button(
 		xPos, yPos, width, height,
@@ -154,7 +159,8 @@ gui::DropdownList::DropdownList(float xPos, float yPos, float width, float heigh
 				&this->ListFont, list[i], 20,
 				sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 				sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
-				sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
+				sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
+				i
 			)
 		);
 	}
@@ -168,7 +174,13 @@ gui::DropdownList::~DropdownList()
 		delete i;
 }
 
+
 //Accessor Methods
+
+const unsigned short& gui::DropdownList::getActiveElementId() const
+{
+	return this->ActiveElement->getId();
+}
 
 const bool gui::DropdownList::getKeytime()
 {

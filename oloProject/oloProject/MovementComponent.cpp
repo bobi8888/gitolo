@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include "MovementComponent.h"
 
 void MovementComponent::initVariables()
