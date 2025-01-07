@@ -15,7 +15,7 @@ private:
 	PauseMenu* pauseMenu;
 	Player* player;
 	//Missing a texture here?
-	TileMap tileMap;
+	TileMap* tileMap;
 
 	//Initializer Methods
 	void initKeybinds();
@@ -23,6 +23,7 @@ private:
 	void initTextures();
 	void initPauseMenu();
 	void initPlayers();
+	void initTileMap();
 
 public:
 	//Constructors & Destructors

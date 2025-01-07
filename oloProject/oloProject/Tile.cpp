@@ -10,11 +10,11 @@ Tile::Tile(float x, float y, float gridSizeF)
 {
 	//this->Texture->loadFromFile("Resources/Images/Tiles/gravel.png");
 
-	this->TileShape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
-	this->TileShape.setFillColor(sf::Color::Yellow);
-	this->TileShape.setOutlineColor(sf::Color::Blue);
-	this->TileShape.setOutlineThickness(1.5f);
-	this->TileShape.setPosition(x, y);
+	this->tileShape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
+	this->tileShape.setFillColor(sf::Color::Yellow);
+	this->tileShape.setOutlineColor(sf::Color::Blue);
+	this->tileShape.setOutlineThickness(1.5f);
+	this->tileShape.setPosition(x, y);
 	//this->TileShape.setTexture(Texture);
 }
 
@@ -32,5 +32,5 @@ void Tile::update()
 
 void Tile::render(sf::RenderTarget& target)
 {
-	target.draw(this->TileShape);
+	target.draw(this->tileShape);
 }

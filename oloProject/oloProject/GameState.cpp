@@ -59,6 +59,11 @@ void GameState::initPlayers()
 	this->player = new Player(this->texturesMap["SKIRT_SHEET"], 0, 0);
 }
 
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 //Constructors & Destructors
 GameState::GameState(StateData* stateData)
 	: State(stateData)
@@ -68,12 +73,16 @@ GameState::GameState(StateData* stateData)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
 {
 	delete this->player;
+
 	delete this->pauseMenu;
+
+	delete this->tileMap;
 }
 
 //Methods
@@ -131,7 +140,7 @@ void GameState::render(sf::RenderTarget* target)
 	if(!target)
 		target = this->window;
 
-	//this->TileMap.render(*target);
+	this->tileMap->render(*target);
 
 	this->player->render(*target);
 

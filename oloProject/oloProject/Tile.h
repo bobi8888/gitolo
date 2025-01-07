@@ -5,8 +5,8 @@ class Tile
 private:
 
 protected:
-	sf::RectangleShape TileShape;
-	sf::Texture* Texture;
+	sf::RectangleShape tileShape;
+	sf::Texture* texture;
 
 public:
 	//Constructors & Destructor

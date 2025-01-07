@@ -57,6 +57,22 @@ void EditorState::initPauseMenu()
 	);
 }
 
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+
+	this->selectorRect.setOutlineThickness(1.f);
+
+	this->selectorRect.setOutlineColor(sf::Color::White);
+}
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 //Constructors & destructor
 EditorState::EditorState(StateData* stateData) 
 	: State(stateData)
@@ -67,6 +83,8 @@ EditorState::EditorState(StateData* stateData)
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
+	this->initGui();
+	this->initTileMap();
 
 	//DEBUG
 }
@@ -79,6 +97,8 @@ EditorState::~EditorState()
 	}
 
 	delete this->pauseMenu;
+
+	delete this->tileMap;
 }
 //Methods
 
@@ -109,6 +129,23 @@ void EditorState::updateButtons()
 	}
 }
 
+void EditorState::updateGUI()
+{
+	this->selectorRect.setPosition(
+		this->mousePositionGrid.x * this->stateData->gridSize, 
+		this->mousePositionGrid.y * this->stateData->gridSize
+	);
+}
+
+void EditorState::updateEditorInput(const float& deltaTime)
+{
+	//add a tile
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTime())
+	{
+		this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0);
+	}
+}
+
 void EditorState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
@@ -117,7 +154,9 @@ void EditorState::update(const float& deltaTime)
 
 	if (!this->isPaused)
 	{
+		this->updateGUI();
 		this->updateButtons();
+		this->updateEditorInput(deltaTime);
 	}
 	else
 	{
@@ -135,6 +174,11 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 	}
 }
 
+void EditorState::renderGUI(sf::RenderTarget& target)
+{
+	target.draw(this->selectorRect);
+}
+
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
@@ -142,7 +186,9 @@ void EditorState::render(sf::RenderTarget* target)
 
 	this->renderButtons(*target);
 
-	this->tileMap.render(*target);
+	this->tileMap->render(*target);
+
+	this->renderGUI(*target);
 
 	if (this->isPaused)
 		this->pauseMenu->render(*target);
