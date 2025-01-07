@@ -4,14 +4,18 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 
+class State;
+class PauseMenu;
+class TileMap;
+
 class GameState : public State
 {
 private:
-	sf::Font Font;
-	PauseMenu* GameStatePauseMenu;
-	Player* GameStatePlayer;
+	sf::Font font;
+	PauseMenu* pauseMenu;
+	Player* player;
 	//Missing a texture here?
-	TileMap TileMap;
+	TileMap tileMap;
 
 	//Initializer Methods
 	void initKeybinds();
@@ -22,7 +26,7 @@ private:
 
 public:
 	//Constructors & Destructors
-	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
+	GameState(StateData* stateData);
 	virtual ~GameState();
 
 	//Methods

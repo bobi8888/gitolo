@@ -5,11 +5,11 @@
 class TileMap
 {
 private:
-	float GridSizeF;
-	unsigned GridSizeU;
-	sf::Vector2u MaxSize;
-	unsigned Layers;
-	std::vector<std::vector<std::vector<Tile>>> TileVectors;
+	float gridSizeF;
+	unsigned gridSizeU;
+	sf::Vector2u maxSize;
+	unsigned layers;
+	std::vector<std::vector<std::vector<Tile>>> tileVectors;
 
 public:
 	//Constructors & Destructor

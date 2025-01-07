@@ -4,23 +4,25 @@
 #include "GraphicsSettings.h"
 #include "GUI.h"
 
+class State;
+class GraphicsSettings;
+class GUI;
+
 class SettingsState :
     public State
 {
 private:
 	//Variables
-	GraphicsSettings& SettingsGraphicsSettings;
+	sf::Texture backgroundTexture;
+	sf::RectangleShape background;
 
-	sf::Texture BackgroundTexture;
-	sf::RectangleShape Background;
+	sf::Font font;
+	sf::Text text;
 
-	sf::Font Font;
-	sf::Text OptionsText;
+	std::map<std::string, gui::Button*> buttons;
+	std::map<std::string, gui::DropdownList*> dropdownMap;
 
-	std::map<std::string, gui::Button*> Buttons;
-	std::map<std::string, gui::DropdownList*> DropdownMap;
-
-	std::vector<sf::VideoMode> VideoModes;
+	std::vector<sf::VideoMode> videoModes;
 
 	//Methods
 	void initBackground();
@@ -32,13 +34,7 @@ private:
 
 public:
     //Constructors & Destructor
-    SettingsState(
-		sf::RenderWindow* window, 
-		GraphicsSettings& graphicsSettings,
-		std::map<std::string, 
-		int>* supportedKeys, 
-		std::stack<State*>* statesStack
-	);
+    SettingsState(StateData* stateData);
     virtual ~SettingsState();
 
     //Accessor Methods

@@ -2,15 +2,25 @@
 
 #include "State.h"
 #include"GUI.h"
+#include"PauseMenu.h"
+#include"TileMap.h"
+
+class State;
+class GUI;
+class PauseMenu;
+class TileMap;
 
 class EditorState :
     public State
 {
 private:
 	//Variables
-	sf::Font Font;
+	sf::Font font;
+	PauseMenu* pauseMenu;
 
-	std::map<std::string, gui::Button*> Buttons;
+	std::map<std::string, gui::Button*> buttons;
+
+	TileMap tileMap;
 
 	//Methods
 	void initBackground();
@@ -18,12 +28,14 @@ private:
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initPauseMenu();
 
 public:
-	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack);
+	EditorState(StateData* stateData);
 	virtual ~EditorState();
 
 	//Methods
+	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& deltaTime);
 	void updateButtons();
 	void update(const float& deltaTime);

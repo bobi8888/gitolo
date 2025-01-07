@@ -15,7 +15,7 @@ void EditorState::initVariables()
 
 void EditorState::initFonts()
 {
-	if (!this->Font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
+	if (!this->font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
 	{
 		throw("ERROR::EditorState::Could not load font.");
 	}
@@ -33,7 +33,7 @@ void EditorState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			this->Keybinds[key] = this->SupportedKeys->at(key2);
+			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
 	}
 
@@ -45,50 +45,91 @@ void EditorState::initButtons()
 
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
-	: State(window, supportedKeys, statesStack)
+void EditorState::initPauseMenu()
+{
+	this->pauseMenu = new PauseMenu(*this->window, this->font);
+
+	this->pauseMenu->addButton(
+		"QUIT",
+		"Quit Game",
+		this->pauseMenu->getContainer().getPosition().x,
+		this->pauseMenu->getContainer().getPosition().y + 200.f
+	);
+}
+
+//Constructors & destructor
+EditorState::EditorState(StateData* stateData) 
+	: State(stateData)
 {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
-	this->initButtons();
 	this->initKeybinds();
+	this->initPauseMenu();
+	this->initButtons();
 
 	//DEBUG
 }
 
 EditorState::~EditorState()
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		delete it->second;
 	}
+
+	delete this->pauseMenu;
+}
+//Methods
+
+//Update Methods
+
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pauseMenu->isButtonPressed("QUIT"))
+		this->endState();
 }
 
 void EditorState::updatePlayerInput(const float& deltaTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))))
-		this->endState();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
+	{
+		if (!this->isPaused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
 }
 
 void EditorState::updateButtons()
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->MousePositionView);
+		it->second->update(this->mousePositionView);
 	}
 }
 
 void EditorState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
+	this->updateKeytime(deltaTime);
 	this->updatePlayerInput(deltaTime);
-	this->updateButtons();
+
+	if (!this->isPaused)
+	{
+		this->updateButtons();
+	}
+	else
+	{
+		this->pauseMenu->update(this->mousePositionView);
+		this->updatePauseMenuButtons();
+	}
 }
 
+//Render Methods
 void EditorState::renderButtons(sf::RenderTarget& target)
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		it->second->render(target);
 	}
@@ -97,17 +138,22 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->Window;
+		target = this->window;
 
 	this->renderButtons(*target);
 
+	this->tileMap.render(*target);
+
+	if (this->isPaused)
+		this->pauseMenu->render(*target);
+
 	//Debugging
 	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->MousePositionView.x, this->MousePositionView.y + 15));
-	mouse_text.setFont(this->Font);
+	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+	mouse_text.setFont(this->font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
+	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
 	mouse_text.setString(ss.str());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))

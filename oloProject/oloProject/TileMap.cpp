@@ -5,27 +5,27 @@
 
 TileMap::TileMap()
 {
-	this->GridSizeF = 50.f;
-	this->GridSizeU = static_cast<unsigned>(this->GridSizeF);
-	this->MaxSize.x = 10;
-	this->MaxSize.y = 10;
-	this->Layers = 1;
+	this->gridSizeF = 50.f;
+	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
+	this->maxSize.x = 10;
+	this->maxSize.y = 10;
+	this->layers = 1;
 
-	this->TileVectors.resize(this->MaxSize.x);
+	this->tileVectors.resize(this->maxSize.x);
 
-	for (size_t i = 0; i < this->MaxSize.x; i++)
+	for (size_t i = 0; i < this->maxSize.x; i++)
 	{
-		this->TileVectors.push_back(std::vector<std::vector<Tile>> ());
+		this->tileVectors.push_back(std::vector<std::vector<Tile>> ());
 
-		for (size_t j = 0; j < this->MaxSize.y; j++)
+		for (size_t j = 0; j < this->maxSize.y; j++)
 		{
-			this->TileVectors[i].resize(this->MaxSize.y);
-			this->TileVectors[i].push_back(std::vector<Tile> ());
+			this->tileVectors[i].resize(this->maxSize.y);
+			this->tileVectors[i].push_back(std::vector<Tile> ());
 
-			for (size_t k = 0; k < this->Layers; k++)
+			for (size_t k = 0; k < this->layers; k++)
 			{
-				this->TileVectors[i][j].resize(this->Layers);
-				this->TileVectors[i][j].push_back(Tile(i * this->GridSizeF, j * this->GridSizeF, this->GridSizeF));
+				this->tileVectors[i][j].resize(this->layers);
+				this->tileVectors[i][j].push_back(Tile(i * this->gridSizeF, j * this->gridSizeF, this->gridSizeF));
 			}
 		}
 	}
@@ -45,7 +45,7 @@ void TileMap::update()
 
 void TileMap::render(sf::RenderTarget& target)
 {
-	for (auto& x : this->TileVectors)
+	for (auto& x : this->tileVectors)
 	{
 		for (auto& y : x)
 		{
@@ -56,4 +56,3 @@ void TileMap::render(sf::RenderTarget& target)
 		}
 	}
 }
-

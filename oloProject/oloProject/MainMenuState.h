@@ -6,17 +6,22 @@
 #include "GraphicsSettings.h"
 #include "GUI.h"
 
+class GameState;
+class EditorState;
+class SettingsState;
+class GraphicsSettings;
+class GUI;
+
 class MainMenuState :
     public State
 {
 private:
 	//Variables
-	sf::Texture BackgroundTexture;
-	GraphicsSettings& MainMenuGraphicsSettings;
-	sf::RectangleShape Background;
+	sf::Texture backgroundTexture;
+	sf::RectangleShape background;
 	sf::Font Font;
 
-	std::map<std::string, gui::Button*> Buttons;
+	std::map<std::string, gui::Button*> buttons;
 
 	//Initializer Methods
 	void initBackground();
@@ -27,13 +32,7 @@ private:
 
 public:
 	//Constructors & Destructor
-	MainMenuState(
-		sf::RenderWindow* window, 
-		GraphicsSettings& graphicsSettings,
-		std::map<std::string, 
-		int>* supportedKeys, 
-		std::stack<State*>* statesStack
-		);
+	MainMenuState(StateData* stateData);
 	virtual ~MainMenuState();
 
 	//Methods

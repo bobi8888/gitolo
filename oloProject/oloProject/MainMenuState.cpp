@@ -5,20 +5,20 @@
 //Initializer Methods
 void MainMenuState::initBackground()
 {
-	this->Background.setSize(
+	this->background.setSize(
 		sf::Vector2f
 		(
-			static_cast <float>(this->Window->getSize().x),
-			static_cast <float>(this->Window->getSize().y)
+			static_cast <float>(this->window->getSize().x),
+			static_cast <float>(this->window->getSize().y)
 		)
 	);
 
-	if (!this->BackgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
 	{
 		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
-	this->Background.setTexture(&this->BackgroundTexture);
+	this->background.setTexture(&this->backgroundTexture);
 }
 
 void MainMenuState::initVariables()
@@ -46,7 +46,7 @@ void MainMenuState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			this->Keybinds[key] = this->SupportedKeys->at(key2);
+			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
 	}
 
@@ -65,32 +65,32 @@ void MainMenuState::initButtons()
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-	this->Buttons["NEW_GAME_BTN"] = new gui::Button(
-		this->Window->getSize().x / 2.f, 250.f, 150.f, 50.f,
+	this->buttons["NEW_GAME_BTN"] = new gui::Button(
+		this->window->getSize().x / 2.f, 250.f, 150.f, 50.f,
 		&this->Font, "New Game", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 	
-	this->Buttons["EDITOR_BTN"] = new  gui::Button(
-		this->Window->getSize().x / 2.f, 315.f, 150.f, 50.f,
+	this->buttons["EDITOR_BTN"] = new  gui::Button(
+		this->window->getSize().x / 2.f, 315.f, 150.f, 50.f,
 		&this->Font, "Editor", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
-	this->Buttons["SETTINGS_BTN"] = new  gui::Button(
-		this->Window->getSize().x / 2.f, 380.f, 150.f, 50.f,
+	this->buttons["SETTINGS_BTN"] = new  gui::Button(
+		this->window->getSize().x / 2.f, 380.f, 150.f, 50.f,
 		&this->Font, "Settings", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
-	this->Buttons["EXIT_BTN"] = new  gui::Button(
-		this->Window->getSize().x / 2.f, 445.f, 150.f, 50.f,
+	this->buttons["EXIT_BTN"] = new  gui::Button(
+		this->window->getSize().x / 2.f, 445.f, 150.f, 50.f,
 		&this->Font, "Quit", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
@@ -99,12 +99,8 @@ void MainMenuState::initButtons()
 }
 
 //Constructors & Destructor
-MainMenuState::MainMenuState(
-	sf::RenderWindow* window, 
-	GraphicsSettings& graphicsSettings,
-	std::map<std::string, int>* supportedKeys, 
-	std::stack<State*>* statesStack
-	) : State(window, supportedKeys, statesStack), MainMenuGraphicsSettings(graphicsSettings)
+MainMenuState::MainMenuState(StateData* stateData)
+	: State(stateData)
 {
 	this->initVariables();
 	this->initBackground();
@@ -117,7 +113,7 @@ MainMenuState::MainMenuState(
 
 MainMenuState::~MainMenuState()
 {	
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		delete it->second;
 	}
@@ -136,31 +132,31 @@ void MainMenuState::updatePlayerInput(const float& deltaTime)
 
 void MainMenuState::updateButtons()
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->MousePositionView);
+		it->second->update(this->mousePositionView);
 	}
 
 	//New game
-	if (this->Buttons["NEW_GAME_BTN"]->isPressed())
+	if (this->buttons["NEW_GAME_BTN"]->isPressed())
 	{
-		this->StatesStack->push(new GameState(this->Window, this->SupportedKeys, this->StatesStack));
+		this->statesStack->push(new GameState(this->stateData));
 	}
 
 	//Editor
-	if (this->Buttons["EDITOR_BTN"]->isPressed())
+	if (this->buttons["EDITOR_BTN"]->isPressed())
 	{
-		this->StatesStack->push(new EditorState(this->Window, this->SupportedKeys, this->StatesStack));
+		this->statesStack->push(new EditorState(this->stateData));
 	}
 
 	//Settings
-	if (this->Buttons["SETTINGS_BTN"]->isPressed())
+	if (this->buttons["SETTINGS_BTN"]->isPressed())
 	{
-		this->StatesStack->push(new SettingsState(this->Window, this->MainMenuGraphicsSettings, this->SupportedKeys, this->StatesStack));
+		this->statesStack->push(new SettingsState(this->stateData));
 	}
 
 	//Quit the game
-	if (this->Buttons["EXIT_BTN"]->isPressed())
+	if (this->buttons["EXIT_BTN"]->isPressed())
 	{
 		this->endState();
 	}
@@ -183,7 +179,7 @@ void MainMenuState::update(const float& deltaTime)
 //Render Methods
 void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		it->second->render(target);
 	}
@@ -192,19 +188,19 @@ void MainMenuState::renderButtons(sf::RenderTarget& target)
 void MainMenuState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->Window;
+		target = this->window;
 
-	target->draw(this->Background);
+	target->draw(this->background);
 
 	this->renderButtons(*target);
 
 	//Debugging
 	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->MousePositionView.x, this->MousePositionView.y + 15));
+	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
 	mouse_text.setFont(this->Font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
+	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
 	mouse_text.setString(ss.str());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))

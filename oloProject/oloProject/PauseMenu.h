@@ -2,6 +2,8 @@
 
 #include "GUI.h";
 
+class GUI;
+
 class PauseMenu
 {
 private:

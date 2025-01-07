@@ -3,6 +3,10 @@
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
 
+class MovementComponent;
+class AnimationComponent;
+class HitboxComponent;
+
 class Entity
 {
 private:

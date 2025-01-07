@@ -14,7 +14,7 @@ void GameState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			this->Keybinds[key] = this->SupportedKeys->at(key2);
+			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
 	}
 
@@ -29,38 +29,39 @@ void GameState::initKeybinds()
 
 void GameState::initFonts()
 {
-	if (!this->Font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
+	if (!this->font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
 	{
 		throw("ERROR::MainMenuState::Could not load font.");
 	}
 }
+
 void GameState::initTextures()
 {
-	if (!this->TexturesMap["SKIRT_SHEET"].loadFromFile("Resources/Images/Sprites/Skirt/SKIRT_SHEET.png"))
+	if (!this->texturesMap["SKIRT_SHEET"].loadFromFile("Resources/Images/Sprites/Skirt/SKIRT_SHEET.png"))
 
 		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_TEXTURE");
 }
 
 void GameState::initPauseMenu()
 {
-	this->GameStatePauseMenu = new PauseMenu(*this->Window, this->Font);
+	this->pauseMenu = new PauseMenu(*this->window, this->font);
 
-	this->GameStatePauseMenu->addButton(
+	this->pauseMenu->addButton(
 		"QUIT", 
 		"Quit Game",
-		this->GameStatePauseMenu->getContainer().getPosition().x, 
-		this->GameStatePauseMenu->getContainer().getPosition().y + 200.f		
+		this->pauseMenu->getContainer().getPosition().x, 
+		this->pauseMenu->getContainer().getPosition().y + 200.f		
 	);
 }
 
 void GameState::initPlayers()
 {
-	this->GameStatePlayer = new Player(this->TexturesMap["SKIRT_SHEET"], 0, 0);
+	this->player = new Player(this->texturesMap["SKIRT_SHEET"], 0, 0);
 }
 
 //Constructors & Destructors
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
-	: State(window, supportedKeys, statesStack)
+GameState::GameState(StateData* stateData)
+	: State(stateData)
 {
 	this->initKeybinds();
 	this->initFonts();
@@ -71,16 +72,16 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 
 GameState::~GameState()
 {
-	delete this->GameStatePlayer;
-	delete this->GameStatePauseMenu;
+	delete this->player;
+	delete this->pauseMenu;
 }
 
 //Methods
 void GameState::updateInput(const float& deltaTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("CLOSE"))) && this->getKeyTime())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
 	{
-		if (!this->IsPaused)
+		if (!this->isPaused)
 			this->pauseState();
 		else
 			this->unpauseState();
@@ -89,21 +90,21 @@ void GameState::updateInput(const float& deltaTime)
 
 void GameState::updatePlayerInput(const float& deltaTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_LEFT"))))
-		this->GameStatePlayer->move(-1.f, 0.f, deltaTime);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_DOWN"))))
-		this->GameStatePlayer->move(0.f, 1.f, deltaTime);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_RIGHT"))))
-		this->GameStatePlayer->move(1.f, 0.f, deltaTime);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Keybinds.at("MOVE_UP"))))
-		this->GameStatePlayer->move(0.f, -1.f, deltaTime);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+		this->player->move(-1.f, 0.f, deltaTime);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+		this->player->move(0.f, 1.f, deltaTime);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+		this->player->move(1.f, 0.f, deltaTime);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+		this->player->move(0.f, -1.f, deltaTime);
 	
 
 }
 
 void GameState::updatePauseMenuButtons()
 {
-	if (this->GameStatePauseMenu->isButtonPressed("QUIT"))
+	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->endState();
 }
 
@@ -113,14 +114,14 @@ void GameState::update(const float& deltaTime)
 	this->updateKeytime(deltaTime);
 	this->updateInput(deltaTime);
 
-	if (!this->IsPaused)
+	if (!this->isPaused)
 	{
 		this->updatePlayerInput(deltaTime);
-		this->GameStatePlayer->update(deltaTime);
+		this->player->update(deltaTime);
 	}
 	else
 	{
-		this->GameStatePauseMenu->update(this->MousePositionView);
+		this->pauseMenu->update(this->mousePositionView);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -128,22 +129,22 @@ void GameState::update(const float& deltaTime)
 void GameState::render(sf::RenderTarget* target)
 {	
 	if(!target)
-		target = this->Window;
+		target = this->window;
 
-	this->TileMap.render(*target);
+	//this->TileMap.render(*target);
 
-	this->GameStatePlayer->render(*target);
+	this->player->render(*target);
 
-	if (this->IsPaused)
-		this->GameStatePauseMenu->render(*target);
+	if (this->isPaused)
+		this->pauseMenu->render(*target);
 
 	//Debugging
 	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->MousePositionView.x, this->MousePositionView.y + 15));
-	mouse_text.setFont(this->Font);
+	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+	mouse_text.setFont(this->font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
+	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
 	mouse_text.setString(ss.str());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))

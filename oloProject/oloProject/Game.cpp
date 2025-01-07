@@ -7,36 +7,48 @@
 //Initialization methods
 void Game::initVariables()
 {
-    this->Window = nullptr;
-    this->GameGraphicSettings.IsFullscreen = false;
+    this->window = nullptr;
+    this->graphicSettings.IsFullscreen = false;
     this->deltaTime = 0.f;
+    this->gridSize = 50.f;
 }
+
 void Game::initGraphicsSettings()
 {
-    this->GameGraphicSettings.loadFromFile("Config/graphics.txt");
+    this->graphicSettings.loadFromFile("Config/graphics.txt");
+}
+
+void Game::initStateData()
+{
+    this->stateData.window = this->window;
+    this->stateData.graphicsSettings = &this->graphicSettings;
+    this->stateData.supportedKeys = &this->supportedKeys;
+    this->stateData.statesStack = &this->statesStack;
+    this->stateData.gridSize = this->gridSize;
 }
 
 void Game::initWindow()
 {
-    if (this->GameGraphicSettings.IsFullscreen)
-	    this->Window = new sf::RenderWindow(
-            this->GameGraphicSettings.Resolution,
-            this->GameGraphicSettings.Title,
+    if (this->graphicSettings.IsFullscreen)
+	    this->window = new sf::RenderWindow(
+            this->graphicSettings.Resolution,
+            this->graphicSettings.Title,
             sf::Style::Fullscreen, 
-            this->GameGraphicSettings.ContextSettings
+            this->graphicSettings.ContextSettings
             );
     else
-        this->Window = new sf::RenderWindow(
-            this->GameGraphicSettings.Resolution,
-            this->GameGraphicSettings.Title,
+        this->window = new sf::RenderWindow(
+            this->graphicSettings.Resolution,
+            this->graphicSettings.Title,
             sf::Style::Titlebar | sf::Style::Close, 
-            this->GameGraphicSettings.ContextSettings
+            this->graphicSettings.ContextSettings
             );
 
-    this->Window->setFramerateLimit(this->GameGraphicSettings.FramerateLimit);
+    this->window->setFramerateLimit(this->graphicSettings.FramerateLimit);
 
-    this->Window->setVerticalSyncEnabled(this->GameGraphicSettings.VsyncEnabled);
+    this->window->setVerticalSyncEnabled(this->graphicSettings.VsyncEnabled);
 }
+
 void Game::initKeys()
 {
     std::ifstream ifs("Config/supportedKeys.txt");
@@ -48,21 +60,22 @@ void Game::initKeys()
 
         while (ifs >> key >> keyValue)
         {
-            this->SupportedKeys[key] = keyValue;
+            this->supportedKeys[key] = keyValue;
         }
     }
 
     ifs.close();
 
     //DEBUGGING
-    for (auto i : this->SupportedKeys)
+    for (auto i : this->supportedKeys)
     {
         std::cout << i.first << " : " << i.second << "\n";
     }
 }
+
 void Game::initStates()
 {
-    this->StatesStack.push(new MainMenuState(this->Window, this->GameGraphicSettings, &this->SupportedKeys, &this->StatesStack));
+    this->statesStack.push(new MainMenuState(&this->stateData));
 }
 
 //Constructors/Destructions
@@ -72,16 +85,18 @@ Game::Game()
     this->initGraphicsSettings();
     this->initWindow();
     this->initKeys();
+    this->initStateData();
     this->initStates();
 }
+
 Game::~Game()
 {
-	delete this->Window;
+	delete this->window;
 
-    while (!this->StatesStack.empty())
+    while (!this->statesStack.empty())
     {
-        delete this->StatesStack.top();
-        this->StatesStack.pop();
+        delete this->statesStack.top();
+        this->statesStack.pop();
     }
 }
 
@@ -94,28 +109,30 @@ void Game::updateDeltaTime()
     //system("cls");
     //std::cout << this->deltaTime << "\n";
 }
+
 void Game::updateSFMLEvents()
 {
-    while (this->Window->pollEvent(this->Event))
+    while (this->window->pollEvent(this->sfEvent))
     {
-        if (this->Event.type == sf::Event::Closed)
-            this->Window->close();
+        if (this->sfEvent.type == sf::Event::Closed)
+            this->window->close();
     }
 }
+
 void Game::update()
 {
     this->updateSFMLEvents();   
     
-    if (!this->StatesStack.empty())
+    if (!this->statesStack.empty())
     {
-        this->StatesStack.top()->update(this->deltaTime);
+        this->statesStack.top()->update(this->deltaTime);
 
-        if (this->StatesStack.top()->getQuit())
+        if (this->statesStack.top()->getQuit())
         {
             //Save game before quit
-            this->StatesStack.top()->endState();
-            delete this->StatesStack.top();
-            this->StatesStack.pop();
+            this->statesStack.top()->endState();
+            delete this->statesStack.top();
+            this->statesStack.pop();
         }
     }
     //Application End
@@ -123,28 +140,30 @@ void Game::update()
         this->endApplication();
     }
 }
+
 void Game::render()
 {
-    this->Window->clear();
+    this->window->clear();
 
     //Rendering
-    if (!this->StatesStack.empty())
-        this->StatesStack.top()->render(this->Window);
+    if (!this->statesStack.empty())
+        this->statesStack.top()->render(this->window);
 
-    this->Window->display();
+    this->window->display();
 }
+
 void Game::run()
 {
-    while (this->Window->isOpen())
+    while (this->window->isOpen())
     {
         this->updateDeltaTime();
         this->update();
         this->render();
-
     }
 }
+
 void Game::endApplication()
 {
     std::cout << "ending application" << "\n";
-    this->Window->close();
+    this->window->close();
 }

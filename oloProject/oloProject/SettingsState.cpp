@@ -5,30 +5,30 @@
 //Initializer Methods
 void SettingsState::initBackground()
 {
-	this->Background.setSize(
+	this->background.setSize(
 		sf::Vector2f
 		(
-			static_cast <float>(this->Window->getSize().x),
-			static_cast <float>(this->Window->getSize().y)
+			static_cast <float>(this->window->getSize().x),
+			static_cast <float>(this->window->getSize().y)
 		)
 	);
 
-	if (!this->BackgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
 	{
 		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
-	this->Background.setTexture(&this->BackgroundTexture);
+	this->background.setTexture(&this->backgroundTexture);
 }
 
 void SettingsState::initVariables()
 {
-	this->VideoModes = sf::VideoMode::getFullscreenModes(); 
+	this->videoModes = sf::VideoMode::getFullscreenModes(); 
 }
 
 void SettingsState::initFonts()
 {
-	if (!this->Font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
+	if (!this->font.loadFromFile("Fonts/RobotoCondensed-Regular.ttf"))
 	{
 		throw("ERROR::MainMenuState::Could not load font.");
 	}
@@ -45,7 +45,7 @@ void SettingsState::initKeybinds()
 
 		while (ifs >> key >> key2)
 		{
-			this->Keybinds[key] = this->SupportedKeys->at(key2);
+			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
 	}
 
@@ -65,17 +65,17 @@ void SettingsState::initGUI()
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 
-	this->Buttons["BACK_BTN"] = new gui::Button(
-		this->Window->getSize().x / 2.f, 500.f, 150.f, 50.f,
-		&this->Font, "Back", 20,
+	this->buttons["BACK_BTN"] = new gui::Button(
+		this->window->getSize().x / 2.f, 500.f, 150.f, 50.f,
+		&this->font, "Back", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
-	this->Buttons["APPLY_BTN"] = new gui::Button(
-		this->Window->getSize().x / 2.f, 600.f, 150.f, 50.f,
-		&this->Font, "Apply", 20,
+	this->buttons["APPLY_BTN"] = new gui::Button(
+		this->window->getSize().x / 2.f, 600.f, 150.f, 50.f,
+		&this->font, "Apply", 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
@@ -83,39 +83,34 @@ void SettingsState::initGUI()
 
 	std::vector<std::string> videoModesStr;
 
-	for (auto& i : this->VideoModes)
+	for (auto& i : this->videoModes)
 	{
 		videoModesStr.push_back(std::to_string(i.width) + " x " + std::to_string(i.width));
 	}
 	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 
-	this->DropdownMap["RESOLUTION"] = new gui::DropdownList(
-		this->Window->getSize().x / 2.f, 150.f, 150.f, 20.f, 
-		Font, videoModesStr.data(), videoModesStr.size()
+	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
+		this->window->getSize().x / 2.f, 150.f, 150.f, 20.f, 
+		font, videoModesStr.data(), videoModesStr.size()
 	);
 }
 
 void SettingsState::initText()
 {
-	this->OptionsText.setFont(this->Font);
+	this->text.setFont(this->font);
 
-	this->OptionsText.setPosition(sf::Vector2f(100.f, 400.f));
+	this->text.setPosition(sf::Vector2f(100.f, 400.f));
 
-	this->OptionsText.setCharacterSize(30.f);
+	this->text.setCharacterSize(30.f);
 
-	this->OptionsText.setFillColor(sf::Color::Black);
+	this->text.setFillColor(sf::Color::Black);
 
-	this->OptionsText.setString("Resolution \nFullscreen \nVsync \nAntialiasing");
+	this->text.setString("Resolution \nFullscreen \nVsync \nAntialiasing");
 }
 
 //Constructors & Destructor
-SettingsState::SettingsState(
-	sf::RenderWindow* window, 
-	GraphicsSettings& graphicsSettings,
-	std::map<std::string, 
-	int>* supportedKeys, 
-	std::stack<State*>* statesStack
-	) : State(window, supportedKeys, statesStack), SettingsGraphicsSettings(graphicsSettings)
+SettingsState::SettingsState(StateData* stateData) 
+	: State(stateData)
 {
 	this->initVariables();
 	this->initBackground();
@@ -127,12 +122,12 @@ SettingsState::SettingsState(
 
 SettingsState::~SettingsState()
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		delete it->second;
 	}
 
-	for (auto it2 = this->DropdownMap.begin(); it2 != this->DropdownMap.end(); ++it2)
+	for (auto it2 = this->dropdownMap.begin(); it2 != this->dropdownMap.end(); ++it2)
 	{
 		delete it2->second;
 	}
@@ -148,32 +143,32 @@ void SettingsState::updateGUI(const float& deltaTime)
 {
 	//Updates all the GUI elements in the state and handle their functionality
 	//Buttons
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->MousePositionView);
+		it->second->update(this->mousePositionView);
 	}
 
 	//Button Functionality
 	//Quit State
-	if (this->Buttons["BACK_BTN"]->isPressed())
+	if (this->buttons["BACK_BTN"]->isPressed())
 	{
 		this->endState();
 	}
 
-	if (this->Buttons["APPLY_BTN"]->isPressed())
+	if (this->buttons["APPLY_BTN"]->isPressed())
 	{
 		//for testing, remove later
 		//std::cout << this-> VideoModes[this->DropdownMap["RESOLUTION"]->getActiveElementId()];
 
-		this->SettingsGraphicsSettings.Resolution = this->VideoModes[this->DropdownMap["RESOLUTION"]->getActiveElementId()];
+		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
 
-		this->Window->create(this->SettingsGraphicsSettings.Resolution, "Spuh", sf::Style::Default);
+		this->window->create(this->stateData->graphicsSettings->Resolution, "Spuh", sf::Style::Default);
 	}
 
 	//DropdownList
-	for (auto it = this->DropdownMap.begin(); it != this->DropdownMap.end(); ++it)
+	for (auto it = this->dropdownMap.begin(); it != this->dropdownMap.end(); ++it)
 	{
-		it->second->update(this->MousePositionView, deltaTime);
+		it->second->update(this->mousePositionView, deltaTime);
 	}
 
 	//DropdownList Functionality
@@ -194,12 +189,12 @@ void SettingsState::update(const float& deltaTime)
 //Render Methods
 void SettingsState::renderGUI(sf::RenderTarget& target)
 {
-	for (auto it = this->Buttons.begin(); it != this->Buttons.end(); ++it)
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		it->second->render(target);
 	}
 
-	for (auto it2 = this->DropdownMap.begin(); it2 != this->DropdownMap.end(); ++it2)
+	for (auto it2 = this->dropdownMap.begin(); it2 != this->dropdownMap.end(); ++it2)
 	{
 		it2->second->render(target);
 	}
@@ -208,22 +203,22 @@ void SettingsState::renderGUI(sf::RenderTarget& target)
 void SettingsState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->Window;
+		target = this->window;
 
-	target->draw(this->Background);
+	target->draw(this->background);
 
 	this->renderGUI(*target);
 
-	target->draw(this->OptionsText);
+	target->draw(this->text);
 	//this->ddl->render(*target);
 
 	//Debugging
 	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->MousePositionView.x, this->MousePositionView.y + 15));
-	mouse_text.setFont(this->Font);
+	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+	mouse_text.setFont(this->font);
 	mouse_text.setCharacterSize(18);
 	std::stringstream ss;
-	ss << this->MousePositionView.x << "  " << this->MousePositionView.y;
+	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
 	mouse_text.setString(ss.str());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))

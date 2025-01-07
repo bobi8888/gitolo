@@ -1,27 +1,47 @@
 #pragma once
 
 #include "Player.h"
+#include "GraphicsSettings.h"
+
+class Player;
+class GraphicsSettings;
+class State;
+
+class StateData
+{
+public:
+	StateData(){};
+
+	//Variables
+	float gridSize;
+	sf::RenderWindow* window; 
+	GraphicsSettings* graphicsSettings;
+	std::map<std::string, int>* supportedKeys;
+	std::stack<State*>* statesStack;
+};
 
 class State
 {
 private:
 	
 protected:
-	std::stack<State*>* StatesStack;
-	sf::RenderWindow* Window;
-	std::map<std::string, int>* SupportedKeys;
-	std::map<std::string, int> Keybinds;
-	bool Quit;
-	bool IsPaused; 
-	float Keytime;
-	float KeytimeMax;
+	StateData* stateData;
+	std::stack<State*>* statesStack;
+	sf::RenderWindow* window;
+	std::map<std::string, int>* supportedKeys;
+	std::map<std::string, int> keybinds;
+	bool quit;
+	bool isPaused; 
+	float keytime;
+	float keytimeMax;
+	float gridSize;
 
-	sf::Vector2i MousePositionScreen;
-	sf::Vector2i MousePositionWindow;
-	sf::Vector2f MousePositionView;
+	sf::Vector2i mousePositionScreen;
+	sf::Vector2i mousePositionWindow;
+	sf::Vector2f mousePositionView;
 
 	//Resources
-	std::map<std::string, sf::Texture> TexturesMap;
+	std::map<std::string, sf::Texture> texturesMap;
 
 	//Methods
 	virtual void initKeybinds() = 0;
@@ -29,7 +49,7 @@ protected:
 public:
 	//Constructors/Destructors
 	State();
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* StatesStack);
+	State(StateData* stateData);
 	virtual ~State();
 
 	//Accessor Methods

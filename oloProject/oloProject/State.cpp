@@ -5,15 +5,17 @@
 //Constructors/Destructors
 State::State(){}
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* statesStack)
+State::State(StateData* stateData)
 {
-	this->Window = window;
-	this->SupportedKeys = supportedKeys;
-	this->StatesStack = statesStack;
-	this->Quit = false;
-	this->IsPaused = false;
-	this->Keytime = 0.f;
-	this->KeytimeMax = 3.f;
+	this->stateData = stateData;
+	this->window = stateData->window;
+	this->supportedKeys = stateData->supportedKeys;
+	this->statesStack = stateData->statesStack;
+	this->quit = false;
+	this->isPaused = false;
+	this->keytime = 0.f;
+	this->keytimeMax = 3.f;
+	this->gridSize = stateData->gridSize;
 }
 
 State::~State()
@@ -23,14 +25,14 @@ State::~State()
 //Accessor Methods
 const bool& State::getQuit() const
 {
-	return this->Quit;
+	return this->quit;
 }
 
 const bool State::getKeyTime()
 {
-	if (this->Keytime >= this->KeytimeMax)
+	if (this->keytime >= this->keytimeMax)
 	{
-		this->Keytime = 0.f;
+		this->keytime = 0.f;
 		return true;
 	}
 
@@ -40,28 +42,28 @@ const bool State::getKeyTime()
 //Methods
 void State::endState()
 {
-	this->Quit = true;
+	this->quit = true;
 }
 
 void State::pauseState()
 {
-	this->IsPaused = true;
+	this->isPaused = true;
 }
 
 void State::unpauseState()
 {
-	this->IsPaused = false;
+	this->isPaused = false;
 }
 
 void State::updateMousePositions()
 {
-	this->MousePositionScreen = sf::Mouse::getPosition();
-	this->MousePositionWindow = sf::Mouse::getPosition(*this->Window);
-	this->MousePositionView = this->Window->mapPixelToCoords(sf::Mouse::getPosition(*this->Window));
+	this->mousePositionScreen = sf::Mouse::getPosition();
+	this->mousePositionWindow = sf::Mouse::getPosition(*this->window);
+	this->mousePositionView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
 }
 
 void State::updateKeytime(const float& deltaTime)
 {
-	if (this->Keytime < this->KeytimeMax)
-		this->Keytime += 10.f * deltaTime;
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f * deltaTime;
 }
