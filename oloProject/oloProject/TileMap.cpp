@@ -3,7 +3,12 @@
 #include "TileMap.h"
 //Constructors & Destructor
 
-TileMap::TileMap(float gridSize, unsigned width, unsigned height)
+TileMap::TileMap(
+	float gridSize, 
+	unsigned width, 
+	unsigned height, 
+	const sf::IntRect texture_rect
+	)
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
@@ -11,23 +16,24 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 	this->maxSize.y = height;
 	this->layers = 1;
 
-	this->tileVectors.resize(this->maxSize.x);
+	this->tileVectors.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
 
 	for (size_t i = 0; i < this->maxSize.x; i++)
 	{
-		this->tileVectors.push_back(std::vector<std::vector<Tile*>> ());
-
 		for (size_t j = 0; j < this->maxSize.y; j++)
 		{
-			this->tileVectors[i].resize(this->maxSize.y);
-			this->tileVectors[i].push_back(std::vector<Tile*> ());
+			this->tileVectors[i].resize(this->maxSize.y, std::vector<Tile*>());
 
 			for (size_t k = 0; k < this->layers; k++)
 			{
-				this->tileVectors[i][j].resize(this->layers);
-				this->tileVectors[i][j].push_back(nullptr);
+				this->tileVectors[i][j].resize(this->layers, nullptr);
 			}
 		}
+	}
+
+	if (!this->tileTextureSheet.loadFromFile("Resources/Images/Tiles/seamlessQuadTexture.png"))
+	{
+		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET" << "\n";
 	}
 }
 
@@ -44,6 +50,13 @@ TileMap::~TileMap()
 			}
 		}
 	}
+}
+
+//Accessors
+
+const sf::Texture* TileMap::getTileTextureSheet() const
+{
+	return &this->tileTextureSheet;
 }
 
 //Methods
@@ -68,7 +81,7 @@ void TileMap::render(sf::RenderTarget& target)
 	}
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect)
 {
 	if (
 		x < this->maxSize.x && 
@@ -83,17 +96,37 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z)
 	{
 		if (this->tileVectors[x][y][z] == nullptr)
 		{
-		//Ok to add tile
+			//Ok to add tile
 			this->tileVectors[x][y][z] = new Tile(
 				x * this->gridSizeF, 
 				y * this->gridSizeF, 
-				this->gridSizeF
+				this->gridSizeF, 
+				this->tileTextureSheet, 
+				texture_rect
 			);
 		}
 	}
 }
 
-void TileMap::removeTile()
+void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 {
+	if (
+		x < this->maxSize.x &&
+		x >= 0 &&
 
+		y < this->maxSize.y &&
+		y >= 0 &&
+
+		z < this->layers &&
+		z >= 0
+		)
+	{
+		if (this->tileVectors[x][y][z] != nullptr)
+		{
+			//Ok to remove tile
+			delete this->tileVectors[x][y][z];
+
+			this->tileVectors[x][y][z] = nullptr;
+		}
+	}
 }

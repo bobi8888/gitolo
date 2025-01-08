@@ -16,6 +16,7 @@ private:
 	Player* player;
 	//Missing a texture here?
 	TileMap* tileMap;
+	const sf::IntRect texture_rect;
 
 	//Initializer Methods
 	void initKeybinds();

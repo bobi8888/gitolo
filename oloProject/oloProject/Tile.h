@@ -6,12 +6,17 @@ private:
 
 protected:
 	sf::RectangleShape tileShape;
-	sf::Texture* texture;
 
 public:
 	//Constructors & Destructor
 	Tile();
-	Tile(float x, float y, float gridSizeF);
+	Tile(
+		float x, 
+		float y, 
+		float gridSizeF, 
+		const sf::Texture& texture, 
+		const sf::IntRect& texture_rect
+	);
 	virtual ~Tile();
 
 	//Methods
