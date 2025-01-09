@@ -61,7 +61,7 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->texture_rect);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->texture_rect, "Resources/Images/Tiles/quadTexture.png");
 }
 
 //Constructors & Destructors

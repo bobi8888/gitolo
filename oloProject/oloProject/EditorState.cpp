@@ -59,7 +59,14 @@ void EditorState::initPauseMenu()
 		"QUIT",
 		"Quit Game",
 		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y + 200.f
+		this->pauseMenu->getContainer().getPosition().y + 50.f
+	);
+
+	this->pauseMenu->addButton(
+		"SAVE",
+		"save texture map",
+		this->pauseMenu->getContainer().getPosition().x,
+		this->pauseMenu->getContainer().getPosition().y - 50.f
 	);
 }
 
@@ -93,7 +100,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->tileToolTextureRect);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->tileToolTextureRect, "Resources/Images/Tiles/quadTexture.png");
 }
 
 //Constructors & destructor
@@ -134,6 +141,9 @@ void EditorState::updatePauseMenuButtons()
 {
 	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->endState();
+
+	if (this->pauseMenu->isButtonPressed("SAVE"))
+		this->tileMap->saveToFile("ayo");
 }
 
 void EditorState::updatePlayerInput(const float& deltaTime)

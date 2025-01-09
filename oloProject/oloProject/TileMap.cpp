@@ -7,8 +7,9 @@ TileMap::TileMap(
 	float gridSize, 
 	unsigned width, 
 	unsigned height, 
-	const sf::IntRect texture_rect
-	)
+	const sf::IntRect texture_rect,
+	std::string texture_file_name
+	) : texture_file_name(texture_file_name)
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
@@ -31,10 +32,9 @@ TileMap::TileMap(
 		}
 	}
 
-	if (!this->tileTextureSheet.loadFromFile("Resources/Images/Tiles/seamlessQuadTexture.png"))
-	{
-		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET" << "\n";
-	}
+	if (!this->tileTextureSheet.loadFromFile(texture_file_name))
+
+		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET" << texture_file_name << "\n";
 }
 
 TileMap::~TileMap()
@@ -129,4 +129,56 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 			this->tileVectors[x][y][z] = nullptr;
 		}
 	}
+}
+
+void TileMap::saveToFile(const std::string file_name)
+{
+	/*Saves the entire tilemap to a text-file.
+	Format:
+	Size X y
+	gridSize
+	layers
+	texture file name
+
+	All tiles:
+	gridPosition x y of all tiles
+	textureRext x y is this from the editorState? rename?
+	type
+	*/
+
+	std::ofstream out_file;
+
+	out_file.open(file_name);
+
+	if (out_file.is_open())
+	{
+		out_file 
+			<< this->maxSize.x << " " << this->maxSize.y << "\n"
+			<< this->gridSizeU << "\n"
+			<< this->layers << "\n"
+			<< this->texture_file_name << "\n";
+
+			for (size_t i = 0; i < this->maxSize.x; i++)
+			{
+				for (size_t j = 0; j < this->maxSize.y; j++)
+				{
+					for (size_t k = 0; k < this->layers; k++)
+					{
+						out_file << 1 << 2 << 3 << 8 << 7 << " ";
+						//out_file << this->tileVectors[i][j][k];
+					}
+				}
+			}
+	}
+	else
+	{
+		std::cout << "ERROR::TILEMAP::COULD NOT SAVE TO :: FILENAME:" << file_name <<"\n";
+	}
+
+	out_file.close();
+}
+
+void TileMap::loadFromFile(const std::string file_name)
+{
+	
 }

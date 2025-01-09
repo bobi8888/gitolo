@@ -11,6 +11,7 @@ private:
 	unsigned layers;
 	std::vector<std::vector<std::vector<Tile*>>> tileVectors;
 	sf::Texture tileTextureSheet;
+	std::string texture_file_name;
 
 public:
 	//Constructors & Destructor
@@ -18,7 +19,8 @@ public:
 		float gridSize, 
 		unsigned width, 
 		unsigned height, 
-		const sf::IntRect texture_rect
+		const sf::IntRect texture_rect,
+		std::string texture_file_name
 	);
 	virtual ~TileMap();
 
@@ -36,6 +38,9 @@ public:
 		const sf::IntRect& texture_rect
 	);
 	void removeTile(const unsigned x, const unsigned y, const unsigned z);
+
+	void saveToFile(const std::string file_name);
+	void loadFromFile(const std::string file_name);
 
 };
 
