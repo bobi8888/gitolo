@@ -28,7 +28,8 @@ namespace gui
 
 	public:	
 		Button();
-		Button(float x, float y, float width, float height,
+		Button(
+			float x, float y, float width, float height,
 			sf::Font* font, std::string text, unsigned character_size,
 			sf::Color text_idle, sf::Color text_hover, sf::Color text_active,
 			sf::Color idle, sf::Color hover, sf::Color active,
@@ -82,22 +83,25 @@ namespace gui
 	class TextureSelector
 	{
 		private:
+			float gridSize;
+			float Keytime;
+			float KeytimeMax;
+			bool isActive;
+			bool isHidden;
 			sf::RectangleShape bounds;
 			sf::Sprite sheet;
 			sf::RectangleShape selector;
 			sf::Vector2u mousePostionGrid;
-			sf::IntRect textureRect;
-			bool isActive;
-			float gridSize;
+			sf::IntRect textureRect;		
+			Button* hide_button;
 
 		public:
 			TextureSelector(
-				float x, 
-				float y, 
-				float width, 
-				float height, 
+				float x, float y, 
+				float width, float height, 
 				float gridSize,
-				const sf::Texture* texture_sheet
+				const sf::Texture* texture_sheet, 
+				sf::Font& font, std::string text
 			);
 
 			~TextureSelector();
@@ -105,9 +109,12 @@ namespace gui
 			//Accessors
 			const bool& getIsActive() const;
 			const sf::IntRect& getTextureRect() const;
+			const bool getKeytime();
 
 			//Methods
-			void update(const sf::Vector2i& mousePositionWindow);
+			void update(const sf::Vector2i& mousePositionWindow, const float& deltaTime);
+			void updateKeytime(const float& deltaTime);
+
 			void render(sf::RenderTarget& target);
 	};
 }

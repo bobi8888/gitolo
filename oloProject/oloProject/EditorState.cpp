@@ -78,12 +78,11 @@ void EditorState::initGui()
 	this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
 
 	this->textureSelector = new gui::TextureSelector(
-		10.f, 
-		10.f, 
-		200.f, 
-		200.f, 
+		10.f, 30.f, 
+		200.f, 200.f, 
 		this->stateData->gridSize, 
-		this->tileMap->getTileTextureSheet()
+		this->tileMap->getTileTextureSheet(), 
+		this->font, "Show/Hide"
 	);
 }
 
@@ -151,9 +150,9 @@ void EditorState::updateButtons()
 	}
 }
 
-void EditorState::updateGUI()
+void EditorState::updateGUI(const float& deltaTime)
 {
-	this->textureSelector->update(this->mousePositionWindow);
+	this->textureSelector->update(this->mousePositionWindow, deltaTime);
 
 	if (!this->textureSelector->getIsActive())
 	{
@@ -172,7 +171,6 @@ void EditorState::updateGUI()
 		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top;
 
 	this->cursorText.setString(ss.str());
-
 }
 
 void EditorState::updateEditorInput(const float& deltaTime)
@@ -202,13 +200,6 @@ void EditorState::updateEditorInput(const float& deltaTime)
 
 		}
 	}
-
-	//change texture
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->getKeyTime())
-	{
-
-	}
-
 }
 
 void EditorState::update(const float& deltaTime)
@@ -219,7 +210,7 @@ void EditorState::update(const float& deltaTime)
 
 	if (!this->isPaused)
 	{
-		this->updateGUI();
+		this->updateGUI(deltaTime);
 		this->updateButtons();
 		this->updateEditorInput(deltaTime);
 	}

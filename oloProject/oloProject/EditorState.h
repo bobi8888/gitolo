@@ -38,6 +38,7 @@ private:
 	void initTileMap();
 
 public:
+	//Constructors & Desctructor
 	EditorState(StateData* stateData);
 	virtual ~EditorState();
 
@@ -45,7 +46,7 @@ public:
 	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& deltaTime);
 	void updateButtons();
-	void updateGUI();
+	void updateGUI(const float& deltaTime);
 	void updateEditorInput(const float& deltaTime);
 	void update(const float& deltaTime);
 
