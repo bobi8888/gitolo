@@ -27,7 +27,7 @@ namespace gui
 		sf::Color OutlineActiveColor;
 
 	public:	
-		Button();
+		//Constructors & Destructor
 		Button(
 			float x, float y, float width, float height,
 			sf::Font* font, std::string text, unsigned character_size,
@@ -37,23 +37,32 @@ namespace gui
 			sf::Color outlineHover = sf::Color::Transparent, 
 			sf::Color outlineActive = sf::Color::Transparent,
 			short unsigned buttonId = 0);
+
 		virtual ~Button();
 
 		//Accessors
 		const bool isPressed() const;
+
 		const std::string getText() const;
+
 		const short unsigned& getId() const;
+
+		//const short unsigned& getButtonState() const;
 
 		//Modifiers
 		void setText(const std::string text);
+
 		void setId(const short unsigned id);
 
 		//Methods
 		void centerText();
-		void update(const sf::Vector2f mousePos);
-		void render(sf::RenderTarget& target);
 
+		void update(const sf::Vector2f mousePos);
+
+		void render(sf::RenderTarget& target);
 	};
+
+	//Dropdown List===============================================================================================
 
 	class DropdownList
 	{
@@ -68,24 +77,30 @@ namespace gui
 		public:
 			//Constructors & Destructor
 			DropdownList(float xPos, float yPos, float width, float height, sf::Font& font, std::string list[],unsigned elementsNum, unsigned default_index = 0);
+
 			~DropdownList();
 
 			//Accessors
 			const unsigned short& getActiveElementId() const;
 
-			//Methods
 			const bool getKeytime();
+
+			//Methods
 			void updateKeytime(const float& deltaTime);
+
 			void update(const sf::Vector2f& mousePos, const float& deltaTime);
+
 			void render(sf::RenderTarget& target);
 	};
+
+	//Texture Selector===========================================================================================
 
 	class TextureSelector
 	{
 		private:
 			float gridSize;
-			float Keytime;
-			float KeytimeMax;
+			float keytime;
+			const float keytimeMax;
 			bool isActive;
 			bool isHidden;
 			sf::RectangleShape bounds;
@@ -96,6 +111,7 @@ namespace gui
 			Button* hide_button;
 
 		public:
+			//Constructors & Destructor
 			TextureSelector(
 				float x, float y, 
 				float width, float height, 
@@ -108,8 +124,12 @@ namespace gui
 
 			//Accessors
 			const bool& getIsActive() const;
+
 			const sf::IntRect& getTextureRect() const;
+
 			const bool getKeytime();
+
+			//const short unsigned& getButtonState() const;
 
 			//Methods
 			void update(const sf::Vector2i& mousePositionWindow, const float& deltaTime);

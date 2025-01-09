@@ -2,10 +2,7 @@
 
 #include "GUI.h"
 
-gui::Button::Button()
-{
-}
-
+//Constructors & Destructor
 gui::Button::Button(float x, float y, float width, float height, 
 	sf::Font* font, std::string text, unsigned character_size,
 	sf::Color text_idle, sf::Color text_hover, sf::Color text_active,
@@ -68,6 +65,11 @@ const short unsigned& gui::Button::getId() const
 {
 	return this->ButtonId;
 }
+
+//const short unsigned& gui::Button::getButtonState() const
+//{
+//	return this->ButtonState;
+//}
 
 //Modifers
 void gui::Button::setText(const std::string text)
@@ -134,7 +136,7 @@ void gui::Button::render(sf::RenderTarget& target)
 	target.draw(this->Text);
 }
 
-//Dropdown List
+//Dropdown List===============================================================================================
 //Constructors & Destructor
 gui::DropdownList::DropdownList(
 	float xPos, float yPos, float width, float height, 
@@ -175,7 +177,7 @@ gui::DropdownList::~DropdownList()
 }
 
 
-//Accessor Methods
+//Accessors
 
 const unsigned short& gui::DropdownList::getActiveElementId() const
 {
@@ -238,7 +240,7 @@ void gui::DropdownList::render(sf::RenderTarget& target)
 }
 
 
-//Texture Selector
+//Texture Selector===========================================================================================
 //Constructors & Destructor
 gui::TextureSelector::TextureSelector(
 	float x, float y,
@@ -246,7 +248,7 @@ gui::TextureSelector::TextureSelector(
 	float gridSize,
 	const sf::Texture* texture_sheet,
 	sf::Font& font, std::string text
-	) : KeytimeMax(3.f), Keytime(KeytimeMax)
+	) : keytimeMax(3.f), keytime(0.f)
 {
 	this->gridSize = gridSize;
 
@@ -308,14 +310,20 @@ const sf::IntRect& gui::TextureSelector::getTextureRect() const
 
 const bool gui::TextureSelector::getKeytime()
 {
-	if (this->Keytime >= this->KeytimeMax)
+	if (this->keytime >= this->keytimeMax)
 	{
-		this->Keytime = 0.f;
+		this->keytime = 0.f;
 		return true;
 	}
 
 	return false;
 }
+
+//const short unsigned& gui::TextureSelector::getButtonState() const
+//{
+//	return this->hide_button->getButtonState();
+//}
+
 
 //Methods
 void gui::TextureSelector::update(const sf::Vector2i& mousePositionWindow, const float& deltaTime)
@@ -354,16 +362,19 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePositionWindow, const
 			);
 
 			//Update Texture Rectangle
-			this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
-			this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+				this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+			}
 		}
 	}
 }
 
 void gui::TextureSelector::updateKeytime(const float& deltaTime)
 {
-	if (this->Keytime < this->KeytimeMax)
-		this->Keytime += 10.f * deltaTime;
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f * deltaTime;
 }
 
 void gui::TextureSelector::render(sf::RenderTarget& target)

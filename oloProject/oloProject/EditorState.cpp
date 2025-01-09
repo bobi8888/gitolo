@@ -78,12 +78,17 @@ void EditorState::initGui()
 	this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
 
 	this->textureSelector = new gui::TextureSelector(
-		10.f, 30.f, 
+		76.f, 30.f, 
 		200.f, 200.f, 
 		this->stateData->gridSize, 
 		this->tileMap->getTileTextureSheet(), 
 		this->font, "Show/Hide"
 	);
+
+	this->sideBar.setSize(sf::Vector2f(75.f, this->stateData->graphicsSettings->Resolution.height));
+	this->sideBar.setFillColor(sf::Color(50,50,50,100));
+	this->sideBar.setOutlineColor(sf::Color(200,200,200,150));
+	this->sideBar.setOutlineThickness(2.f);
 }
 
 void EditorState::initTileMap()
@@ -178,26 +183,28 @@ void EditorState::updateEditorInput(const float& deltaTime)
 	//add a tile
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTime())
 	{
-		if (!this->textureSelector->getIsActive())
+		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(this->mousePositionWindow)))
 		{
-			this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0, this->tileToolTextureRect);
-		}
-		else
-		{
-			this->tileToolTextureRect = this->textureSelector->getTextureRect();
-			this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
+			if (!this->textureSelector->getIsActive())
+			{
+				this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0, this->tileToolTextureRect);
+			}
+			else
+			{
+				this->tileToolTextureRect = this->textureSelector->getTextureRect();
+				this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
+			}
 		}
 	}
 	//remove a tile
 	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeyTime())
 	{
-		if (!this->textureSelector->getIsActive())
+		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(this->mousePositionWindow)))
 		{
-			this->tileMap->removeTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0);
-		}
-		else
-		{
-
+			if (!this->textureSelector->getIsActive())
+			{
+				this->tileMap->removeTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0);
+			}
 		}
 	}
 }
@@ -242,6 +249,7 @@ void EditorState::renderGUI(sf::RenderTarget& target)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 		target.draw(this->cursorText);
 
+	target.draw(this->sideBar);
 }
 
 void EditorState::render(sf::RenderTarget* target)

@@ -26,6 +26,8 @@ private:
 
 	gui::TextureSelector* textureSelector;
 
+	sf::RectangleShape sideBar;
+
 	//Methods
 	void initBackground();
 	void initVariables();
