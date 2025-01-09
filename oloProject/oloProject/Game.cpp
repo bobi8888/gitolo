@@ -10,7 +10,7 @@ void Game::initVariables()
     this->window = nullptr;
     this->graphicSettings.IsFullscreen = false;
     this->deltaTime = 0.f;
-    this->gridSize = 50.f;
+    this->gridSize = 100.f;
 }
 
 void Game::initGraphicsSettings()

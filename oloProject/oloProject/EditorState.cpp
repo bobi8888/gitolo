@@ -10,7 +10,7 @@ void EditorState::initBackground()
 
 void EditorState::initVariables()
 {
-	this->textureRect = sf::IntRect(0, 0, static_cast<int> (this->stateData->gridSize), static_cast<int> (this->stateData->gridSize));
+	this->tileToolTextureRect = sf::IntRect(0, 0, static_cast<int> (this->stateData->gridSize), static_cast<int> (this->stateData->gridSize));
 }
 
 void EditorState::initFonts()
@@ -65,22 +65,31 @@ void EditorState::initPauseMenu()
 
 void EditorState::initGui()
 {
-	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+	this->tileToolSelectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
 
-	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
+	this->tileToolSelectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 
-	this->selectorRect.setOutlineThickness(1.f);
+	this->tileToolSelectorRect.setOutlineThickness(1.f);
 
-	this->selectorRect.setOutlineColor(sf::Color::White);
+	this->tileToolSelectorRect.setOutlineColor(sf::Color::White);
 
-	this->selectorRect.setTexture(this->tileMap->getTileTextureSheet());
+	this->tileToolSelectorRect.setTexture(this->tileMap->getTileTextureSheet());
 
-	this->selectorRect.setTextureRect(this->textureRect);
+	this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
+
+	this->textureSelector = new gui::TextureSelector(
+		10.f, 
+		10.f, 
+		200.f, 
+		200.f, 
+		this->stateData->gridSize, 
+		this->tileMap->getTileTextureSheet()
+	);
 }
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->textureRect);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->tileToolTextureRect);
 }
 
 //Constructors & destructor
@@ -110,6 +119,8 @@ EditorState::~EditorState()
 	delete this->pauseMenu;
 
 	delete this->tileMap;
+
+	delete this->textureSelector;
 }
 //Methods
 
@@ -142,18 +153,26 @@ void EditorState::updateButtons()
 
 void EditorState::updateGUI()
 {
-	this->selectorRect.setPosition(
-		this->mousePositionGrid.x * this->stateData->gridSize, 
-		this->mousePositionGrid.y * this->stateData->gridSize
-	);
+	this->textureSelector->update(this->mousePositionWindow);
+
+	if (!this->textureSelector->getIsActive())
+	{
+		this->tileToolSelectorRect.setPosition(
+			this->mousePositionGrid.x * this->stateData->gridSize,
+			this->mousePositionGrid.y * this->stateData->gridSize
+		);
+	}
 
 	this->cursorText.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15.f));
 
 	std::stringstream ss;
+
 	ss << this->mousePositionView.x << "  " << this->mousePositionView.y << "\n" <<
 		this->mousePositionGrid.x << "  " << this->mousePositionGrid.y << "\n" <<
-		this->textureRect.left << " " << this->textureRect.top;
+		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top;
+
 	this->cursorText.setString(ss.str());
+
 }
 
 void EditorState::updateEditorInput(const float& deltaTime)
@@ -161,12 +180,27 @@ void EditorState::updateEditorInput(const float& deltaTime)
 	//add a tile
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTime())
 	{
-		this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0, this->textureRect);
+		if (!this->textureSelector->getIsActive())
+		{
+			this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0, this->tileToolTextureRect);
+		}
+		else
+		{
+			this->tileToolTextureRect = this->textureSelector->getTextureRect();
+			this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
+		}
 	}
 	//remove a tile
 	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeyTime())
 	{
-		this->tileMap->removeTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0);
+		if (!this->textureSelector->getIsActive())
+		{
+			this->tileMap->removeTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0);
+		}
+		else
+		{
+
+		}
 	}
 
 	//change texture
@@ -207,12 +241,16 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 
 void EditorState::renderGUI(sf::RenderTarget& target)
 {
-	target.draw(this->selectorRect);
+	this->textureSelector->render(target);
+
+	if (!this->textureSelector->getIsActive())
+		target.draw(this->tileToolSelectorRect);
 	
 	//Debugging
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 		target.draw(this->cursorText);
+
 }
 
 void EditorState::render(sf::RenderTarget* target)

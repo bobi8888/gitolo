@@ -20,8 +20,11 @@ private:
 	PauseMenu* pauseMenu;
 	std::map<std::string, gui::Button*> buttons;
 	TileMap* tileMap;
-	sf::IntRect textureRect;
-	sf::RectangleShape selectorRect;
+
+	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
+	sf::RectangleShape tileToolSelectorRect; //the rectangle that is visible on the editor
+
+	gui::TextureSelector* textureSelector;
 
 	//Methods
 	void initBackground();
