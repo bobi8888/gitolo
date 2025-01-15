@@ -59,14 +59,21 @@ void EditorState::initPauseMenu()
 		"QUIT",
 		"Quit Game",
 		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y + 50.f
+		this->pauseMenu->getContainer().getPosition().y + 100.f
 	);
 
 	this->pauseMenu->addButton(
 		"SAVE",
-		"save texture map",
+		"Save texture map",
 		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y - 50.f
+		this->pauseMenu->getContainer().getPosition().y - 75.f
+	);
+
+	this->pauseMenu->addButton(
+		"LOAD",
+		"Load texture map",
+		this->pauseMenu->getContainer().getPosition().x,
+		this->pauseMenu->getContainer().getPosition().y
 	);
 }
 
@@ -144,6 +151,9 @@ void EditorState::updatePauseMenuButtons()
 
 	if (this->pauseMenu->isButtonPressed("SAVE"))
 		this->tileMap->saveToFile("ayo");
+
+	if (this->pauseMenu->isButtonPressed("LOAD"))
+		this->tileMap->loadFromFile("ayo");
 }
 
 void EditorState::updatePlayerInput(const float& deltaTime)

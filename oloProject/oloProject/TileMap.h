@@ -5,6 +5,8 @@
 class TileMap
 {
 private:
+	void clearTileVectors();
+
 	float gridSizeF;
 	unsigned gridSizeU;
 	sf::Vector2u maxSize;
