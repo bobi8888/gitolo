@@ -48,30 +48,30 @@ public:
     enum Key
     {
         Unknown = -1, ///< Unhandled key
-        A = 0,        ///< The A key
-        B,            ///< The B key
-        C,            ///< The C key
-        D,            ///< The D key
-        E,            ///< The E key
-        F,            ///< The F key
-        G,            ///< The G key
-        H,            ///< The H key
-        I,            ///< The I key
-        J,            ///< The J key
-        K,            ///< The K key
-        L,            ///< The L key
-        M,            ///< The M key
-        N,            ///< The N key
-        O,            ///< The O key
-        P,            ///< The P key
-        Q,            ///< The Q key
-        R,            ///< The R key
-        S,            ///< The S key
-        T,            ///< The T key
-        U,            ///< The U key
-        V,            ///< The V key
-        W,            ///< The W key
-        X,            ///< The X key
+        A = 0,        ///< The A key 0
+        B,            ///< The B key 1
+        C,            ///< The C key 2 
+        D,            ///< The D key 3
+        E,            ///< The E key 4
+        F,            ///< The F key 5
+        G,            ///< The G key 6
+        H,            ///< The H key 7
+        I,            ///< The I key 8
+        J,            ///< The J key 9 
+        K,            ///< The K key 10
+        L,            ///< The L key 11 
+        M,            ///< The M key 12
+        N,            ///< The N key 13
+        O,            ///< The O key 14
+        P,            ///< The P key 15 
+        Q,            ///< The Q key 16
+        R,            ///< The R key 17
+        S,            ///< The S key 18 
+        T,            ///< The T key 19
+        U,            ///< The U key 20
+        V,            ///< The V key 21
+        W,            ///< The W key 22
+        X,            ///< The X key 23
         Y,            ///< The Y key
         Z,            ///< The Z key
         Num0,         ///< The 0 key

@@ -1,6 +1,6 @@
 #pragma once
 
-enum TileTypes {DEFAULT = 0, GRASS, WATER};
+enum TileTypes {DEFAULT = 0, WOOD, GRAVEL, METAL, SAND};
 
 class Tile
 {

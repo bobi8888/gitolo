@@ -94,7 +94,11 @@ void TileMap::render(sf::RenderTarget& target)
 	}
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect)
+void TileMap::addTile(
+	const unsigned x, const unsigned y, const unsigned z, 
+	const sf::IntRect& texture_rect, 
+	const bool& collision, const short& type
+	)
 {
 	if (
 		x < this->maxSize.x && 
@@ -114,7 +118,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
 				x, y, this->gridSizeF, 
 				this->tileTextureSheet, 
 				texture_rect,
-				false, 0
+				collision, type
 			);
 		}
 	}

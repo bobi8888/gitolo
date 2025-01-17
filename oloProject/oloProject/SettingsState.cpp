@@ -145,7 +145,7 @@ void SettingsState::updateGUI(const float& deltaTime)
 	//Buttons
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->mousePositionView);
+		it->second->update(this->mousePositionWindow);
 	}
 
 	//Button Functionality
@@ -168,7 +168,7 @@ void SettingsState::updateGUI(const float& deltaTime)
 	//DropdownList
 	for (auto it = this->dropdownMap.begin(); it != this->dropdownMap.end(); ++it)
 	{
-		it->second->update(this->mousePositionView, deltaTime);
+		it->second->update(this->mousePositionWindow, deltaTime);
 	}
 
 	//DropdownList Functionality

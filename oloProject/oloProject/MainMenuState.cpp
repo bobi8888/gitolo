@@ -134,7 +134,7 @@ void MainMenuState::updateButtons()
 {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->mousePositionView);
+		it->second->update(this->mousePositionWindow);
 	}
 
 	//New game

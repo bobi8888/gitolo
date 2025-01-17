@@ -37,8 +37,8 @@ const std::string Tile::getAsString() const
 {
 	std::stringstream ss;
 
-	ss << this->tileShape.getTextureRect().left << " " << this->tileShape.getTextureRect().top << " " << this->hasCollision << 
-	" " << this->type;
+	ss << this->tileShape.getTextureRect().left << " " << this->tileShape.getTextureRect().top << " " <<
+	this->hasCollision << " " << this->type;
 
 	return ss.str();
 }

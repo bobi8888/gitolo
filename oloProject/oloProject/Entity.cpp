@@ -52,6 +52,11 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 	this->EntityAnimationComponent = new AnimationComponent(this->EntitySprite, texture_sheet);
 }
 
+const sf::Vector2f& Entity::getPosition() const
+{
+	return this->EntitySprite.getPosition();
+}
+
 //Methods
 void Entity::setPosition(const float x, const float y)
 {

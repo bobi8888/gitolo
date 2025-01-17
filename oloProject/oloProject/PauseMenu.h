@@ -26,7 +26,7 @@ public:
 	//Methods
 	const bool isButtonPressed(const std::string key);
 	void addButton(const std::string key, const std::string text, float xPos, float yPos);
-	void update(const sf::Vector2f mousePos);
+	void update(const sf::Vector2i& mousePosWindow);
 	void render(sf::RenderTarget& target);
 
 	sf::RectangleShape getContainer();

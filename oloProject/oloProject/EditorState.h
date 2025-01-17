@@ -15,10 +15,16 @@ class EditorState :
 {
 private:
 	//Variables
+	sf::View view;
+	float cameraSpeed;
+
 	sf::Font font;
 	sf::Text cursorText;
+
 	PauseMenu* pauseMenu;
+
 	std::map<std::string, gui::Button*> buttons;
+
 	TileMap* tileMap;
 
 	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
@@ -28,9 +34,13 @@ private:
 
 	sf::RectangleShape sideBar;
 
+	bool collision;
+	short type;
+
 	//Methods
-	void initBackground();
 	void initVariables();
+	void initView();
+	void initBackground();
 	void initFonts();
 	void initText();
 	void initKeybinds();

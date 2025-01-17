@@ -89,12 +89,12 @@ void gui::Button::centerText() {
 	this->Text.setPosition(this->Rectangle.getPosition());
 }
 
-void gui::Button::update(const sf::Vector2f mousePos)
+void gui::Button::update(const sf::Vector2i& mousePosWindow)
 {
 	this->ButtonState = BTN_IDLE;
 
 	//check for hover
-	if (this->Rectangle.getGlobalBounds().contains(mousePos)) 
+	if (this->Rectangle.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow))) 
 	{
 		this->ButtonState = BTN_HOVER;
 
@@ -203,11 +203,11 @@ void gui::DropdownList::updateKeytime(const float& deltaTime)
 	
 }
 
-void gui::DropdownList::update(const sf::Vector2f& mousePos, const float& deltaTime)
+void gui::DropdownList::update(const sf::Vector2i& mousePosWindow, const float& deltaTime)
 {
 	this->updateKeytime(deltaTime);
 
-	this->ActiveElement->update(mousePos);
+	this->ActiveElement->update(mousePosWindow);
 
 	if (this->ActiveElement->isPressed() && this->getKeytime())
 		this->ShowList ? this->ShowList = false : this->ShowList = true;
@@ -215,7 +215,7 @@ void gui::DropdownList::update(const sf::Vector2f& mousePos, const float& deltaT
 	if (this->ShowList)
 		for (auto &i : this->ElementList)
 		{
-			i->update(mousePos);
+			i->update(mousePosWindow);
 
 			if (i->isPressed() && this->getKeytime())
 			{
@@ -330,7 +330,7 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePositionWindow, const
 {
 	this->updateKeytime(deltaTime);
 
-	this->hide_button->update(static_cast<sf::Vector2f>(mousePositionWindow));
+	this->hide_button->update(mousePositionWindow);
 
 	if (this->hide_button->isPressed() && this->getKeytime())
 	{

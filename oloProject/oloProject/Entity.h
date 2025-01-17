@@ -33,8 +33,12 @@ public:
 	void createMovementComponent(const float maxVelo, const float acceleration, const float deceleration);
 	void createAnimationComponent(sf::Texture& texture_sheet);
 
-	//Methods
+	//Accessors
+	virtual const sf::Vector2f& getPosition() const;
+	//Modifiers
 	virtual void setPosition(const float x, const float y);
+	
+	//Methods
 	virtual void move(const float xDir, const float yDir, const float& deltaTime);
 	virtual void update(const float& deltaTime);
 	virtual void render(sf::RenderTarget& target);

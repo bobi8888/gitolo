@@ -50,20 +50,27 @@ protected:
 public:
 	//Constructors/Destructors
 	State();
+
 	State(StateData* stateData);
+
 	virtual ~State();
 
 	//Accessor Methods
 	const bool& getQuit() const;
+
 	const bool getKeyTime();
 
 	//Methods
 	void endState();
+
 	void pauseState();
+
 	void unpauseState();
 
-	virtual void updateMousePositions();
+	virtual void updateMousePositions(sf::View* view = nullptr);
+
 	virtual void updateKeytime(const float& deltaTime);
+
 	virtual void updatePlayerInput(const float& deltaTime) = 0;
 	virtual void update(const float& deltaTime) = 0;
 	

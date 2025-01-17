@@ -11,6 +11,26 @@ void EditorState::initBackground()
 void EditorState::initVariables()
 {
 	this->tileToolTextureRect = sf::IntRect(0, 0, static_cast<int> (this->stateData->gridSize), static_cast<int> (this->stateData->gridSize));
+
+	this->collision = false;
+
+	this->type = TileTypes::DEFAULT;
+
+	this->cameraSpeed = 150.f;
+}
+
+void EditorState::initView()
+{
+	this->view.setSize(
+		sf::Vector2f(
+			this->stateData->graphicsSettings->Resolution.width, 
+			this->stateData->graphicsSettings->Resolution.height
+		));
+
+	this->view.setCenter(
+		this->stateData->graphicsSettings->Resolution.width / 2.f,
+		this->stateData->graphicsSettings->Resolution.height / 2.f
+	);
 }
 
 void EditorState::initFonts()
@@ -115,6 +135,7 @@ EditorState::EditorState(StateData* stateData)
 	: State(stateData)
 {
 	this->initVariables();
+	this->initView();
 	this->initBackground();
 	this->initFonts();
 	this->initText();
@@ -150,10 +171,10 @@ void EditorState::updatePauseMenuButtons()
 		this->endState();
 
 	if (this->pauseMenu->isButtonPressed("SAVE"))
-		this->tileMap->saveToFile("ayo");
+		this->tileMap->saveToFile("editorTileMap.txt");
 
 	if (this->pauseMenu->isButtonPressed("LOAD"))
-		this->tileMap->loadFromFile("ayo");
+		this->tileMap->loadFromFile("editorTileMap.txt");
 }
 
 void EditorState::updatePlayerInput(const float& deltaTime)
@@ -171,7 +192,7 @@ void EditorState::updateButtons()
 {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
-		it->second->update(this->mousePositionView);
+		it->second->update(this->mousePositionWindow);
 	}
 }
 
@@ -193,13 +214,33 @@ void EditorState::updateGUI(const float& deltaTime)
 
 	ss << this->mousePositionView.x << "  " << this->mousePositionView.y << "\n" <<
 		this->mousePositionGrid.x << "  " << this->mousePositionGrid.y << "\n" <<
-		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top;
+		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top << "\n" <<
+		"Collision:" << this->collision << "\n" <<
+		"Type: " << this->type;
 
 	this->cursorText.setString(ss.str());
 }
 
 void EditorState::updateEditorInput(const float& deltaTime)
 {
+	//Move view
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
+	{
+		this->view.move(0.f, -this->cameraSpeed * deltaTime);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
+	{
+		this->view.move(0.f, this->cameraSpeed * deltaTime);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
+	{
+		this->view.move(-this->cameraSpeed * deltaTime, 0.f);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
+	{
+		this->view.move(this->cameraSpeed * deltaTime, 0.f);
+	}
+
 	//add a tile
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTime())
 	{
@@ -207,11 +248,16 @@ void EditorState::updateEditorInput(const float& deltaTime)
 		{
 			if (!this->textureSelector->getIsActive())
 			{
-				this->tileMap->addTile(this->mousePositionGrid.x, this->mousePositionGrid.y, 0, this->tileToolTextureRect);
+				this->tileMap->addTile(
+					this->mousePositionGrid.x, this->mousePositionGrid.y, 0, 
+					this->tileToolTextureRect, 
+					this->collision, this->type
+					);
 			}
 			else
 			{
 				this->tileToolTextureRect = this->textureSelector->getTextureRect();
+
 				this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
 			}
 		}
@@ -227,11 +273,30 @@ void EditorState::updateEditorInput(const float& deltaTime)
 			}
 		}
 	}
+
+	//Toggle Collision
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeyTime())
+	{
+		if (this->collision)
+			this->collision = false;
+		else
+			this->collision = true;
+	}
+	//Toggle Type
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("INCREASE_TYPE"))) && this->getKeyTime())
+	{
+		++this->type;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DECREASE_TYPE"))) && this->getKeyTime())
+	{
+		if (this->type > 0)
+			--this->type;
+	}
 }
 
 void EditorState::update(const float& deltaTime)
 {
-	this->updateMousePositions();
+	this->updateMousePositions(&this->view);
 	this->updateKeytime(deltaTime);
 	this->updatePlayerInput(deltaTime);
 
@@ -243,7 +308,7 @@ void EditorState::update(const float& deltaTime)
 	}
 	else
 	{
-		this->pauseMenu->update(this->mousePositionView);
+		this->pauseMenu->update(this->mousePositionWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -259,17 +324,22 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 
 void EditorState::renderGUI(sf::RenderTarget& target)
 {
+	if (!this->textureSelector->getIsActive())
+	{
+		target.setView(this->view);
+
+		target.draw(this->tileToolSelectorRect);
+	}
+
+	target.setView(this->window->getDefaultView());
+
 	this->textureSelector->render(target);
 
-	if (!this->textureSelector->getIsActive())
-		target.draw(this->tileToolSelectorRect);
-	
-	//Debugging
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-		target.draw(this->cursorText);
-
 	target.draw(this->sideBar);
+
+	target.setView(this->view);
+
+	target.draw(this->cursorText);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -277,9 +347,13 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-	this->renderButtons(*target);
+	target->setView(this->view);
 
 	this->tileMap->render(*target);
+
+	target->setView(this->window->getDefaultView());
+
+	this->renderButtons(*target);
 
 	this->renderGUI(*target);
 

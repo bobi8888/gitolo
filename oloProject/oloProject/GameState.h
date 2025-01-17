@@ -7,10 +7,19 @@
 class State;
 class PauseMenu;
 class TileMap;
+class Player;
+
+class sf::View;
+class sf::Font;
+class sf::RenderTexture;
 
 class GameState : public State
 {
 private:
+	sf::View view;
+	sf::RenderTexture renderTexture;
+	sf::Sprite renderSprite;
+
 	sf::Font font;
 	PauseMenu* pauseMenu;
 	Player* player;
@@ -19,6 +28,7 @@ private:
 	const sf::IntRect texture_rect;
 
 	//Initializer Methods
+	void initView();
 	void initKeybinds();
 	void initFonts();
 	void initTextures();
@@ -32,6 +42,7 @@ public:
 	virtual ~GameState();
 
 	//Methods
+	void updateView(const float& deltaTime);
 	void updateInput(const float& deltaTime);
 	void updatePlayerInput(const float& deltaTime);
 	void updatePauseMenuButtons();

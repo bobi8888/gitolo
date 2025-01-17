@@ -2,6 +2,23 @@
 
 #include "GameState.h"
 
+void GameState::initView()
+{
+	this->view.setSize(
+		sf::Vector2f(
+			this->stateData->graphicsSettings->Resolution.width,
+			this->stateData->graphicsSettings->Resolution.height
+		)
+	);
+
+	this->view.setCenter(
+		sf::Vector2f(
+			this->stateData->graphicsSettings->Resolution.width / 2.f,
+			this->stateData->graphicsSettings->Resolution.height / 2.f
+		)
+	);
+}
+
 //Initializer Methods
 void GameState::initKeybinds()
 {
@@ -62,12 +79,15 @@ void GameState::initPlayers()
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->texture_rect, "Resources/Images/Tiles/quadTexture.png");
+
+	this->tileMap->loadFromFile("editorTileMap.txt");
 }
 
 //Constructors & Destructors
 GameState::GameState(StateData* stateData)
 	: State(stateData)
 {
+	this->initView();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
@@ -86,6 +106,10 @@ GameState::~GameState()
 }
 
 //Methods
+void GameState::updateView(const float& deltaTime)
+{
+	this->view.setCenter(this->player->getPosition());
+}
 void GameState::updateInput(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
@@ -119,18 +143,21 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::update(const float& deltaTime)
 {
-	this->updateMousePositions();
+	this->updateMousePositions(&this->view);
 	this->updateKeytime(deltaTime);
 	this->updateInput(deltaTime);
 
 	if (!this->isPaused)
 	{
+		this->updateView(deltaTime);
+
 		this->updatePlayerInput(deltaTime);
+
 		this->player->update(deltaTime);
 	}
 	else
 	{
-		this->pauseMenu->update(this->mousePositionView);
+		this->pauseMenu->update(this->mousePositionWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -140,12 +167,17 @@ void GameState::render(sf::RenderTarget* target)
 	if(!target)
 		target = this->window;
 
+	target->setView(this->view);
 	this->tileMap->render(*target);
 
 	this->player->render(*target);
 
 	if (this->isPaused)
+	{
+		target->setView(this->window->getDefaultView());
+
 		this->pauseMenu->render(*target);
+	}
 
 	//Debugging
 	sf::Text mouse_text;
