@@ -2,6 +2,25 @@
 
 #include "GameState.h"
 
+void GameState::initDeferredRender()
+{
+	this->renderTexture.create(
+		this->stateData->graphicsSettings->Resolution.width,
+		this->stateData->graphicsSettings->Resolution.height
+	);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(
+		sf::IntRect(
+			0,
+			0, 
+			this->stateData->graphicsSettings->Resolution.width, 
+			this->stateData->graphicsSettings->Resolution.height
+		)
+	);
+
+}
+
 void GameState::initView()
 {
 	this->view.setSize(
@@ -87,6 +106,7 @@ void GameState::initTileMap()
 GameState::GameState(StateData* stateData)
 	: State(stateData)
 {
+	this->initDeferredRender();
 	this->initView();
 	this->initKeybinds();
 	this->initFonts();
@@ -108,8 +128,15 @@ GameState::~GameState()
 //Methods
 void GameState::updateView(const float& deltaTime)
 {
-	this->view.setCenter(this->player->getPosition());
+	//std::floor helps with screen tearing because using float values makes it hard to be pixel perfect
+	//look into this for a better explaination
+
+	this->view.setCenter(
+		std::floor(this->player->getPosition().x),
+		std::floor(this->player->getPosition().y)
+	);
 }
+
 void GameState::updateInput(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
@@ -125,10 +152,13 @@ void GameState::updatePlayerInput(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		this->player->move(-1.f, 0.f, deltaTime);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 1.f, deltaTime);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 		this->player->move(1.f, 0.f, deltaTime);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 		this->player->move(0.f, -1.f, deltaTime);
 	
@@ -139,6 +169,13 @@ void GameState::updatePauseMenuButtons()
 {
 	if (this->pauseMenu->isButtonPressed("QUIT"))
 		this->endState();
+}
+
+void GameState::updateTileMap(const float& deltaTime)
+{
+	this->tileMap->update();
+
+	this->tileMap->updateCollision(this->player);
 }
 
 void GameState::update(const float& deltaTime)
@@ -154,6 +191,8 @@ void GameState::update(const float& deltaTime)
 		this->updatePlayerInput(deltaTime);
 
 		this->player->update(deltaTime);
+
+		this->updateTileMap(deltaTime);
 	}
 	else
 	{
@@ -167,17 +206,28 @@ void GameState::render(sf::RenderTarget* target)
 	if(!target)
 		target = this->window;
 
-	target->setView(this->view);
-	this->tileMap->render(*target);
+	this->renderTexture.clear();
 
-	this->player->render(*target);
+	this->renderTexture.setView(this->view);
+
+	this->tileMap->render(this->renderTexture);
+
+	this->player->render(this->renderTexture);
 
 	if (this->isPaused)
 	{
-		target->setView(this->window->getDefaultView());
+		this->renderTexture.setView(this->renderTexture.getDefaultView());
 
-		this->pauseMenu->render(*target);
+		this->pauseMenu->render(this->renderTexture);
 	}
+
+	//Final Render
+	this->renderTexture.display();
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+
+	target->draw(this->renderSprite);
+
 
 	//Debugging
 	sf::Text mouse_text;

@@ -123,6 +123,8 @@ void EditorState::initGui()
 	this->sideBar.setFillColor(sf::Color(50,50,50,100));
 	this->sideBar.setOutlineColor(sf::Color(200,200,200,150));
 	this->sideBar.setOutlineThickness(2.f);
+
+
 }
 
 void EditorState::initTileMap()
@@ -226,19 +228,19 @@ void EditorState::updateEditorInput(const float& deltaTime)
 	//Move view
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
 	{
-		this->view.move(0.f, -this->cameraSpeed * deltaTime);
+		this->view.move(0.f, -std::floor(this->cameraSpeed * deltaTime));
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
 	{
-		this->view.move(0.f, this->cameraSpeed * deltaTime);
+		this->view.move(0.f, std::floor(this->cameraSpeed * deltaTime));
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
 	{
-		this->view.move(-this->cameraSpeed * deltaTime, 0.f);
+		this->view.move(-std::floor(this->cameraSpeed * deltaTime), 0.f);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
 	{
-		this->view.move(this->cameraSpeed * deltaTime, 0.f);
+		this->view.move(std::floor(this->cameraSpeed * deltaTime), 0.f);
 	}
 
 	//add a tile

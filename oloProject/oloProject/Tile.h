@@ -20,11 +20,19 @@ public:
 		const sf::IntRect& texture_rect,
 		bool collision, short type
 	);
+
 	virtual ~Tile();
 
-	//Methods
+	//Accessors
+	const bool& getCollision() const;
+
+	const sf::Vector2f& getPosition() const;
+
 	const std::string getAsString() const;
+
+	//Methods
 	void update();
+
 	void render(sf::RenderTarget& target);
 };
 

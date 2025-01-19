@@ -5,9 +5,9 @@
 
 void TileMap::clearTileVectors()
 {
-	for (size_t i = 0; i < this->maxSize.x; i++)
+	for (size_t i = 0; i < this->maxSizeWorldGrid.x; i++)
 	{
-		for (size_t j = 0; j < this->maxSize.y; j++)
+		for (size_t j = 0; j < this->maxSizeWorldGrid.y; j++)
 		{
 			for (size_t k = 0; k < this->layers; k++)
 			{
@@ -36,17 +36,19 @@ TileMap::TileMap(
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
-	this->maxSize.x = width;
-	this->maxSize.y = height;
+	this->maxSizeWorldGrid.x = width;
+	this->maxSizeWorldGrid.y = height;
+	this->maxSizeWorldF.x = static_cast<float>(width) * gridSize;
+	this->maxSizeWorldF.y = static_cast<float>(height) * gridSize;
 	this->layers = 1;
 
-	this->tileVectors.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
+	this->tileVectors.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<Tile*>>());
 
-	for (size_t i = 0; i < this->maxSize.x; i++)
+	for (size_t i = 0; i < this->maxSizeWorldGrid.x; i++)
 	{
-		for (size_t j = 0; j < this->maxSize.y; j++)
+		for (size_t j = 0; j < this->maxSizeWorldGrid.y; j++)
 		{
-			this->tileVectors[i].resize(this->maxSize.y, std::vector<Tile*>());
+			this->tileVectors[i].resize(this->maxSizeWorldGrid.y, std::vector<Tile*>());
 
 			for (size_t k = 0; k < this->layers; k++)
 			{
@@ -58,6 +60,11 @@ TileMap::TileMap(
 	if (!this->tileTextureSheet.loadFromFile(texture_file_name))
 
 		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET" << texture_file_name << "\n";
+
+	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
+	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setOutlineColor(sf::Color::Red);
+	this->collisionBox.setOutlineThickness(1.f);
 }
 
 TileMap::~TileMap()
@@ -79,7 +86,7 @@ void TileMap::update()
 
 }
 
-void TileMap::render(sf::RenderTarget& target)
+void TileMap::render(sf::RenderTarget& target, Entity* entity)
 {
 	for (auto& x : this->tileVectors)
 	{
@@ -88,7 +95,17 @@ void TileMap::render(sf::RenderTarget& target)
 			for (auto *z : y)
 			{
 				if (z != nullptr)
+				{
 					z->render(target);
+
+					//Debug
+					if (z->getCollision())
+					{
+						this->collisionBox.setPosition(z->getPosition());
+
+						target.draw(this->collisionBox);
+					}
+				}
 			}
 		}
 	}
@@ -101,10 +118,10 @@ void TileMap::addTile(
 	)
 {
 	if (
-		x < this->maxSize.x && 
+		x < this->maxSizeWorldGrid.x &&
 		x >= 0 &&
 
-		y < this->maxSize.y && 
+		y < this->maxSizeWorldGrid.y &&
 		y >= 0 &&
 
 		z < this->layers &&
@@ -127,10 +144,10 @@ void TileMap::addTile(
 void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 {
 	if (
-		x < this->maxSize.x &&
+		x < this->maxSizeWorldGrid.x &&
 		x >= 0 &&
 
-		y < this->maxSize.y &&
+		y < this->maxSizeWorldGrid.y &&
 		y >= 0 &&
 
 		z < this->layers &&
@@ -170,14 +187,14 @@ void TileMap::saveToFile(const std::string file_name)
 	if (out_file.is_open())
 	{
 		out_file 
-			<< this->maxSize.x << " " << this->maxSize.y << "\n"
+			<< this->maxSizeWorldGrid.x << " " << this->maxSizeWorldGrid.y << "\n"
 			<< this->gridSizeU << "\n"
 			<< this->layers << "\n"
 			<< this->texture_file_name << "\n";
 
-			for (size_t i = 0; i < this->maxSize.x; i++)
+			for (size_t i = 0; i < this->maxSizeWorldGrid.x; i++)
 			{
-				for (size_t j = 0; j < this->maxSize.y; j++)
+				for (size_t j = 0; j < this->maxSizeWorldGrid.y; j++)
 				{
 					for (size_t k = 0; k < this->layers; k++)
 					{
@@ -222,20 +239,20 @@ void TileMap::loadFromFile(const std::string file_name)
 		//Tiles
 		this->gridSizeF = static_cast<float>(gridSize);
 		this->gridSizeU = gridSize;
-		this->maxSize.x = size.x;
-		this->maxSize.y = size.y;
+		this->maxSizeWorldGrid.x = size.x;
+		this->maxSizeWorldGrid.y = size.y;
 		this->layers = layers;
 		this->texture_file_name = texture_file_name;
 
 		this->clearTileVectors();
 
-		this->tileVectors.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
+		this->tileVectors.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<Tile*>>());
 
-		for (size_t i = 0; i < this->maxSize.x; i++)
+		for (size_t i = 0; i < this->maxSizeWorldGrid.x; i++)
 		{
-			for (size_t j = 0; j < this->maxSize.y; j++)
+			for (size_t j = 0; j < this->maxSizeWorldGrid.y; j++)
 			{
-				this->tileVectors[i].resize(this->maxSize.y, std::vector<Tile*>());
+				this->tileVectors[i].resize(this->maxSizeWorldGrid.y, std::vector<Tile*>());
 
 				for (size_t k = 0; k < this->layers; k++)
 				{
@@ -265,4 +282,19 @@ void TileMap::loadFromFile(const std::string file_name)
 	}
 
 	in_file.close();
+}
+
+void TileMap::updateCollision(Entity* entity)
+{
+	//World Bounds
+	if (entity->getPosition().x < 0.f)
+		entity->setPosition(0.f, entity->getPosition().y);
+	else if (entity->getPosition().x > this->maxSizeWorldF.x)
+		entity->setPosition(this->maxSizeWorldF.x, entity->getPosition().y);
+
+	if (entity->getPosition().y < 0.f)
+		entity->setPosition(entity->getPosition().x, 0.f);
+	else if (entity->getPosition().y > this->maxSizeWorldF.y)
+		entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y);
+		
 }
