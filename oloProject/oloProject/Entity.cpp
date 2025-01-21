@@ -89,6 +89,25 @@ void Entity::move(const float xDir, const float yDir, const float& deltaTime)
 	}
 }
 
+void Entity::stopVelocity()
+{
+	if (this->EntityMovementComponent)
+		this->EntityMovementComponent->stopVelocity();
+}
+
+void Entity::stopVelocityX()
+{
+	if (this->EntityMovementComponent)
+		this->EntityMovementComponent->stopVelocityX();
+
+}
+
+void Entity::stopVelocityY()
+{
+	if (this->EntityMovementComponent)
+		this->EntityMovementComponent->stopVelocityY();
+}
+
 void Entity::update(const float& deltaTime)
 {
 	if (this->EntityMovementComponent)

@@ -79,6 +79,23 @@ void MovementComponent::move(const float xDir, const float yDir, const float& de
 	this->Velocity.y += this->Acceleration * yDir;
 }
 
+void MovementComponent::stopVelocity()
+{
+	this->Velocity.x = 0.f;
+
+	this->Velocity.y = 0.f;
+}
+
+void MovementComponent::stopVelocityX()
+{
+	this->Velocity.x = 0.f;
+}
+
+void MovementComponent::stopVelocityY()
+{
+	this->Velocity.y = 0.f;
+}
+
 void MovementComponent::update(const float& deltaTime)
 {
 	if (this->Velocity.x > 0.f)

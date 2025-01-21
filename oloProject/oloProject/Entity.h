@@ -49,6 +49,12 @@ public:
 	//Methods
 	virtual void move(const float xDir, const float yDir, const float& deltaTime);
 
+	virtual void stopVelocity();
+
+	virtual void stopVelocityX();
+
+	virtual void stopVelocityY();
+
 	virtual void update(const float& deltaTime) = 0;
 
 	virtual void render(sf::RenderTarget& target) = 0;
