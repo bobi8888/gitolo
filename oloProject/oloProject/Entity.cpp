@@ -34,9 +34,10 @@ void Entity::setTexture(sf::Texture& texture)
 	this->EntitySprite.setTexture(texture);
 }
 
-void Entity::createHitboxComponent(sf::Sprite& sprite,
-float offset_x, float offset_y,
-float width, float height
+void Entity::createHitboxComponent(
+	sf::Sprite& sprite,
+	float offset_x, float offset_y,
+	float width, float height
 )
 {
 	this->EntityHitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
@@ -52,17 +53,34 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 	this->EntityAnimationComponent = new AnimationComponent(this->EntitySprite, texture_sheet);
 }
 
+
+//Accessors
 const sf::Vector2f& Entity::getPosition() const
 {
+	if (this->EntityHitboxComponent)
+		return this->EntityHitboxComponent->getPosition();
+
 	return this->EntitySprite.getPosition();
 }
 
-//Methods
-void Entity::setPosition(const float x, const float y)
+const sf::FloatRect Entity::getGlobalBounds() const
 {
-	this->EntitySprite.setPosition(x, y);
+	if (this->EntityHitboxComponent)
+		return this->EntityHitboxComponent->getGlobalBounds();
+
+	return this->EntitySprite.getGlobalBounds();
 }
 
+//Modifiers
+void Entity::setPosition(const float x, const float y)
+{
+	if (this->EntityHitboxComponent)
+		this->EntityHitboxComponent->setPosition(x, y);
+	else
+		this->EntitySprite.setPosition(x, y);
+}
+
+//Methods
 void Entity::move(const float xDir, const float yDir, const float& deltaTime)
 {
 	if (this->EntityMovementComponent)

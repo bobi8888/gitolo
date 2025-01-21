@@ -27,20 +27,30 @@ public:
 
 	//Component Methods
 	void setTexture(sf::Texture& texture);
-	void createHitboxComponent(sf::Sprite& sprite,
+
+	void createHitboxComponent(
+		sf::Sprite& sprite,
 		float offset_x, float offset_y,
-		float width, float height);
+		float width, float height
+	);
+
 	void createMovementComponent(const float maxVelo, const float acceleration, const float deceleration);
+
 	void createAnimationComponent(sf::Texture& texture_sheet);
 
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;
+
+	virtual const sf::FloatRect getGlobalBounds() const;
+
 	//Modifiers
 	virtual void setPosition(const float x, const float y);
 	
 	//Methods
 	virtual void move(const float xDir, const float yDir, const float& deltaTime);
-	virtual void update(const float& deltaTime);
-	virtual void render(sf::RenderTarget& target);
+
+	virtual void update(const float& deltaTime) = 0;
+
+	virtual void render(sf::RenderTarget& target) = 0;
 };
 

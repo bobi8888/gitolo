@@ -18,6 +18,34 @@ HitboxComponent::~HitboxComponent()
 {
 
 }
+//Accessors
+const sf::Vector2f& HitboxComponent::getPosition()
+{
+	return this->Hitbox.getPosition(); 
+}
+
+const sf::FloatRect HitboxComponent::getGlobalBounds() const
+{
+	return this->Hitbox.getGlobalBounds();
+}
+
+//Modifiers
+
+void HitboxComponent::setPosition(const sf::Vector2f& position)
+{
+	this->Hitbox.setPosition(position);
+
+	this->Sprite.setPosition(position.x - this->OffsetX, position.y - this->OffsetY);
+}
+
+void HitboxComponent::setPosition(const float& x, const float& y)
+{
+	this->Hitbox.setPosition(x, y);
+
+	this->Sprite.setPosition(x - this->OffsetX, y - this->OffsetY);
+}
+
+
 //Methods
 
 bool HitboxComponent::isIntersecting(const sf::FloatRect& rect)

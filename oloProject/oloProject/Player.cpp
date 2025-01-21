@@ -12,6 +12,7 @@ void Player::initVariables()
 Player::Player()
 {
 }
+
 Player::Player(sf::Texture& texture_sheet, float x, float y)
 {
 	this->initVariables();
@@ -42,20 +43,22 @@ Player::~Player()
 }
 
 //Methods
-void Player::update(const float& deltaTime)
-{
-	this->EntityMovementComponent->update(deltaTime);
 
+void Player::updateAttack()
+{
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		this->IsAttacking = true;
 	}
+}
 
+void Player::updateAnimation(const float& deltaTime)
+{
 	if (this->IsAttacking)
 	{
 		if (this->EntityAnimationComponent->play("ATTACK", deltaTime, true))
 			this->IsAttacking = false;
-	}	
+	}
 	else if (this->EntityMovementComponent->getState(MOVING_RIGHT))
 	{
 		this->EntitySprite.setOrigin(0.f, 0.f);
@@ -67,11 +70,27 @@ void Player::update(const float& deltaTime)
 		this->EntitySprite.setOrigin(128.f, 0.f);
 		this->EntitySprite.setScale(-1.f, 1.f);
 		this->EntityAnimationComponent->play("WALK", deltaTime, this->EntityMovementComponent->getVelo().x, this->EntityMovementComponent->getMaxVelo());
-	} 
+	}
 	else if (this->EntityMovementComponent->getState(IDLE))
 	{
 		this->EntityAnimationComponent->play("IDLE", deltaTime);
 	}
+}
+
+void Player::update(const float& deltaTime)
+{
+	this->EntityMovementComponent->update(deltaTime);
+
+	this->updateAttack();
+
+	this->updateAnimation(deltaTime);
 
 	this->EntityHitboxComponent->update();
+}
+
+void Player::render(sf::RenderTarget& target)
+{
+	target.draw(this->EntitySprite);
+
+	this->EntityHitboxComponent->render(target);
 }

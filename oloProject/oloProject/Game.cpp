@@ -123,7 +123,7 @@ void Game::update()
 {
     this->updateSFMLEvents();   
     
-    if (!this->statesStack.empty())
+    if (!this->statesStack.empty() && this->window->hasFocus())
     {
         this->statesStack.top()->update(this->deltaTime);
 
