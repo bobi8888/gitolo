@@ -30,6 +30,8 @@ public:
 
 	const std::string getAsString() const;
 
+	const bool isIntersecting(const sf::FloatRect bounds) const;
+
 	//Methods
 	void update();
 

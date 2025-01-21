@@ -20,6 +20,7 @@ protected:
 	MovementComponent* EntityMovementComponent;
 	AnimationComponent* EntityAnimationComponent;
 	HitboxComponent* EntityHitboxComponent;
+
 public:
 	//Constructors & Destructors
 	Entity();
@@ -40,6 +41,8 @@ public:
 
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;
+
+	virtual const sf::Vector2u getGridPosition(const unsigned gridSizeU) const;
 
 	virtual const sf::FloatRect getGlobalBounds() const;
 
