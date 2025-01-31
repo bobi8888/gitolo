@@ -23,8 +23,8 @@ void EditorState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			this->stateData->graphicsSettings->Resolution.width, 
-			this->stateData->graphicsSettings->Resolution.height
+			static_cast<float>(this->stateData->graphicsSettings->Resolution.width), 
+			static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
 		));
 
 	this->view.setCenter(
@@ -119,12 +119,15 @@ void EditorState::initGui()
 		this->font, "Show/Hide"
 	);
 
-	this->sideBar.setSize(sf::Vector2f(75.f, this->stateData->graphicsSettings->Resolution.height));
+	this->sideBar.setSize(
+		sf::Vector2f(
+			75.f, 
+			static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
+		)
+	);
 	this->sideBar.setFillColor(sf::Color(50,50,50,100));
 	this->sideBar.setOutlineColor(sf::Color(200,200,200,150));
 	this->sideBar.setOutlineThickness(2.f);
-
-
 }
 
 void EditorState::initTileMap()

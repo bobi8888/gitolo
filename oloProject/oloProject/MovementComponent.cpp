@@ -19,7 +19,7 @@ MovementComponent::~MovementComponent()
 }
 
 //Methods
-const sf::Vector2f& MovementComponent::getVelo() const
+const sf::Vector2f& MovementComponent::getVelo()
 {
 	return this->Velocity;
 }

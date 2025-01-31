@@ -10,13 +10,17 @@ class State;
 class StateData
 {
 public:
-	StateData(){};
+	//StateData(){};
 
 	//Variables
 	float gridSize;
+
 	sf::RenderWindow* window; 
+
 	GraphicsSettings* graphicsSettings;
+
 	std::map<std::string, int>* supportedKeys;
+
 	std::stack<State*>* statesStack;
 };
 
@@ -27,11 +31,15 @@ private:
 protected:
 	StateData* stateData;
 	std::stack<State*>* statesStack;
+
 	sf::RenderWindow* window;
+
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keybinds;
+
 	bool quit;
 	bool isPaused; 
+
 	float keytime;
 	float keytimeMax;
 	float gridSize;

@@ -51,7 +51,7 @@ PauseMenu::PauseMenu(sf::RenderWindow& window, sf::Font& font)
 	this->MenuText.setString("::PAUSED::");
 	this->MenuText.setOrigin(sf::Vector2f(
 		this->MenuText.getGlobalBounds().width / 2,
-		this->MenuText.getCharacterSize() / 2
+		static_cast<float>(this->MenuText.getCharacterSize()) / 2.f
 		)
 	);
 	this->MenuText.setPosition(Container.getPosition().x, Container.getPosition().y - 150.f);

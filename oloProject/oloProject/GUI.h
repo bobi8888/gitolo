@@ -69,14 +69,23 @@ namespace gui
 		private:
 			float Keytime;
 			float KeytimeMax;
+
 			sf::Font& ListFont;
+
 			Button* ActiveElement;
+
 			std::vector<Button*> ElementList;
+
 			bool ShowList;
 
 		public:
 			//Constructors & Destructor
-			DropdownList(float xPos, float yPos, float width, float height, sf::Font& font, std::string list[],unsigned elementsNum, unsigned default_index = 0);
+			DropdownList(
+				float xPos, float yPos, 
+				float width, float height, 
+				sf::Font& font, std::string list[],
+				int elementsNum, unsigned default_index = 0
+			);
 
 			~DropdownList();
 

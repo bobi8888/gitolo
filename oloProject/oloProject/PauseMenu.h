@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GUI.h";
+#include "GUI.h"
 
 class GUI;
 

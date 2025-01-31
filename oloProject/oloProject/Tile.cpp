@@ -3,10 +3,10 @@
 #include "Tile.h"
 
 //Constructors & Destructor
-Tile::Tile(){}
+//Tile::Tile(){}
 
 Tile::Tile(
-	unsigned grid_x, unsigned grid_y, float gridSizeF, 
+	int grid_x, int grid_y, float gridSizeF, 
 	const sf::Texture& texture, 
 	const sf::IntRect& texture_rect,
 	bool collision, short type
@@ -54,6 +54,11 @@ const std::string Tile::getAsString() const
 const bool Tile::isIntersecting(const sf::FloatRect bounds) const
 {
 	return this->tileShape.getGlobalBounds().intersects(bounds);
+}
+
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return this->tileShape.getGlobalBounds();
 }
 
 //Methods

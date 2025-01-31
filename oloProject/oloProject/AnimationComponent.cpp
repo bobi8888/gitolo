@@ -94,7 +94,10 @@ const bool& AnimationComponent::play(const std::string key, const float& deltaTi
 }
 
 
-const bool& AnimationComponent::play(const std::string key, const float& deltaTime, const float& modifier, const float& modifier_max)
+const bool& AnimationComponent::play(
+	const std::string key, const float& deltaTime, 
+	const float& modifier, const float& modifier_max
+)
 {
 	if (this->PriorityAnimation)
 	{

@@ -27,7 +27,12 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->Text.setString(text);
 	this->Text.setFillColor(text_idle);
 	this->Text.setCharacterSize(character_size);
-	this->Text.setOrigin(sf::Vector2f(this->Text.getGlobalBounds().width / 2, this->Text.getCharacterSize() / 2));
+	this->Text.setOrigin(
+		sf::Vector2f(
+			this->Text.getGlobalBounds().width / 2.f, 
+			this->Text.getCharacterSize() / 2.f
+		)
+	);
 	this->Text.setPosition(this->Rectangle.getPosition());
 
 	this->TextIdleColor = text_idle;
@@ -85,7 +90,13 @@ void gui::Button::setId(const short unsigned id)
 
 //Methods
 void gui::Button::centerText() {
-	this->Text.setOrigin(sf::Vector2f(this->Text.getGlobalBounds().width / 2, this->Text.getCharacterSize() / 2));
+	this->Text.setOrigin(
+		sf::Vector2f(
+			this->Text.getGlobalBounds().width / 2.f, 
+			this->Text.getCharacterSize() / 2.f
+		)
+	);
+
 	this->Text.setPosition(this->Rectangle.getPosition());
 }
 
@@ -141,9 +152,13 @@ void gui::Button::render(sf::RenderTarget& target)
 gui::DropdownList::DropdownList(
 	float xPos, float yPos, float width, float height, 
 	sf::Font& font, std::string list[], 
-	unsigned elementsNum, unsigned default_index
-	) : ListFont(font), ShowList(false), KeytimeMax(1.f), Keytime(KeytimeMax)
+	int elementsNum, unsigned default_index
+	) : ListFont(font), ShowList(false)
 {
+	KeytimeMax = 1.f;
+
+	Keytime = KeytimeMax;
+
 	this->ActiveElement = new Button(
 		xPos, yPos, width, height,
 		&this->ListFont, list[default_index], 20,
@@ -153,7 +168,7 @@ gui::DropdownList::DropdownList(
 
 	);
 
-	for (size_t i = 0; i < elementsNum; i++)
+	for (int i = 0; i < elementsNum; i++)
 	{
 		this->ElementList.push_back(
 			new Button(
@@ -266,12 +281,24 @@ gui::TextureSelector::TextureSelector(
 
 	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+		this->sheet.setTextureRect(
+			sf::IntRect(
+				0, 0, 
+				static_cast<int>(this->bounds.getGlobalBounds().width),
+				static_cast<int>(this->sheet.getGlobalBounds().height)
+			)
+		);
 	}
 
 	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
 	{
-		this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().height, this->sheet.getGlobalBounds().width));
+		this->sheet.setTextureRect(
+			sf::IntRect(
+				0, 0, 
+				static_cast<int>(this->bounds.getGlobalBounds().height), 
+				static_cast<int>(this->sheet.getGlobalBounds().width)
+			)
+		);
 	}
 
 	this->selector.setPosition(x, y);

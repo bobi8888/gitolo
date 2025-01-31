@@ -90,8 +90,10 @@ void SettingsState::initGUI()
 	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
-		this->window->getSize().x / 2.f, 150.f, 150.f, 20.f, 
-		font, videoModesStr.data(), videoModesStr.size()
+		this->window->getSize().x / 2.f, 150.f, 
+		150.f, 20.f, 
+		font, videoModesStr.data(), 
+		static_cast<int>(videoModesStr.size())
 	);
 }
 
@@ -101,7 +103,7 @@ void SettingsState::initText()
 
 	this->text.setPosition(sf::Vector2f(100.f, 400.f));
 
-	this->text.setCharacterSize(30.f);
+	this->text.setCharacterSize(30);
 
 	this->text.setFillColor(sf::Color::Black);
 

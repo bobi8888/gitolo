@@ -21,6 +21,8 @@ private:
 	sf::Sprite renderSprite;
 
 	sf::Font font;
+	sf::Text cursorText;
+
 	PauseMenu* pauseMenu;
 	Player* player;
 	//Missing a texture here?

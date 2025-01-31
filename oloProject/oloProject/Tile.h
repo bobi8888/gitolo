@@ -13,9 +13,9 @@ protected:
 
 public:
 	//Constructors & Destructor
-	Tile();
+	//Tile();
 	Tile(
-		unsigned grid_x, unsigned grid_y, float gridSizeF, 
+		int grid_x, int grid_y, float gridSizeF, 
 		const sf::Texture& texture, 
 		const sf::IntRect& texture_rect,
 		bool collision, short type
@@ -31,6 +31,8 @@ public:
 	const std::string getAsString() const;
 
 	const bool isIntersecting(const sf::FloatRect bounds) const;
+
+	const sf::FloatRect getGlobalBounds() const;
 
 	//Methods
 	void update();

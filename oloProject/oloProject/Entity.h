@@ -46,6 +46,8 @@ public:
 
 	virtual const sf::FloatRect getGlobalBounds() const;
 
+	virtual const sf::FloatRect& getNextPositionBounds(const float& deltaTime) const;
+
 	//Modifiers
 	virtual void setPosition(const float x, const float y);
 	

@@ -63,7 +63,11 @@ void Player::updateAnimation(const float& deltaTime)
 	{
 		this->EntitySprite.setOrigin(0.f, 0.f);
 		this->EntitySprite.setScale(1.f, 1.f);
-		this->EntityAnimationComponent->play("WALK", deltaTime, this->EntityMovementComponent->getVelo().x, this->EntityMovementComponent->getMaxVelo());
+		this->EntityAnimationComponent->play(
+			"WALK", deltaTime, 
+			this->EntityMovementComponent->getVelo().x, 
+			this->EntityMovementComponent->getMaxVelo()
+		);
 	}
 	else if (this->EntityMovementComponent->getState(MOVING_LEFT))
 	{

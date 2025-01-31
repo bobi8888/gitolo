@@ -114,6 +114,10 @@ GameState::GameState(StateData* stateData)
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initTileMap();
+
+	//DEBUG
+	this->cursorText.setFont(this->font);
+	this->cursorText.setCharacterSize(18);
 }
 
 GameState::~GameState()
@@ -175,14 +179,31 @@ void GameState::updateTileMap(const float& deltaTime)
 {
 	this->tileMap->update();
 
-	this->tileMap->updateCollision(this->player);
+	this->tileMap->updateCollision(this->player, deltaTime);
 }
 
 void GameState::update(const float& deltaTime)
 {
 	this->updateMousePositions(&this->view);
+
 	this->updateKeytime(deltaTime);
+
 	this->updateInput(deltaTime);
+
+	//DEBUG
+	this->cursorText.setPosition(
+		sf::Vector2f(
+			static_cast<float>(this->mousePositionWindow.x), 
+			static_cast<float>(this->mousePositionWindow.y) + 15.f
+		)
+	);
+
+	std::stringstream ss;
+
+	ss << this->mousePositionView.x << "  " << this->mousePositionView.y << "\n";
+
+	this->cursorText.setString(ss.str());
+	//DEBUG
 
 	if (!this->isPaused)
 	{
@@ -190,13 +211,14 @@ void GameState::update(const float& deltaTime)
 
 		this->updatePlayerInput(deltaTime);
 
-		this->player->update(deltaTime);
-
 		this->updateTileMap(deltaTime);
+
+		this->player->update(deltaTime);
 	}
 	else
 	{
 		this->pauseMenu->update(this->mousePositionWindow);
+
 		this->updatePauseMenuButtons();
 	}
 }
@@ -230,15 +252,19 @@ void GameState::render(sf::RenderTarget* target)
 
 
 	//Debugging
-	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
-	mouse_text.setFont(this->font);
-	mouse_text.setCharacterSize(18);
-	std::stringstream ss;
-	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
-	mouse_text.setString(ss.str());
+	//sf::Text mouse_text;
+	//mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+	//mouse_text.setFont(this->font);
+	//mouse_text.setCharacterSize(18);
+	//std::stringstream ss;
+	//ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
+	//mouse_text.setString(ss.str());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-		target->draw(mouse_text);
+	{
+		//target->draw(mouse_text);
+
+		target->draw(this->cursorText);
+	}
 	
 }
