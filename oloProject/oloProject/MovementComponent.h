@@ -2,6 +2,8 @@
 
 enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN};
 
+enum facing_dir {UP = 0, DOWN, LEFT, RIGHT};
+
 class MovementComponent
 {
 private:
@@ -28,6 +30,8 @@ public:
 	const float& getMaxVelo() const;
 
 	const bool getState(const short unsigned state) const;
+
+	const bool getDir(const short unsigned dir) const;
 
 	//Methods
 	void move(const float xDir, const float yDir, const float& deltaTime);

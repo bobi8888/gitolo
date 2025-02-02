@@ -62,6 +62,7 @@ const bool& AnimationComponent::play(const std::string key, const float& deltaTi
 				else
 				{
 					this->LastAnimation->reset();
+
 					this->LastAnimation = this->AnimationSheets[key];
 				}
 			}
@@ -83,6 +84,7 @@ const bool& AnimationComponent::play(const std::string key, const float& deltaTi
 			else
 			{
 				this->LastAnimation->reset();
+
 				this->LastAnimation = this->AnimationSheets[key];
 			}
 		}

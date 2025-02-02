@@ -4,6 +4,7 @@
 
 void MovementComponent::initVariables()
 {
+
 }
 
 //Constructors & Destructors
@@ -28,6 +29,8 @@ const float& MovementComponent::getMaxVelo() const
 {
 	return this->maxVelo;
 }
+
+
 
 const bool MovementComponent::getState(const short unsigned state) const
 {
@@ -58,6 +61,31 @@ const bool MovementComponent::getState(const short unsigned state) const
 				return true;
 			break;
 	}
+	return false;
+}
+
+const bool MovementComponent::getDir(const short unsigned dir) const
+{
+	switch (dir)
+	{
+	case UP:
+		if (velocity.y < 0 && std::abs(velocity.y) > std::abs(velocity.x))
+			return true;
+		break;
+	case DOWN:
+		if (velocity.y > 0 && std::abs(velocity.y) > std::abs(velocity.x))
+			return true;
+		break;
+	case LEFT:
+		if (velocity.x < 0 && std::abs(velocity.y) < std::abs(velocity.x))
+			return true;
+		break;
+	case RIGHT:
+		if (velocity.x > 0 && abs(velocity.y) < std::abs(velocity.x))
+			return true;
+		break;
+	}
+
 	return false;
 }
 
