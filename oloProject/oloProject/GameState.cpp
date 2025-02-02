@@ -24,9 +24,9 @@ void GameState::initDeferredRender()
 void GameState::initView()
 {
 	this->view.setSize(
-		sf::Vector2f(
-			this->stateData->graphicsSettings->Resolution.width,
-			this->stateData->graphicsSettings->Resolution.height
+		sf::Vector2f( 
+			static_cast<float>(this->stateData->graphicsSettings->Resolution.width),
+			static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
 		)
 	);
 

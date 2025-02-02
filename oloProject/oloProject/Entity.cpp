@@ -85,14 +85,14 @@ const sf::FloatRect Entity::getGlobalBounds() const
 	return this->EntitySprite.getGlobalBounds();
 }
 
-const sf::FloatRect& Entity::getNextPositionBounds(const float& deltaTime) const
+const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
 {
 	if (this->EntityHitboxComponent && this->EntityMovementComponent)
 	{
 		return this->EntityHitboxComponent->getNextPosition(this->EntityMovementComponent->getVelo() * deltaTime);
 	}
 
-	return sf::FloatRect();
+	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
 }
 
 //Modifiers

@@ -1,5 +1,6 @@
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\AnimationComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\AnimationComponent.obj
-C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Button.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Button.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\GraphicsSettings.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\GraphicsSettings.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\GUI.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\GUI.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\EditorState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\EditorState.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Entity.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Entity.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Game.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Game.obj
@@ -10,5 +11,8 @@ C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MainMenuStat
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\MovementComponent.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\MovementComponent.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\PauseMenu.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\PauseMenu.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Player.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Player.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\SettingsState.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\SettingsState.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\State.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\State.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\stdafx.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\stdafx.obj
 C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\Tile.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\Tile.obj
+C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\TileMap.cpp;C:\Users\1stBuild\Desktop\gitolo\GitRemoteCon\oloProject\oloProject\x64\Release\TileMap.obj

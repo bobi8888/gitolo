@@ -5,13 +5,13 @@ enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MO
 class MovementComponent
 {
 private:
-	sf::Sprite& Sprite;
+	sf::Sprite& sprite;
 
-	sf::Vector2f Velocity;
+	sf::Vector2f velocity;
 
-	float MaxVelo;
-	float Acceleration;
-	float Deceleration;
+	float maxVelo;
+	float acceleration;
+	float deceleration;
 
 	//Initializer Methods
 	void initVariables();

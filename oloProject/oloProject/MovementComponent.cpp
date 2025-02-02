@@ -8,7 +8,7 @@ void MovementComponent::initVariables()
 
 //Constructors & Destructors
 MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelo, float acceleration, float deceleration)
-	:Sprite(sprite), MaxVelo(maxVelo), Acceleration(acceleration), Deceleration(deceleration)
+	:sprite(sprite), maxVelo(maxVelo), acceleration(acceleration), deceleration(deceleration)
 {
 
 }
@@ -21,12 +21,12 @@ MovementComponent::~MovementComponent()
 //Methods
 const sf::Vector2f& MovementComponent::getVelo()
 {
-	return this->Velocity;
+	return this->velocity;
 }
 
 const float& MovementComponent::getMaxVelo() const
 {
-	return this->MaxVelo;
+	return this->maxVelo;
 }
 
 const bool MovementComponent::getState(const short unsigned state) const
@@ -34,27 +34,27 @@ const bool MovementComponent::getState(const short unsigned state) const
 	switch (state)
 	{
 		case IDLE:
-			if (this->Velocity.x == 0.f && this->Velocity.y == 0)
+			if (this->velocity.x == 0.f && this->velocity.y == 0)
 				return true;
 			break;
 		case MOVING:
-			if (this->Velocity.x != 0.f || this->Velocity.y != 0)
+			if (this->velocity.x != 0.f || this->velocity.y != 0)
 				return true;
 			break;
 		case MOVING_LEFT:
-			if (this->Velocity.x < 0.f)
+			if (this->velocity.x < 0.f)
 				return true;
 			break;
 		case MOVING_RIGHT:
-			if (this->Velocity.x > 0.f)
+			if (this->velocity.x > 0.f)
 				return true;
 			break;
 		case MOVING_UP:
-			if (this->Velocity.y < 0.f)
+			if (this->velocity.y < 0.f)
 				return true;
 			break;
 		case MOVING_DOWN:
-			if (this->Velocity.y > 0.f)
+			if (this->velocity.y > 0.f)
 				return true;
 			break;
 	}
@@ -65,85 +65,86 @@ const bool MovementComponent::getState(const short unsigned state) const
 void MovementComponent::move(const float xDir, const float yDir, const float& deltaTime)
 {
 	//Acceleration
-	this->Velocity.x += this->Acceleration * xDir;
+	this->velocity.x += this->acceleration * xDir * deltaTime;
 
-	if (this->Velocity.x > 0.f)
+	this->velocity.y += this->acceleration * yDir * deltaTime;
+
+	if (this->velocity.x > 0.f)
 	{
 
 	}
-	else if (this->Velocity.x < 0.f)
+	else if (this->velocity.x < 0.f)
 	{
 
 	}
 
-	this->Velocity.y += this->Acceleration * yDir;
 }
 
 void MovementComponent::stopVelocity()
 {
-	this->Velocity.x = 0.f;
+	this->velocity.x = 0.f;
 
-	this->Velocity.y = 0.f;
+	this->velocity.y = 0.f;
 }
 
 void MovementComponent::stopVelocityX()
 {
-	this->Velocity.x = 0.f;
+	this->velocity.x = 0.f;
 }
 
 void MovementComponent::stopVelocityY()
 {
-	this->Velocity.y = 0.f;
+	this->velocity.y = 0.f;
 }
 
 void MovementComponent::update(const float& deltaTime)
 {
-	if (this->Velocity.x > 0.f)
+	if (this->velocity.x > 0.f)
 	{
 		//Max Velo check x positive
-		if (this->Velocity.x > this->MaxVelo)
-			this->Velocity.x = this->MaxVelo;
+		if (this->velocity.x > this->maxVelo)
+			this->velocity.x = this->maxVelo;
 
 		//Deceleration X positive
-		this->Velocity.x -= Deceleration;
-		if (this->Velocity.x < 0.f)
-			this->Velocity.x = 0.f;
+		this->velocity.x -= deceleration * deltaTime;
+		if (this->velocity.x < 0.f)
+			this->velocity.x = 0.f;
 	}
-	else if (this->Velocity.x < 0.f)
+	else if (this->velocity.x < 0.f)
 	{
 		//Max Velo check x negative
-		if (this->Velocity.x < -this->MaxVelo)
-			this->Velocity.x = -this->MaxVelo;
+		if (this->velocity.x < -this->maxVelo)
+			this->velocity.x = -this->maxVelo;
 		
-		//Deceleration X negitive
-		this->Velocity.x += Deceleration;
-		if (this->Velocity.x > 0.f)
-			this->Velocity.x = 0.f;
+		//deceleration X negitive
+		this->velocity.x += deceleration * deltaTime;
+		if (this->velocity.x > 0.f)
+			this->velocity.x = 0.f;
 	}
 
-	if (this->Velocity.y > 0.f)
+	if (this->velocity.y > 0.f)
 	{
 		//Max Velo check y positive
-		if (this->Velocity.y > this->MaxVelo)
-			this->Velocity.y = this->MaxVelo;
+		if (this->velocity.y > this->maxVelo)
+			this->velocity.y = this->maxVelo;
 
-		//Deceleration y positive
-		this->Velocity.y -= Deceleration;
-		if (this->Velocity.y < 0.f)
-			this->Velocity.y = 0.f;
+		//deceleration y positive
+		this->velocity.y -= deceleration * deltaTime;
+		if (this->velocity.y < 0.f)
+			this->velocity.y = 0.f;
 	}
-	else if (this->Velocity.y < 0.f)
+	else if (this->velocity.y < 0.f)
 	{
 		//Max Velo check y negative
-		if (this->Velocity.y < -this->MaxVelo)
-			this->Velocity.y = -this->MaxVelo;
+		if (this->velocity.y < -this->maxVelo)
+			this->velocity.y = -this->maxVelo;
 
-		//Deceleration y negitive
-		this->Velocity.y += Deceleration;
-		if (this->Velocity.y > 0.f)
-			this->Velocity.y = 0.f;
+		//deceleration y negitive
+		this->velocity.y += deceleration * deltaTime;
+		if (this->velocity.y > 0.f)
+			this->velocity.y = 0.f;
 	}
 
 	//Final Movement
-	this->Sprite.move(this->Velocity * deltaTime);
+	this->sprite.move(this->velocity * deltaTime);
 }

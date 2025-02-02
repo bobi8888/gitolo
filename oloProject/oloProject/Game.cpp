@@ -123,16 +123,21 @@ void Game::update()
 {
     this->updateSFMLEvents();   
     
-    if (!this->statesStack.empty() && this->window->hasFocus())
+    if (!this->statesStack.empty())
     {
-        this->statesStack.top()->update(this->deltaTime);
-
-        if (this->statesStack.top()->getQuit())
+        if (this->window->hasFocus())
         {
-            //Save game before quit
-            this->statesStack.top()->endState();
-            delete this->statesStack.top();
-            this->statesStack.pop();
+            this->statesStack.top()->update(this->deltaTime);
+
+            if (this->statesStack.top()->getQuit())
+            {
+                //Save game before quit
+                this->statesStack.top()->endState();
+
+                delete this->statesStack.top();
+
+                this->statesStack.pop();
+            }
         }
     }
     //Application End
