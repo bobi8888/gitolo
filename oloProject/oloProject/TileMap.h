@@ -19,7 +19,7 @@ private:
 
 	int layers;
 
-	std::vector<std::vector<std::vector<Tile*>>> tileVectors;
+	std::vector<std::vector<std::vector<std::vector<Tile*>>>> tileVectors;
 
 	sf::Texture tileTextureSheet;
 
@@ -38,11 +38,11 @@ public:
 	//Constructors & Destructor
 	TileMap(
 		float gridSize, 
-		int width, 
-		int height, 
+		int width, int height, 
 		const sf::IntRect texture_rect,
 		std::string texture_file_name
 	);
+
 	virtual ~TileMap();
 
 	//Accessors
@@ -50,6 +50,7 @@ public:
 
 	//Methods
 	void update();
+
 	void render(sf::RenderTarget& target, Entity* entity = nullptr);
 
 	void addTile(
@@ -57,9 +58,11 @@ public:
 		const sf::IntRect& texture_rect,
 		const bool& collision, const short& type
 	);
+
 	void removeTile(const int x, const int y, const int z);
 
 	void saveToFile(const std::string file_name);
+
 	void loadFromFile(const std::string file_name);
 
 	void updateCollision(Entity* entity, const float& deltaTime);

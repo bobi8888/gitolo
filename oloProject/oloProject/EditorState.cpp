@@ -132,7 +132,12 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->tileToolTextureRect, "Resources/Images/Tiles/quadTexture.png");
+	this->tileMap = new TileMap(
+		this->stateData->gridSize, 
+		10, 10, 
+		this->tileToolTextureRect, 
+		"Resources/Images/Tiles/quadTexture.png"
+	);
 }
 
 //Constructors & destructor

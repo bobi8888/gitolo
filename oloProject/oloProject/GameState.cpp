@@ -97,7 +97,12 @@ void GameState::initPlayers()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, this->texture_rect, "Resources/Images/Tiles/quadTexture.png");
+	this->tileMap = new TileMap(
+		this->stateData->gridSize, 
+		10, 10, 
+		this->texture_rect, 
+		"Resources/Images/Tiles/quadTexture.png"
+	);
 
 	this->tileMap->loadFromFile("editorTileMap.txt");
 }
