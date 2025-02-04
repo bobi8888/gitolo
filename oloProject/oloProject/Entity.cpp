@@ -70,7 +70,7 @@ const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 		//std::cout << "EntityHitboxComponent->getPosition().x: " << this->EntityHitboxComponent->getPosition().x << "\n";
 		//std::cout << "gridSizeI: " << gridSizeI << "\n";
 		//std::cout << "x / gridSizeI: " << this->EntityHitboxComponent->getPosition().x / gridSizeI << "\n";
-		//std::cout << "cast int: " << static_cast<int>(this->EntityHitboxComponent->getPosition().x) / gridSizeI << "\n";
+		//std::cout << "cast int: " << static_cast<int>(this->EntityHitboxComponent->getPosition().x) / gridSizeI << "\n \n";
 
 		return sf::Vector2i(
 			static_cast<int>(this->EntityHitboxComponent->getPosition().x) / gridSizeI,

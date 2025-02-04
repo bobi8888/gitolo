@@ -182,8 +182,6 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& deltaTime)
 {
-	//this->tileMap->update();
-
 	this->tileMap->updateCollision(this->player, deltaTime);
 }
 
@@ -237,7 +235,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 
-	this->tileMap->render(this->renderTexture);
+	this->tileMap->render(this->renderTexture, this->player);
 
 	this->player->render(this->renderTexture);
 

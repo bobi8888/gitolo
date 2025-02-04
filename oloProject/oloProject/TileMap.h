@@ -49,10 +49,6 @@ public:
 	const sf::Texture* getTileTextureSheet()const ;
 
 	//Methods
-	void update();
-
-	void render(sf::RenderTarget& target, Entity* entity = nullptr);
-
 	void addTile(
 		const int x, const int y,	const int z, 
 		const sf::IntRect& texture_rect,
@@ -66,5 +62,7 @@ public:
 	void loadFromFile(const std::string file_name);
 
 	void updateCollision(Entity* entity, const float& deltaTime);
+
+	void render(sf::RenderTarget& target, Entity* entity = nullptr);
 };
 
