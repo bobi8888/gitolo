@@ -47,6 +47,8 @@ public:
 
 	//Accessors
 	const sf::Texture* getTileTextureSheet()const ;
+	const int getLayerSize(const sf::Vector2i mousePos, const int z) const;
+
 
 	//Methods
 	void addTile(
@@ -63,6 +65,6 @@ public:
 
 	void updateCollision(Entity* entity, const float& deltaTime);
 
-	void render(sf::RenderTarget& target, Entity* entity = nullptr);
+	void render(sf::RenderTarget& target, const sf::Vector2i gridPosition);
 };
 

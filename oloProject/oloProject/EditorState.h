@@ -16,10 +16,11 @@ class EditorState :
 private:
 	//Variables
 	sf::View view;
-	float cameraSpeed;
-
 	sf::Font font;
 	sf::Text cursorText;
+	sf::RectangleShape sideBar;
+	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
+	sf::RectangleShape tileToolSelectorRect; //the rectangle that is visible on the editor
 
 	PauseMenu* pauseMenu;
 
@@ -27,13 +28,10 @@ private:
 
 	TileMap* tileMap;
 
-	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
-	sf::RectangleShape tileToolSelectorRect; //the rectangle that is visible on the editor
-
 	gui::TextureSelector* textureSelector;
 
-	sf::RectangleShape sideBar;
-
+	int layer;
+	float cameraSpeed;
 	bool collision;
 	short type;
 

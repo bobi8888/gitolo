@@ -17,6 +17,8 @@ void EditorState::initVariables()
 	this->type = TileTypes::DEFAULT;
 
 	this->cameraSpeed = 150.f;
+
+	this->layer = 0;
 }
 
 void EditorState::initView()
@@ -113,7 +115,7 @@ void EditorState::initGui()
 
 	this->textureSelector = new gui::TextureSelector(
 		76.f, 30.f, 
-		200.f, 200.f, 
+		300.f, 300.f, 
 		this->stateData->gridSize, 
 		this->tileMap->getTileTextureSheet(), 
 		this->font, "Show/Hide"
@@ -136,7 +138,7 @@ void EditorState::initTileMap()
 		this->stateData->gridSize, 
 		10, 10, 
 		this->tileToolTextureRect, 
-		"Resources/Images/Tiles/quadTexture.png"
+		"Resources/Images/Tiles/quadWithLight.png"
 	);
 }
 
@@ -226,7 +228,8 @@ void EditorState::updateGUI(const float& deltaTime)
 		this->mousePositionGrid.x << "  " << this->mousePositionGrid.y << "\n" <<
 		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top << "\n" <<
 		"Collision:" << this->collision << "\n" <<
-		"Type: " << this->type;
+		"Type: " << this->type << "\n" <<
+		"# of Tiles: " << this->tileMap->getLayerSize(this->mousePositionGrid, this->layer);
 
 	this->cursorText.setString(ss.str());
 }
@@ -359,7 +362,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	target->setView(this->view);
 
-	this->tileMap->render(*target);
+	this->tileMap->render(*target, this->mousePositionGrid);
 
 	target->setView(this->window->getDefaultView());
 

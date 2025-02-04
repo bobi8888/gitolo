@@ -83,93 +83,28 @@ TileMap::~TileMap()
 }
 
 //Accessors
-
 const sf::Texture* TileMap::getTileTextureSheet() const
 {
 	return &this->tileTextureSheet;
 }
 
-//Methods
-
-void TileMap::render(sf::RenderTarget& target, Entity* entity)
+const int TileMap::getLayerSize(const sf::Vector2i mousePos, const int z) const
 {
-	if (entity)
+	if (mousePos.x >= 0 && mousePos.x < this->tileVectors.size())
 	{
-		this->layer = 0;
-
-		this->fromX = entity->getGridPosition(this->gridSizeI).x - 2;
-		if(this-> fromX < 0)
-			this->fromX = 0;
-		else if (this->fromX > this->maxSizeWorldGrid.x)
-			this->fromX = this->maxSizeWorldGrid.x;
-
-		this->toX = entity->getGridPosition(this->gridSizeI).x + 3;
-		if (this->toX < 0)
-			this->toX = 0;
-		else if (this->toX > this->maxSizeWorldGrid.x)
-			this->toX = this->maxSizeWorldGrid.x;
-
-		this->fromY = entity->getGridPosition(this->gridSizeI).y - 1;
-		if (this->fromY < 0)
-			this->fromY = 0;
-		else if (this->fromY > this->maxSizeWorldGrid.y)
-			this->fromY = this->maxSizeWorldGrid.y;
-
-		this->toY = entity->getGridPosition(this->gridSizeI).y + 4;
-		if (this->toY < 0)
-			this->toY = 0;
-		else if (this->toY > this->maxSizeWorldGrid.y)
-			this->toY = this->maxSizeWorldGrid.y;
-
-
-		for (int x = this->fromX; x < this->toX; x++)
+		if (mousePos.y >= 0 && mousePos.y < this->tileVectors[mousePos.x].size())
 		{
-			for (int y = this->fromY; y < this->toY; y++)
+			if (z >= 0 && z < this->tileVectors[mousePos.x][mousePos.y].size())
 			{
-				for (size_t k = 0; k < this->tileVectors[x][y][this->layer].size(); k++)
-				{
-					this->tileVectors[x][y][this->layer][k]->render(target);
-
-					if (this->tileVectors[x][y][this->layer][k]->getCollision())
-					{
-						this->collisionBox.setPosition(this->tileVectors[x][y][this->layer][k]->getPosition());
-
-						target.draw(this->collisionBox);
-					}
-				}
-			}
-		}
-	}
-	else {
-		for (auto& x : this->tileVectors)
-		{
-			for (auto& y : x)
-			{
-				for (auto& z : y)
-				{
-					for (auto* l : z)
-					{
-						if (l != nullptr)
-						{
-							l->render(target);
-
-							//					//Debug
-							//					if (l->getCollision())
-							//					{
-							//						this->collisionBox.setPosition(l->getPosition());
-
-							//						//Draws the red box indicating a tile has collision
-							//						target.draw(this->collisionBox);
-							//					}
-						}
-					}
-				}
+				return this->tileVectors[mousePos.x][mousePos.y][layer].size();
 			}
 		}
 	}
 
+	return -1;
 }
 
+//Methods
 void TileMap::addTile(
 	const int x, const int y, const int z, 
 	const sf::IntRect& texture_rect, 
@@ -480,4 +415,81 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 			}
 		}
 	}
+}
+
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i gridPosition)
+{
+	this->layer = 0;
+
+	this->fromX = gridPosition.x - 2;
+	if (this->fromX < 0)
+		this->fromX = 0;
+	else if (this->fromX > this->maxSizeWorldGrid.x)
+		this->fromX = this->maxSizeWorldGrid.x;
+
+	this->toX = gridPosition.x + 3;
+	if (this->toX < 0)
+		this->toX = 0;
+	else if (this->toX > this->maxSizeWorldGrid.x)
+		this->toX = this->maxSizeWorldGrid.x;
+
+	this->fromY = gridPosition.y - 1;
+	if (this->fromY < 0)
+		this->fromY = 0;
+	else if (this->fromY > this->maxSizeWorldGrid.y)
+		this->fromY = this->maxSizeWorldGrid.y;
+
+	this->toY = gridPosition.y + 4;
+	if (this->toY < 0)
+		this->toY = 0;
+	else if (this->toY > this->maxSizeWorldGrid.y)
+		this->toY = this->maxSizeWorldGrid.y;
+
+
+	for (int x = this->fromX; x < this->toX; x++)
+	{
+		for (int y = this->fromY; y < this->toY; y++)
+		{
+			for (size_t k = 0; k < this->tileVectors[x][y][this->layer].size(); k++)
+			{
+				this->tileVectors[x][y][this->layer][k]->render(target);
+
+				if (this->tileVectors[x][y][this->layer][k]->getCollision())
+				{
+					this->collisionBox.setPosition(this->tileVectors[x][y][this->layer][k]->getPosition());
+
+					target.draw(this->collisionBox);
+				}
+			}
+		}
+	}
+	
+	//Rendering in editor mode
+
+	//for (auto& x : this->tileVectors)
+	//{
+	//	for (auto& y : x)
+	//	{
+	//		for (auto& z : y)
+	//		{
+	//			for (auto* l : z)
+	//			{
+	//				if (l != nullptr)
+	//				{
+	//					l->render(target);
+
+	//					if (l->getCollision())
+	//					{
+	//						this->collisionBox.setPosition(l->getPosition());
+
+	//						//Draws the red box indicating a tile has collision
+	//						target.draw(this->collisionBox);
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	
+
 }
