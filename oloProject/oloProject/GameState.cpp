@@ -182,7 +182,7 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& deltaTime)
 {
-	this->tileMap->update();
+	//this->tileMap->update();
 
 	this->tileMap->updateCollision(this->player, deltaTime);
 }

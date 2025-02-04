@@ -65,12 +65,19 @@ const sf::Vector2f& Entity::getPosition() const
 
 const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {
-	if (this->EntityHitboxComponent)
+	if (this->EntityHitboxComponent){
+
+		//std::cout << "EntityHitboxComponent->getPosition().x: " << this->EntityHitboxComponent->getPosition().x << "\n";
+		//std::cout << "gridSizeI: " << gridSizeI << "\n";
+		//std::cout << "x / gridSizeI: " << this->EntityHitboxComponent->getPosition().x / gridSizeI << "\n";
+		//std::cout << "cast int: " << static_cast<int>(this->EntityHitboxComponent->getPosition().x) / gridSizeI << "\n";
+
 		return sf::Vector2i(
 			static_cast<int>(this->EntityHitboxComponent->getPosition().x) / gridSizeI,
 			static_cast<int>(this->EntityHitboxComponent->getPosition().y) / gridSizeI
-			);
-	
+		);
+	}
+
 	return sf::Vector2i(
 		static_cast<int>(this->EntitySprite.getPosition().x) / gridSizeI,
 		static_cast<int>(this->EntitySprite.getPosition().y) / gridSizeI
