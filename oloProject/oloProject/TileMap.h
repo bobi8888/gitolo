@@ -16,6 +16,7 @@ private:
 
 	sf::Vector2i maxSizeWorldGrid;
 	sf::Vector2f maxSizeWorldF;
+	sf::RectangleShape collisionBox;
 
 	int layers;
 
@@ -25,7 +26,7 @@ private:
 
 	std::string texture_file_name;
 
-	sf::RectangleShape collisionBox;
+	std::stack<Tile*> deferredRenderedStack;
 
 	//Culling
 	int fromX;
@@ -66,5 +67,7 @@ public:
 	void updateCollision(Entity* entity, const float& deltaTime);
 
 	void render(sf::RenderTarget& target, const sf::Vector2i gridPosition);
+
+	void renderDeferred(sf::RenderTarget& target);
 };
 

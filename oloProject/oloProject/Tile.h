@@ -1,6 +1,13 @@
 #pragma once
 
-enum TileTypes {DEFAULT = 0, WOOD, GRAVEL, METAL, SAND};
+enum TileTypes {
+	DEFAULT = 0, 
+	WOOD = 1, 
+	GRAVEL = 2, 
+	METAL = 3, 
+	SAND = 4, 
+	ABOVE_BRUSH = 5
+};
 
 class Tile
 {
@@ -33,6 +40,8 @@ public:
 	const bool isIntersecting(const sf::FloatRect bounds) const;
 
 	const sf::FloatRect getGlobalBounds() const;
+
+	const short& getType() const;
 
 	//Methods
 	void update();

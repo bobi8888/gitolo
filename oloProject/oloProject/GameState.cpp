@@ -239,6 +239,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->player->render(this->renderTexture);
 
+	this->tileMap->renderDeferred(this->renderTexture);
+
 	if (this->isPaused)
 	{
 		this->renderTexture.setView(this->renderTexture.getDefaultView());
