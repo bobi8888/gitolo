@@ -8,7 +8,7 @@ class Player :
 {
 private:
     //Variables
-    bool IsAttacking;
+    bool isAttacking;
 
     //Initializer Methods
     void initVariables();
