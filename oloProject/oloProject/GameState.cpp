@@ -99,7 +99,7 @@ void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(
 		this->stateData->gridSize, 
-		10, 10, 
+		1000, 1000, 
 		this->texture_rect, 
 		"Resources/Images/Tiles/quadTexture.png"
 	);
@@ -170,8 +170,6 @@ void GameState::updatePlayerInput(const float& deltaTime)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 		this->player->move(0.f, -1.f, deltaTime);
-	
-
 }
 
 void GameState::updatePauseMenuButtons()

@@ -3,9 +3,27 @@
 #include "EditorState.h"
 
 //Initializer Methods
-void EditorState::initBackground()
-{
+//void EditorState::initBackground()
+//{
+//
+//}
 
+void EditorState::initRender()
+{
+	this->renderTexture.create(
+		this->stateData->graphicsSettings->Resolution.width,
+		this->stateData->graphicsSettings->Resolution.height
+	);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(
+		sf::IntRect(
+			0,
+			0,
+			this->stateData->graphicsSettings->Resolution.width,
+			this->stateData->graphicsSettings->Resolution.height
+		)
+	);
 }
 
 void EditorState::initVariables()
@@ -16,7 +34,7 @@ void EditorState::initVariables()
 
 	this->type = TileTypes::DEFAULT;
 
-	this->cameraSpeed = 150.f;
+	this->cameraSpeed = 750.f;
 
 	this->layer = 0;
 }
@@ -68,10 +86,10 @@ void EditorState::initKeybinds()
 	ifs.close();
 }
 
-void EditorState::initButtons()
-{
-
-}
+//void EditorState::initButtons()
+//{
+//
+//}
 
 void EditorState::initPauseMenu()
 {
@@ -136,7 +154,7 @@ void EditorState::initTileMap()
 {
 	this->tileMap = new TileMap(
 		this->stateData->gridSize, 
-		10, 10, 
+		1000, 1000, 
 		this->tileToolTextureRect, 
 		"Resources/Images/Tiles/quadWithLight.png"
 	);
@@ -146,14 +164,15 @@ void EditorState::initTileMap()
 EditorState::EditorState(StateData* stateData) 
 	: State(stateData)
 {
+	this->initRender();
 	this->initVariables();
 	this->initView();
-	this->initBackground();
+	//this->initBackground();
 	this->initFonts();
 	this->initText();
 	this->initKeybinds();
 	this->initPauseMenu();
-	this->initButtons();
+	//this->initButtons();
 	this->initTileMap();
 	this->initGui();
 
@@ -310,18 +329,23 @@ void EditorState::updateEditorInput(const float& deltaTime)
 void EditorState::update(const float& deltaTime)
 {
 	this->updateMousePositions(&this->view);
+
 	this->updateKeytime(deltaTime);
+
 	this->updatePlayerInput(deltaTime);
 
 	if (!this->isPaused)
 	{
 		this->updateGUI(deltaTime);
+
 		this->updateButtons();
+
 		this->updateEditorInput(deltaTime);
 	}
 	else
 	{
 		this->pauseMenu->update(this->mousePositionWindow);
+
 		this->updatePauseMenuButtons();
 	}
 }
@@ -360,16 +384,27 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-	target->setView(this->view);
+	this->renderTexture.clear();
 
-	this->tileMap->render(*target, this->mousePositionGrid);
+	this->renderTexture.setView(this->view);
+		
+	this->tileMap->render(this->renderTexture, this->mousePositionGrid);
 
-	target->setView(this->window->getDefaultView());
-
-	this->renderButtons(*target);
-
-	this->renderGUI(*target);
+	this->tileMap->renderDeferred(this->renderTexture);
 
 	if (this->isPaused)
-		this->pauseMenu->render(*target);
+	{
+		this->renderTexture.setView(this->renderTexture.getDefaultView());
+
+		this->pauseMenu->render(this->renderTexture);
+	}
+
+	//Final Render
+	this->renderTexture.display();
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+
+	target->draw(this->renderSprite);
+
+	this->renderGUI(*target);
 }

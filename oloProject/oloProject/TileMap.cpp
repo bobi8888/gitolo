@@ -452,6 +452,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i gridPosition)
 		{
 			for (size_t k = 0; k < this->tileVectors[x][y][this->layer].size(); k++)
 			{
+				
 				if (this->tileVectors[x][y][this->layer][k]->getType() == TileTypes::ABOVE_BRUSH)
 				{
 					this->deferredRenderedStack.push(this->tileVectors[x][y][this->layer][k]);
@@ -471,35 +472,6 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i gridPosition)
 			}
 		}
 	}
-	
-	//Rendering in editor mode
-
-	//for (auto& x : this->tileVectors)
-	//{
-	//	for (auto& y : x)
-	//	{
-	//		for (auto& z : y)
-	//		{
-	//			for (auto* l : z)
-	//			{
-	//				if (l != nullptr)
-	//				{
-	//					l->render(target);
-
-	//					if (l->getCollision())
-	//					{
-	//						this->collisionBox.setPosition(l->getPosition());
-
-	//						//Draws the red box indicating a tile has collision
-	//						target.draw(this->collisionBox);
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
-	
-
 }
 
 void TileMap::renderDeferred(sf::RenderTarget& target)

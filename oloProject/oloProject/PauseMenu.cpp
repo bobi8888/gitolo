@@ -77,7 +77,12 @@ const bool PauseMenu::isButtonPressed(const std::string key)
 	return this->Buttons[key]->isPressed();
 }
 
-void PauseMenu::addButton(const std::string key, const std::string text, float xPos, float yPos)
+void PauseMenu::addButton(
+	const std::string key, 
+	const std::string text, 
+	float xPos, 
+	float yPos
+	)
 {
 	float width = 150.f;
 	float height = 50.f;
@@ -105,6 +110,7 @@ void PauseMenu::update(const sf::Vector2i& mousePosWindow)
 void PauseMenu::render(sf::RenderTarget& target)
 {
 	target.draw(this->Background);
+
 	target.draw(this->Container);
 
 	for (auto& i : this->Buttons)

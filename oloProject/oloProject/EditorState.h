@@ -10,14 +10,20 @@ class GUI;
 class PauseMenu;
 class TileMap;
 
+class sf::RenderTexture;
+
 class EditorState :
     public State
 {
 private:
 	//Variables
 	sf::View view;
+	sf::RenderTexture renderTexture;
+	sf::Sprite renderSprite;
+
 	sf::Font font;
 	sf::Text cursorText;
+
 	sf::RectangleShape sideBar;
 	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
 	sf::RectangleShape tileToolSelectorRect; //the rectangle that is visible on the editor
@@ -36,13 +42,14 @@ private:
 	short type;
 
 	//Methods
+	void initRender();
 	void initVariables();
 	void initView();
-	void initBackground();
+	//void initBackground();
 	void initFonts();
 	void initText();
 	void initKeybinds();
-	void initButtons();
+	//void initButtons();
 	void initPauseMenu();
 	void initGui();
 	void initTileMap();
@@ -52,17 +59,24 @@ public:
 	EditorState(StateData* stateData);
 	virtual ~EditorState();
 
-	//Methods
+	//Update Methods
 	void updatePauseMenuButtons();
+
 	void updatePlayerInput(const float& deltaTime);
+
 	void updateButtons();
+
 	void updateGUI(const float& deltaTime);
+
 	void updateEditorInput(const float& deltaTime);
+
 	void update(const float& deltaTime);
 
+	//Render Methods
 	void renderButtons(sf::RenderTarget& target);
-	void renderGUI(sf::RenderTarget& target);
-	void render(sf::RenderTarget* target = NULL);
 
+	void renderGUI(sf::RenderTarget& target);
+
+	void render(sf::RenderTarget* target = NULL);
 };
 

@@ -17,6 +17,7 @@ private:
 	sf::Vector2i maxSizeWorldGrid;
 	sf::Vector2f maxSizeWorldF;
 	sf::RectangleShape collisionBox;
+	//add deferredBox to indicate defered tiles?
 
 	int layers;
 
