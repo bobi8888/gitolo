@@ -29,5 +29,7 @@ public:
     void update(const float& deltaTime);
 
     void render(sf::RenderTarget& target);
+
+    void updateLevel();
 };
 

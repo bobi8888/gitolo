@@ -56,7 +56,7 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 
 void Entity::createAttributeComponent()
 {
-	this->attributeComponent = new AttributeComponent(1);
+	this->attributeComponent = new AttributeComponent(3);
 }
 
 //Accessors

@@ -3,17 +3,17 @@ class AttributeComponent
 {
 public:
 	//Leveling 
-	unsigned level;
+	int level;
 	unsigned exp;
 	unsigned expNext;
-	unsigned attributePts;
+	int attributePts;
 
 	//Attributes
-	unsigned health;
-	unsigned strength;
-	unsigned dexterity;
-	unsigned charisma;
-	unsigned intelligence;
+	int health;
+	int strength;
+	int dexterity;
+	int charisma;
+	int intelligence;
 	
 	//Status
 	//Health
@@ -49,9 +49,11 @@ public:
 	//Methods
 	void calculateExpNext();
 
-	void updateStats();
+	void updateStats(const bool reset);
 
-	void levelUp();
+	void levelUpLuck();
+
+	void updateLevel();
 
 	void update();
 };

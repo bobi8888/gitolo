@@ -16,8 +16,6 @@ AttributeComponent::AttributeComponent(unsigned lvl)
 		)
 	;
 
-	std::cout << expNext;
-
 	this->attributePts = 2;
 
 	this->health = 1;
@@ -50,6 +48,8 @@ AttributeComponent::AttributeComponent(unsigned lvl)
 	//Other
 	this->luck = 1;
 	this->totalSteps = 0;
+
+	this->updateStats(true);
 }
 
 AttributeComponent::~AttributeComponent()
@@ -62,17 +62,52 @@ void AttributeComponent::calculateExpNext()
 
 }
 
-void AttributeComponent::updateStats()
+void AttributeComponent::updateStats(const bool reset)
 {
+	//Health
+	this->hpMax = this-> health * 9 + this->health;
+	//Strength
+	this->damageMin = this->strength * 2 + this->strength / 4;
+	this->damageMax = this->strength * 2 + this->strength / 2;
+	this->endurance = this->strength * 2 + this->strength;
+	//Dexterity
+	this->buildSpeed = this->dexterity * 2 + this->dexterity;
+	this->repairSpeed = this->dexterity * 2 + this->dexterity;
+	this->accuracy = this->dexterity * 2 + this->dexterity;
+	this->lockpick = this->dexterity * 2 + this->dexterity;
+	//Charisma
+	this->barter = this->charisma * 2 + this->charisma;
+	this->convince = this->charisma * 2 + this->charisma;
+	this->conversation = this->charisma * 2 + this->charisma;
+	this->intimidation = this->charisma * 2 + this->charisma;
+	//Intelligence
+	this->expMultiplier = this->intelligence * 2 + this->intelligence;
+	this->science = this->intelligence * 2 + this->intelligence;
+	this->hacking = this->intelligence * 2 + this->intelligence;
 
+	if (reset)
+	{
+		this->hp = this->hpMax;
+	}
 }
 
-void AttributeComponent::levelUp()
+void AttributeComponent::levelUpLuck()
 {
+	++this->luck;
+}
 
+void AttributeComponent::updateLevel()
+{
+	while (this->exp > this->expNext)
+	{
+		++this->level;
+		this->exp -= this->expNext;
+		this->expNext = (50 / 3) * (pow(level, 3)	- 6 * pow(level, 2) + (level * 17) - 12);
+		++this->attributePts;	
+	}
 }
 
 void AttributeComponent::update()
 {
-
+	this->updateLevel();
 }

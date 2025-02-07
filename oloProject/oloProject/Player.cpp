@@ -28,18 +28,45 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 
 	this->createAnimationComponent(texture_sheet);
 
-	//____________________________________________key________timer_startX_startY_framesX_framesY__W___H
-	this->animationComponent->addAnimation("WALK",   10.f,    0,     2,      6,      2,   128, 128);
-	this->animationComponent->addAnimation("IDLE",   10.f,    0,     0,      5,      0,   128, 128);
-	this->animationComponent->addAnimation("ATTACK", 10.f,    0,     3,      4,      3,   128, 128);
+	//_______________________________________key____timer___startX__startY__framesX_framesY__W___H
+	
+	//this->animationComponent->addAnimation("WALK",   10.f,    0,     2,      6,      2,   128, 128);
+	//this->animationComponent->addAnimation("IDLE",   10.f,    0,     0,      5,      0,   128, 128);
+	//this->animationComponent->addAnimation("ATTACK", 10.f,    0,     3,      4,      3,   128, 128);
+
+	//Robo sprite
+	this->animationComponent->addAnimation(
+		"WALK", 10.f, 
+		0, 2, 
+		5, 2, 
+		128, 128
+	);
+
+	this->animationComponent->addAnimation(
+		"IDLE", 20.f, 
+		0, 2, /*startX & startY*/
+		5, 2, /*# of X frames & # of Y frames*/
+		128, 128 /*width & height of frame*/
+	);
+
+	this->animationComponent->addAnimation(
+		"ATTACK", 5.f, 
+		0, 2, 
+		5, 2, 
+		128, 128
+	);
+
 	//4 frame knight
-//this->animationComponent->addAnimation("WALK_RIGHT",10.f,   0,     0,      4,      0,   96, 96);
-//this->animationComponent->addAnimation("WALK_LEFT", 10.f,   0,     1,      4,      1,   96, 96);
-//this->animationComponent->addAnimation("IDLE_RIGHT",40.f,   0,     2,      3,      2,   96, 96);
-//this->animationComponent->addAnimation("IDLE_LEFT", 40.f,   0,     3,      3,      3,   96, 96);
-// 
+	//this->animationComponent->addAnimation("WALK_RIGHT",10.f,   0,     0,      4,      0,   96, 96);
+	//this->animationComponent->addAnimation("WALK_LEFT", 10.f,   0,     1,      4,      1,   96, 96);
+	//this->animationComponent->addAnimation("IDLE_RIGHT",40.f,   0,     2,      3,      2,   96, 96);
+	//this->animationComponent->addAnimation("IDLE_LEFT", 40.f,   0,     3,      3,      3,   96, 96);
+ 
 	//_______________________________sprite________offsetX_offsetY_width_height
-	this->createHitboxComponent(this->EntitySprite,  47.f,   58.f,  30.f,  70.f);
+	this->createHitboxComponent(this->EntitySprite, 47.f, 58.f, 30.f, 70.f);
+
+	//Robo sprite
+	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
 
 	this->createAttributeComponent();
 }
@@ -125,3 +152,10 @@ void Player::render(sf::RenderTarget& target)
 
 	this->hitboxComponent->render(target);
 }
+
+void Player::updateLevel()
+{
+	this->attributeComponent->updateLevel();
+}
+
+

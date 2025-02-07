@@ -73,7 +73,13 @@ void GameState::initFonts()
 
 void GameState::initTextures()
 {
-	if (!this->texturesMap["SKIRT_SHEET"].loadFromFile("Resources/Images/Sprites/Skirt/SKIRT_SHEET.png"))
+	if (!this->texturesMap["SKIRT_SHEET"].loadFromFile(
+		"Resources/Images/Sprites/Skirt/ROBO_ROBO.png"
+		)
+	)
+	
+	//Robo sprite
+	//if (!this->texturesMap["SKIRT_SHEET"].loadFromFile("Resources/Images/Sprites/Robo.png"))
 
 		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_TEXTURE");
 }
