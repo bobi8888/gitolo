@@ -20,7 +20,7 @@ AnimationComponent::~AnimationComponent()
 //Accessor Methods
 const bool& AnimationComponent::getIsDone(const std::string key) 
 {
-	return this->AnimationSheets[key]->IsDone;
+	return this->AnimationSheets[key]->isDone;
 }
 
 //Methods
@@ -37,18 +37,18 @@ void AnimationComponent::addAnimation(
 		);
 }
 
-void AnimationComponent::startAnimation(const std::string animation)
-{
-}
-
-void AnimationComponent::pauseAnimation(const std::string animation)
-{
-}
-
-void AnimationComponent::resetAnimation(const std::string animation)
-{
-
-}
+//void AnimationComponent::startAnimation(const std::string animation)
+//{
+//}
+//
+//void AnimationComponent::pauseAnimation(const std::string animation)
+//{
+//}
+//
+//void AnimationComponent::resetAnimation(const std::string animation)
+//{
+//
+//}
 
 const bool& AnimationComponent::play(const std::string key, const float& deltaTime, const bool priority)
 {
@@ -93,14 +93,14 @@ const bool& AnimationComponent::play(const std::string key, const float& deltaTi
 		this->AnimationSheets[key]->play(deltaTime);
 	}
 
-	return this->AnimationSheets[key]->IsDone;
+	return this->AnimationSheets[key]->isDone;
 }
 
 
 const bool& AnimationComponent::play(
 	const std::string key, const float& deltaTime, 
 	const float& modifier, const float& modifier_max
-)
+	)
 {
 	if (this->PriorityAnimation)
 	{
@@ -142,5 +142,5 @@ const bool& AnimationComponent::play(
 		this->PriorityAnimation = NULL;
 	}
 
-	return this->AnimationSheets[key]->IsDone;
+	return this->AnimationSheets[key]->isDone;
 }

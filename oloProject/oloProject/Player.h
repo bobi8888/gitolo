@@ -19,6 +19,11 @@ public:
 
     virtual ~Player();
 
+    //Accessors
+    AttributeComponent* getAttributeComponent();
+
+    MovementComponent* getMovementComponent();
+
     //Methods
     void updateAttack();
 

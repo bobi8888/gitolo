@@ -17,7 +17,7 @@ private:
 	void initComponents();
 
 protected:
-	sf::Sprite EntitySprite;
+	sf::Sprite sprite;
 
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;

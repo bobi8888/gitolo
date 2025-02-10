@@ -61,7 +61,27 @@ namespace gui
 
 		void render(sf::RenderTarget& target);
 	};
+	//Bar===============================================================================
+	class Bar
+	{
+	private:
+		sf::Font font;
+		sf::RectangleShape BarBack;
+		sf::RectangleShape BarFront;
 
+	public:
+		//Constructords & Destructor
+		Bar();
+
+		Bar(sf::Vector2f position);
+
+		~Bar();
+
+		//Methods
+		void update(const sf::Vector2f& position);
+
+		void render(sf::RenderTarget& target);
+	};
 	//Dropdown List===============================================================================================
 
 	class DropdownList

@@ -33,6 +33,8 @@ public:
 
 	const bool getDir(const short unsigned dir) const;
 
+	const sf::Vector2f& getSpritePosition() const;
+
 	//Methods
 	void move(const float xDir, const float yDir, const float& deltaTime);
 

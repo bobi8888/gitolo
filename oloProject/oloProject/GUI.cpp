@@ -147,6 +147,44 @@ void gui::Button::render(sf::RenderTarget& target)
 	target.draw(this->Text);
 }
 
+//Bar===============================================================================
+//Constructords & Destructor
+
+gui::Bar::Bar()
+{
+}
+
+gui::Bar::Bar(sf::Vector2f position)
+{
+	this->BarBack.setSize(sf::Vector2f(15.f, 2.f));
+	this->BarBack.setFillColor(sf::Color::Red);
+	this->BarBack.setPosition(position);
+
+	this->BarFront.setSize(sf::Vector2f(7.5f, 2.f));
+	this->BarFront.setFillColor(sf::Color::Green);
+	this->BarFront.setPosition(position);
+
+}
+gui::Bar::~Bar()
+{
+
+}
+
+//Methods
+void gui::Bar::update(const sf::Vector2f& position)
+{
+	this->BarBack.setPosition(position);
+
+	this->BarFront.setPosition(position);
+}
+
+void gui::Bar::render(sf::RenderTarget& target)
+{
+	target.draw(this->BarBack);
+
+	target.draw(this->BarFront);
+}
+
 //Dropdown List===============================================================================================
 //Constructors & Destructor
 gui::DropdownList::DropdownList(
@@ -418,3 +456,4 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 			target.draw(this->selector);
 	}
 }
+

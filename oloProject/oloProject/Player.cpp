@@ -37,8 +37,8 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 
 	this->animationComponent->addAnimation(
 		"IDLE", 20.f, 
-		0, 2, /*startX & startY*/
-		5, 2, /*# of X frames & # of Y frames*/
+		0, 0, /*startX & startY*/
+		5, 0, /*# of X frames & # of Y frames*/
 		128, 128 /*width & height of frame*/
 	);
 
@@ -56,7 +56,7 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	//this->animationComponent->addAnimation("IDLE_LEFT", 40.f,   0,     3,      3,      3,   96, 96);
  
 	//_______________________________sprite________offsetX_offsetY_width_height
-	this->createHitboxComponent(this->EntitySprite, 47.f, 58.f, 30.f, 70.f);
+	this->createHitboxComponent(this->sprite, 47.f, 58.f, 30.f, 70.f);
 
 	//Robo sprite
 	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
@@ -66,10 +66,17 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 
 Player::~Player()
 {
-	delete this->movementComponent;
-	delete this->animationComponent;
-	delete this->hitboxComponent;
-	delete this->attributeComponent;
+
+}
+
+AttributeComponent* Player::getAttributeComponent()
+{
+	return nullptr;
+}
+
+MovementComponent* Player::getMovementComponent()
+{
+	return this->movementComponent;
 }
 
 //Methods
@@ -91,9 +98,9 @@ void Player::updateAnimation(const float& deltaTime)
 	}
 	else if (this->movementComponent->getDir(UP))
 	{
-		this->EntitySprite.setOrigin(0.f, 0.f);
+		this->sprite.setOrigin(0.f, 0.f);
 
-		this->EntitySprite.setScale(1.f, 1.f);
+		this->sprite.setScale(1.f, 1.f);
 
 		this->animationComponent->play(
 			"WALK", deltaTime,
@@ -103,9 +110,9 @@ void Player::updateAnimation(const float& deltaTime)
 	}
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-		this->EntitySprite.setOrigin(0.f, 0.f);
+		this->sprite.setOrigin(0.f, 0.f);
 
-		this->EntitySprite.setScale(1.f, 1.f);
+		this->sprite.setScale(1.f, 1.f);
 
 		this->animationComponent->play(
 			"WALK", deltaTime, 
@@ -115,9 +122,9 @@ void Player::updateAnimation(const float& deltaTime)
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		this->EntitySprite.setOrigin(128.f, 0.f);
+		this->sprite.setOrigin(128.f, 0.f);
 
-		this->EntitySprite.setScale(-1.f, 1.f);
+		this->sprite.setScale(-1.f, 1.f);
 
 		this->animationComponent->play(
 			"WALK", deltaTime, 
@@ -150,7 +157,7 @@ void Player::update(const float& deltaTime)
 
 void Player::render(sf::RenderTarget& target)
 {
-	target.draw(this->EntitySprite);
+	target.draw(this->sprite);
 
 	this->hitboxComponent->render(target);
 }

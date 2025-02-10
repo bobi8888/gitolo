@@ -6,7 +6,9 @@
 void Entity::initVariables()
 {
 	this->movementComponent = nullptr;
+
 	this->animationComponent = nullptr;
+
 	this->hitboxComponent = nullptr;
 }
 
@@ -24,34 +26,37 @@ Entity::Entity()
 Entity::~Entity()
 {
 	delete this->movementComponent;
+
 	delete this->animationComponent;
+
 	delete this->hitboxComponent;
+
 	delete this->attributeComponent;
 }
 
 //Component Methods
 void Entity::setTexture(sf::Texture& texture)
 {
-	this->EntitySprite.setTexture(texture);
+	this->sprite.setTexture(texture);
 }
 
 void Entity::createHitboxComponent(
 	sf::Sprite& sprite,
 	float offset_x, float offset_y,
 	float width, float height
-)
+	)
 {
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 
 void Entity::createMovementComponent(const float maxVelo, const float acceleration, const float deceleration)
 {
-	this->movementComponent = new MovementComponent(this->EntitySprite, maxVelo, acceleration, deceleration);
+	this->movementComponent = new MovementComponent(this->sprite, maxVelo, acceleration, deceleration);
 }
 
 void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 {
-	this->animationComponent = new AnimationComponent(this->EntitySprite, texture_sheet);
+	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
 }
 
 void Entity::createAttributeComponent(const unsigned level)
@@ -65,7 +70,7 @@ const sf::Vector2f& Entity::getPosition() const
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getPosition();
 
-	return this->EntitySprite.getPosition();
+	return this->sprite.getPosition();
 }
 
 const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
@@ -84,8 +89,8 @@ const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 	}
 
 	return sf::Vector2i(
-		static_cast<int>(this->EntitySprite.getPosition().x) / gridSizeI,
-		static_cast<int>(this->EntitySprite.getPosition().y) / gridSizeI
+		static_cast<int>(this->sprite.getPosition().x) / gridSizeI,
+		static_cast<int>(this->sprite.getPosition().y) / gridSizeI
 	);
 }
 
@@ -94,7 +99,7 @@ const sf::FloatRect Entity::getGlobalBounds() const
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getGlobalBounds();
 
-	return this->EntitySprite.getGlobalBounds();
+	return this->sprite.getGlobalBounds();
 }
 
 const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
@@ -113,7 +118,7 @@ void Entity::setPosition(const float x, const float y)
 	if (this->hitboxComponent)
 		this->hitboxComponent->setPosition(x, y);
 	else
-		this->EntitySprite.setPosition(x, y);
+		this->sprite.setPosition(x, y);
 }
  
 //Methods
@@ -135,7 +140,6 @@ void Entity::stopVelocityX()
 {
 	if (this->movementComponent)
 		this->movementComponent->stopVelocityX();
-
 }
 
 void Entity::stopVelocityY()
@@ -152,9 +156,8 @@ void Entity::update(const float& deltaTime)
 
 void Entity::render(sf::RenderTarget& target)
 {
-	target.draw(this->EntitySprite);
+	target.draw(this->sprite);
 
 	if (this->hitboxComponent)
-		this->hitboxComponent->render(target);
-		
+		this->hitboxComponent->render(target);		
 }

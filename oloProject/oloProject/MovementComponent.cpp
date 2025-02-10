@@ -89,6 +89,11 @@ const bool MovementComponent::getDir(const short unsigned dir) const
 	return false;
 }
 
+const sf::Vector2f& MovementComponent::getSpritePosition() const
+{
+	return this->sprite.getPosition();
+}
+
 //Methods
 void MovementComponent::move(const float xDir, const float yDir, const float& deltaTime)
 {
