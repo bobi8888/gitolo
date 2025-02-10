@@ -5,16 +5,7 @@ AttributeComponent::AttributeComponent(unsigned lvl)
 {
 	this->level = lvl;
 	this->exp = 0;
-	this->expNext = 
-		static_cast<int>(
-			(50 / 3) 
-			* (
-				pow(lvl, 3)
-				- 6 * pow(lvl, 2)
-				+ (lvl * 17) 
-				)
-		)
-	;
+	this->expNext = static_cast<int>((50 / 3) * (pow(lvl, 3) - 6 * pow(lvl, 2) + (lvl * 17) - 12));
 
 	this->attributePts = 2;
 
@@ -62,6 +53,13 @@ void AttributeComponent::calculateExpNext()
 
 }
 
+void AttributeComponent::gainExp(const unsigned exp)
+{
+	this->exp += exp;
+
+	this->updateLevel();
+}
+
 void AttributeComponent::updateStats(const bool reset)
 {
 	//Health
@@ -102,7 +100,7 @@ void AttributeComponent::updateLevel()
 	{
 		++this->level;
 		this->exp -= this->expNext;
-		this->expNext = (50 / 3) * (pow(level, 3)	- 6 * pow(level, 2) + (level * 17) - 12);
+		this->expNext = static_cast<unsigned>((50 / 3) * (pow(level, 3)	- 6 * pow(level, 2) + (level * 17) - 12));
 		++this->attributePts;	
 	}
 }
@@ -110,4 +108,16 @@ void AttributeComponent::updateLevel()
 void AttributeComponent::update()
 {
 	this->updateLevel();
+}
+
+std::string AttributeComponent::debugPrint()
+{
+	std::stringstream ss;
+
+	ss << "Level: " << this->level << "\n"
+	<< "Exp: " << this->exp << "\n"
+	<< "NextExp: " << this->expNext << "\n"
+	<< "Attribute points: "  << this->attributePts << "\n";
+
+	return ss.str();
 }

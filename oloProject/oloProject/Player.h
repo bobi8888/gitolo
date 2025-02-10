@@ -15,8 +15,6 @@ private:
 
 public:
     //Constructors/Destructors
-    Player();
-
     Player(sf::Texture& texture_sheet, float x, float y);
 
     virtual ~Player();

@@ -42,7 +42,7 @@ public:
 
 	void createAnimationComponent(sf::Texture& texture_sheet);
 
-	void createAttributeComponent();
+	void createAttributeComponent(const unsigned lvl);
 
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;

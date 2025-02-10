@@ -9,13 +9,6 @@ void Player::initVariables()
 }
 
 //Constructors/Destructors
-Player::Player()
-{
-	delete this->movementComponent;
-	delete this->animationComponent;
-	delete this->hitboxComponent;
-	delete this->attributeComponent;
-}
 
 Player::Player(sf::Texture& texture_sheet, float x, float y)
 {
@@ -68,12 +61,15 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	//Robo sprite
 	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
 
-	this->createAttributeComponent();
+	this->createAttributeComponent(0);
 }
 
 Player::~Player()
 {
-	
+	delete this->movementComponent;
+	delete this->animationComponent;
+	delete this->hitboxComponent;
+	delete this->attributeComponent;
 }
 
 //Methods
@@ -137,6 +133,12 @@ void Player::updateAnimation(const float& deltaTime)
 
 void Player::update(const float& deltaTime)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		this->attributeComponent->gainExp(15);
+
+	//system("cls");
+	//std::cout << this->attributeComponent->debugPrint();
+	
 	this->movementComponent->update(deltaTime);
 
 	this->updateAttack();

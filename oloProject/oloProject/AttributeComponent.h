@@ -49,6 +49,8 @@ public:
 	//Methods
 	void calculateExpNext();
 
+	void gainExp(const unsigned exp);
+
 	void updateStats(const bool reset);
 
 	void levelUpLuck();
@@ -56,5 +58,7 @@ public:
 	void updateLevel();
 
 	void update();
+
+	std::string debugPrint();
 };
 

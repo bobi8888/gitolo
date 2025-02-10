@@ -96,7 +96,9 @@ const int TileMap::getLayerSize(const sf::Vector2i mousePos, const int z) const
 		{
 			if (z >= 0 && z < this->tileVectors[mousePos.x][mousePos.y].size())
 			{
-				return this->tileVectors[mousePos.x][mousePos.y][layer].size();
+				return static_cast<int>(
+					this->tileVectors[mousePos.x][mousePos.y][layer].size()
+				);
 			}
 		}
 	}

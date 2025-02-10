@@ -54,9 +54,9 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 	this->animationComponent = new AnimationComponent(this->EntitySprite, texture_sheet);
 }
 
-void Entity::createAttributeComponent()
+void Entity::createAttributeComponent(const unsigned level)
 {
-	this->attributeComponent = new AttributeComponent(3);
+	this->attributeComponent = new AttributeComponent(level);
 }
 
 //Accessors
