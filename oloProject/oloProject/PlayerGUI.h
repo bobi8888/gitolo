@@ -17,7 +17,7 @@ private:
 
 	void initFont();
 
-	void initHPBar();
+	//void initHPBar();
 
 public:
 	//Constructors & destructor

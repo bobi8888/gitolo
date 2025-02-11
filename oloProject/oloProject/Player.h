@@ -29,6 +29,12 @@ public:
     //Methods
     void updateAttack();
 
+    void loseHp(const int damage);
+
+    void gainHp(const int heal);
+
+    void gainExp(const int gainedExp);
+
     void updateAnimation(const float& deltaTime);
 
     void update(const float& deltaTime);

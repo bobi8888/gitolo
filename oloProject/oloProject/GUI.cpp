@@ -154,16 +154,18 @@ gui::Bar::Bar()
 {
 }
 
-gui::Bar::Bar(sf::Vector2f position)
+gui::Bar::Bar(float width, float height, sf::Vector2f position)
 {
-	this->BarBack.setSize(sf::Vector2f(15.f, 2.f));
+	this->BarBack.setSize(sf::Vector2f(width, height));
 	this->BarBack.setFillColor(sf::Color::Red);
 	this->BarBack.setPosition(position);
 
-	this->BarFront.setSize(sf::Vector2f(7.5f, 2.f));
+	this->BarFront.setSize(sf::Vector2f(width, height));
 	this->BarFront.setFillColor(sf::Color::Green);
 	this->BarFront.setPosition(position);
 
+	this->maxWidth = width;
+	this->height = height;
 }
 gui::Bar::~Bar()
 {
@@ -171,11 +173,23 @@ gui::Bar::~Bar()
 }
 
 //Methods
-void gui::Bar::update(const sf::Vector2f position)
+void gui::Bar::updatePosition(const sf::Vector2f position)
 {
 	this->BarBack.setPosition(position);
 
 	this->BarFront.setPosition(position);
+}
+
+void gui::Bar::updateBarFrontSize(int value, int valueMax)
+{
+	float percent = static_cast<float>(value) / static_cast<float>(valueMax);
+
+	this->BarFront.setSize(
+		sf::Vector2f(
+			static_cast<float>(std::floor(this->maxWidth * percent)), 
+			this->height
+		)
+	);
 }
 
 void gui::Bar::render(sf::RenderTarget& target)

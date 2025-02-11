@@ -69,16 +69,20 @@ namespace gui
 		sf::RectangleShape BarBack;
 		sf::RectangleShape BarFront;
 
+		float maxWidth, height;
+
 	public:
 		//Constructords & Destructor
 		Bar();
 
-		Bar(sf::Vector2f position);
+		Bar(float width, float height, sf::Vector2f position);
 
 		~Bar();
 
 		//Methods
-		void update(const sf::Vector2f position);
+		void updatePosition(const sf::Vector2f position);
+
+		void updateBarFrontSize(int value, int valueMax);
 
 		void render(sf::RenderTarget& target);
 	};

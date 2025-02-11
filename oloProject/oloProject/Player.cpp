@@ -71,7 +71,7 @@ Player::~Player()
 
 AttributeComponent* Player::getAttributeComponent()
 {
-	return nullptr;
+	return this->attributeComponent;
 }
 
 MovementComponent* Player::getMovementComponent()
@@ -92,6 +92,24 @@ void Player::updateAttack()
 	{
 		this->isAttacking = true;
 	}
+}
+
+void Player::loseHp(const int damage)
+{
+	this->attributeComponent->hp -= damage;
+
+	if (this->attributeComponent->hp < 0)
+		this->attributeComponent->hp = 0;
+}
+
+void Player::gainHp(const int heal)
+{
+
+}
+
+void Player::gainExp(const int gainedExp)
+{
+
 }
 
 void Player::updateAnimation(const float& deltaTime)
@@ -147,6 +165,9 @@ void Player::update(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->gainExp(15);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		loseHp(1);
 
 	//system("cls");
 	//std::cout << this->attributeComponent->debugPrint();

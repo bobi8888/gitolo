@@ -295,9 +295,9 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 
 		entity->stopVelocityX();
 	}
-	else if (entity->getHitboxPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldF.x)
+	else if (entity->getHitboxPosition().x + entity->getHitboxGlobalBounds().width > this->maxSizeWorldF.x)
 	{
-		entity->setPosition(this->maxSizeWorldF.x - entity->getGlobalBounds().width, entity->getHitboxPosition().y);
+		entity->setPosition(this->maxSizeWorldF.x - entity->getHitboxGlobalBounds().width, entity->getHitboxPosition().y);
 		
 		entity->stopVelocityX();
 	}
@@ -308,9 +308,9 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 		
 		entity->stopVelocityY();
 	}
-	else if (entity->getHitboxPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldF.y)
+	else if (entity->getHitboxPosition().y + entity->getHitboxGlobalBounds().height > this->maxSizeWorldF.y)
 	{
-		entity->setPosition(entity->getHitboxPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
+		entity->setPosition(entity->getHitboxPosition().x, this->maxSizeWorldF.y - entity->getHitboxGlobalBounds().height);
 
 		entity->stopVelocityY();
 	}		
@@ -355,7 +355,7 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 			{			
 				if (this->tileVectors[i][j][this->layer][k] != nullptr)
 				{
-					sf::FloatRect playerBounds = entity->getGlobalBounds();
+					sf::FloatRect playerBounds = entity->getHitboxGlobalBounds();
 
 					sf::FloatRect wallBounds = this->tileVectors[i][j][this->layer][k]->getGlobalBounds();
 

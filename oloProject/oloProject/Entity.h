@@ -51,7 +51,9 @@ public:
 
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 
-	virtual const sf::FloatRect getGlobalBounds() const;
+	virtual const sf::FloatRect getSpriteGlobalBounds() const;
+
+	virtual const sf::FloatRect getHitboxGlobalBounds() const;
 
 	virtual const sf::FloatRect getNextPositionBounds(const float& deltaTime) const;
 

@@ -75,7 +75,6 @@ const sf::Vector2f& Entity::getHitboxPosition() const
 	return this->hitboxComponent->getPosition();
 }
 
-
 const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {
 	if (this->hitboxComponent){
@@ -97,13 +96,16 @@ const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 	);
 }
 
-const sf::FloatRect Entity::getGlobalBounds() const
+const sf::FloatRect Entity::getSpriteGlobalBounds() const
 {
-	if (this->hitboxComponent)
-		return this->hitboxComponent->getGlobalBounds();
-
 	return this->sprite.getGlobalBounds();
 }
+
+const sf::FloatRect Entity::getHitboxGlobalBounds() const
+{
+	return this->hitboxComponent->getGlobalBounds();
+}
+
 
 const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
 {
