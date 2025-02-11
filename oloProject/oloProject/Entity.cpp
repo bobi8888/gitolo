@@ -125,6 +125,22 @@ void Entity::setPosition(const float x, const float y)
 	else
 		this->sprite.setPosition(x, y);
 }
+
+void Entity::loseHp(const int damage)
+{
+	this->attributeComponent->hp -= damage;
+
+	if (this->attributeComponent->hp < 0)
+		this->attributeComponent->hp = 0;
+}
+
+void Entity::gainHp(const int heal)
+{
+	this->attributeComponent->hp += heal;
+
+	if (this->attributeComponent->hp > this->attributeComponent->hpMax)
+		this->attributeComponent->hp = this->attributeComponent->hpMax;
+}
  
 //Methods
 void Entity::move(const float xDir, const float yDir, const float& deltaTime)

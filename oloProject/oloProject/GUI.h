@@ -66,23 +66,51 @@ namespace gui
 	{
 	private:
 		sf::Font font;
-		sf::RectangleShape BarBack;
-		sf::RectangleShape BarFront;
+		sf::Text text;
+		sf::RectangleShape barBack;
+		sf::RectangleShape barFront;
 
 		float maxWidth, height;
 
 	public:
-		//Constructords & Destructor
-		Bar();
-
-		Bar(float width, float height, sf::Vector2f position);
+		//Constructors & Destructor
+		Bar(
+			float width, float height, 
+			sf::Vector2f position, 
+			std::string font
+		);
 
 		~Bar();
 
 		//Methods
 		void updatePosition(const sf::Vector2f position);
 
+		void updateText(std::string string);
+
 		void updateBarFrontSize(int value, int valueMax);
+
+		void render(sf::RenderTarget& target);
+	};
+
+	//Sphere
+	class Sphere
+	{
+	private:
+		sf::CircleShape circleBack;
+		sf::CircleShape circleFront;
+
+		float maxRadius;
+
+	public:
+		//Constructors & Destructor
+		Sphere(float radius, sf::Vector2f position);
+
+		~Sphere();
+
+		//Methods
+		void updatePosition(const sf::Vector2f position);
+
+		void updateCircleFrontSize(int value, int valueMax);
 
 		void render(sf::RenderTarget& target);
 	};
@@ -134,13 +162,16 @@ namespace gui
 			float gridSize;
 			float keytime;
 			const float keytimeMax;
+
 			bool isActive;
 			bool isHidden;
+
 			sf::RectangleShape bounds;
 			sf::Sprite sheet;
 			sf::RectangleShape selector;
 			sf::Vector2u mousePostionGrid;
-			sf::IntRect textureRect;		
+			sf::IntRect textureRect;
+			
 			Button* hide_button;
 
 		public:

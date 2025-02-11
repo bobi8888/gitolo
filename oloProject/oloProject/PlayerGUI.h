@@ -15,9 +15,13 @@ private:
 
 	gui::Bar* hpBar;
 
+	gui::Sphere* expSphere;
+
 	void initFont();
 
-	//void initHPBar();
+	void initHpBar();
+
+	void initExpSphere();
 
 public:
 	//Constructors & destructor

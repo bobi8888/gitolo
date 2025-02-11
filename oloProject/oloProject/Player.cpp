@@ -61,7 +61,7 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	//Robo sprite
 	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
 
-	this->createAttributeComponent(0);
+	this->createAttributeComponent(1);
 }
 
 Player::~Player()
@@ -94,22 +94,9 @@ void Player::updateAttack()
 	}
 }
 
-void Player::loseHp(const int damage)
+void Player::gainExp(const unsigned gainedExp)
 {
-	this->attributeComponent->hp -= damage;
-
-	if (this->attributeComponent->hp < 0)
-		this->attributeComponent->hp = 0;
-}
-
-void Player::gainHp(const int heal)
-{
-
-}
-
-void Player::gainExp(const int gainedExp)
-{
-
+	this->attributeComponent->gainExp(gainedExp);
 }
 
 void Player::updateAnimation(const float& deltaTime)
@@ -166,8 +153,11 @@ void Player::update(const float& deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->gainExp(15);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		loseHp(1);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		gainHp(1);
 
 	//system("cls");
 	//std::cout << this->attributeComponent->debugPrint();

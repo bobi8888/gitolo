@@ -149,23 +149,28 @@ void gui::Button::render(sf::RenderTarget& target)
 
 //Bar===============================================================================
 //Constructords & Destructor
-
-gui::Bar::Bar()
+gui::Bar::Bar(
+	float width, float height, 
+	sf::Vector2f position,
+	std::string font
+	)
 {
-}
+	this->barBack.setSize(sf::Vector2f(width, height));
+	this->barBack.setFillColor(sf::Color::Red);
+	this->barBack.setPosition(position);
 
-gui::Bar::Bar(float width, float height, sf::Vector2f position)
-{
-	this->BarBack.setSize(sf::Vector2f(width, height));
-	this->BarBack.setFillColor(sf::Color::Red);
-	this->BarBack.setPosition(position);
-
-	this->BarFront.setSize(sf::Vector2f(width, height));
-	this->BarFront.setFillColor(sf::Color::Green);
-	this->BarFront.setPosition(position);
+	this->barFront.setSize(sf::Vector2f(width, height));
+	this->barFront.setFillColor(sf::Color::Green);
+	this->barFront.setPosition(position);
 
 	this->maxWidth = width;
 	this->height = height;
+
+	this->font.loadFromFile(font);
+
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(12);
+	this->text.setPosition(sf::Vector2f(position.x - 5.f, position.y));
 }
 gui::Bar::~Bar()
 {
@@ -175,16 +180,23 @@ gui::Bar::~Bar()
 //Methods
 void gui::Bar::updatePosition(const sf::Vector2f position)
 {
-	this->BarBack.setPosition(position);
+	this->barBack.setPosition(position);
 
-	this->BarFront.setPosition(position);
+	this->barFront.setPosition(position);
+
+	this->text.setPosition(sf::Vector2f(position.x - 5.f, position.y));
+}
+
+void gui::Bar::updateText(std::string string)
+{
+	this->text.setString(string);
 }
 
 void gui::Bar::updateBarFrontSize(int value, int valueMax)
 {
 	float percent = static_cast<float>(value) / static_cast<float>(valueMax);
 
-	this->BarFront.setSize(
+	this->barFront.setSize(
 		sf::Vector2f(
 			static_cast<float>(std::floor(this->maxWidth * percent)), 
 			this->height
@@ -194,9 +206,65 @@ void gui::Bar::updateBarFrontSize(int value, int valueMax)
 
 void gui::Bar::render(sf::RenderTarget& target)
 {
-	target.draw(this->BarBack);
+	target.draw(this->barBack);
 
-	target.draw(this->BarFront);
+	target.draw(this->barFront);
+
+	target.draw(this->text);
+}
+
+//Sphere
+gui::Sphere::Sphere(float radius, sf::Vector2f position)
+{
+	this->circleBack.setRadius(radius);
+	this->circleBack.setOutlineThickness(1.f);
+	this->circleBack.setOutlineColor(sf::Color::White);
+	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
+	this->circleBack.setPosition(position);
+
+	this->circleFront.setRadius(radius);
+	this->circleFront.setFillColor(sf::Color::Yellow);
+	this->circleFront.setPosition(position);
+
+	this->maxRadius = radius;
+}
+
+gui::Sphere::~Sphere()
+{
+}
+
+//Methods
+void gui::Sphere::updatePosition(const sf::Vector2f position)
+{
+	this->circleBack.setPosition(position);
+
+	this->circleFront.setOrigin(
+		sf::Vector2f(
+			this->circleFront.getRadius(),
+			this->circleFront.getRadius() 
+		)
+	);
+
+	this->circleFront.setPosition(
+		sf::Vector2f(
+			this->circleBack.getPosition().x + this->circleBack.getRadius(),
+			this->circleBack.getPosition().y + this->circleBack.getRadius()
+		)
+	);
+}
+
+void gui::Sphere::updateCircleFrontSize(int value, int valueMax)
+{
+	float percent = static_cast<float>(value) / static_cast<float>(valueMax);
+
+	this->circleFront.setRadius(static_cast<float>(std::floor(this->maxRadius * percent)));
+}
+
+void gui::Sphere::render(sf::RenderTarget& target)
+{
+	target.draw(this->circleBack);
+
+	target.draw(this->circleFront);
 }
 
 //Dropdown List===============================================================================================
@@ -470,4 +538,5 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 			target.draw(this->selector);
 	}
 }
+
 

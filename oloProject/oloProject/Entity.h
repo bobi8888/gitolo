@@ -59,6 +59,10 @@ public:
 
 	//Modifiers
 	virtual void setPosition(const float x, const float y);
+
+	virtual void loseHp(const int damage);
+
+	virtual void gainHp(const int heal);
 	
 	//Methods
 	virtual void move(const float xDir, const float yDir, const float& deltaTime);

@@ -6,7 +6,6 @@ AttributeComponent::AttributeComponent(unsigned lvl)
 	this->level = lvl;
 	this->exp = 0;
 	this->expNext = static_cast<int>((50 / 3) * (pow(lvl, 3) - 6 * pow(lvl, 2) + (lvl * 17) - 12));
-
 	this->attributePts = 2;
 
 	this->health = 1;
@@ -99,8 +98,11 @@ void AttributeComponent::updateLevel()
 	while (this->exp > this->expNext)
 	{
 		++this->level;
+
 		this->exp -= this->expNext;
-		this->expNext = static_cast<unsigned>((50 / 3) * (pow(level, 3)	- 6 * pow(level, 2) + (level * 17) - 12));
+
+		this->expNext = static_cast<unsigned>((50 / 3) * (pow(this->level, 3)	- 6 * pow(this->level, 2) + (this->level * 17) - 12));
+
 		++this->attributePts;	
 	}
 }

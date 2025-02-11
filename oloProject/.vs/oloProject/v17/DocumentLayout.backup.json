@@ -3,20 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\AttributeComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\PlayerGUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GUI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\AttributeComponent.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GameState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -27,28 +47,12 @@
       "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\AttributeComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GameState.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\PlayerGUI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GameState.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DA66E8FD-2C9A-4D2A-9691-E50933A2D08B}|oloProject\\oloProject.vcxproj|solutionrelative:oloProject\\GameState.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,22 +62,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 598,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 16,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Player.cpp",
-              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp",
-              "RelativeDocumentMoniker": "oloProject\\Player.cpp",
-              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp",
-              "RelativeToolTip": "oloProject\\Player.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKkAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-02-06T18:40:00.474Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -120,65 +110,91 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Game.cpp",
+              "RelativeDocumentMoniker": "oloProject\\Game.cpp",
+              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Game.cpp",
+              "RelativeToolTip": "oloProject\\Game.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-11T19:55:25.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Player.cpp",
+              "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp",
+              "RelativeDocumentMoniker": "oloProject\\Player.cpp",
+              "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.cpp",
+              "RelativeToolTip": "oloProject\\Player.cpp",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAwD8AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-06T18:40:00.474Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AttributeComponent.cpp",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.cpp",
               "RelativeDocumentMoniker": "oloProject\\AttributeComponent.cpp",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.cpp",
               "RelativeToolTip": "oloProject\\AttributeComponent.cpp",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAGkAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-11T18:30:59.28Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "PlayerGUI.cpp",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.cpp",
               "RelativeDocumentMoniker": "oloProject\\PlayerGUI.cpp",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.cpp",
               "RelativeToolTip": "oloProject\\PlayerGUI.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-10T19:29:31.965Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "Entity.cpp",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.cpp",
               "RelativeDocumentMoniker": "oloProject\\Entity.cpp",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.cpp",
               "RelativeToolTip": "oloProject\\Entity.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGUAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAwwIkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-10T19:02:55.121Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "GUI.cpp",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.cpp",
               "RelativeDocumentMoniker": "oloProject\\GUI.cpp",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.cpp",
               "RelativeToolTip": "oloProject\\GUI.cpp",
-              "ViewState": "AgIAAKkAAAAAAAAAAAAnwKwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAANIAAAAAAAAAAAAAwN4AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-10T21:17:16.148Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "GameState.cpp",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.cpp",
               "RelativeDocumentMoniker": "oloProject\\GameState.cpp",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.cpp",
               "RelativeToolTip": "oloProject\\GameState.cpp",
-              "ViewState": "AgIAAM8AAAAAAAAAAAAAAGcAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAALwAAAAAAAAAAAAAAGcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-02T18:58:23.892Z",
               "EditorCaption": ""
@@ -187,17 +203,17 @@
         },
         {
           "DockedWidth": 425,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "GUI.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.h",
               "RelativeDocumentMoniker": "oloProject\\GUI.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GUI.h",
               "RelativeToolTip": "oloProject\\GUI.h",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAEcAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAqwF4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-10T21:14:24.296Z",
               "IsPinned": true,
@@ -205,64 +221,65 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 7,
               "Title": "GameState.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.h",
               "RelativeDocumentMoniker": "oloProject\\GameState.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\GameState.h",
               "RelativeToolTip": "oloProject\\GameState.h",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACAAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-10T20:58:14.434Z"
+              "WhenOpened": "2025-02-10T20:58:14.434Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "Player.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.h",
               "RelativeDocumentMoniker": "oloProject\\Player.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Player.h",
               "RelativeToolTip": "oloProject\\Player.h",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACEAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-06T18:48:10.958Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Entity.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.h",
               "RelativeDocumentMoniker": "oloProject\\Entity.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\Entity.h",
               "RelativeToolTip": "oloProject\\Entity.h",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACUAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAD8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-06T18:36:25.366Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "PlayerGUI.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.h",
               "RelativeDocumentMoniker": "oloProject\\PlayerGUI.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\PlayerGUI.h",
               "RelativeToolTip": "oloProject\\PlayerGUI.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-10T19:29:11.386Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "AttributeComponent.h",
               "DocumentMoniker": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.h",
               "RelativeDocumentMoniker": "oloProject\\AttributeComponent.h",
               "ToolTip": "C:\\Users\\1stBuild\\Desktop\\gitolo\\GitRemoteCon\\oloProject\\oloProject\\AttributeComponent.h",
               "RelativeToolTip": "oloProject\\AttributeComponent.h",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAADMAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-06T18:34:14.179Z",
               "EditorCaption": ""
