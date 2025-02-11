@@ -4,14 +4,14 @@
 
 //Constructors & Destructors
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& textureSheet)
-	:Sprite(sprite), TextureSheet(textureSheet), LastAnimation(NULL), PriorityAnimation(NULL)
+	:sprite(sprite), textureSheet(textureSheet), lastAnimation(NULL), priorityAnimation(NULL)
 {
 	
 }
 
 AnimationComponent::~AnimationComponent()
 {
-	for (auto &i : this->AnimationSheets)
+	for (auto &i : this->animationSheets)
 	{
 		delete i.second;
 	}
@@ -20,7 +20,7 @@ AnimationComponent::~AnimationComponent()
 //Accessor Methods
 const bool& AnimationComponent::getIsDone(const std::string key) 
 {
-	return this->AnimationSheets[key]->isDone;
+	return this->animationSheets[key]->isDone;
 }
 
 //Methods
@@ -31,10 +31,13 @@ void AnimationComponent::addAnimation(
 	int width, int height
 	)
 {
-	this->AnimationSheets[key] = new Animation(
-		this->Sprite, this->TextureSheet,
-		animation_timer, start_frame_x, start_frame_y, frames_x, frames_y, width, height		
-		);
+	this->animationSheets[key] = new Animation(
+		this->sprite, this->textureSheet,
+		animation_timer, 
+		start_frame_x, start_frame_y, 
+		frames_x, frames_y, 
+		width, height		
+	);
 }
 
 //void AnimationComponent::startAnimation(const std::string animation)
@@ -52,48 +55,48 @@ void AnimationComponent::addAnimation(
 
 const bool& AnimationComponent::play(const std::string key, const float& deltaTime, const bool priority)
 {
-	if (this->PriorityAnimation)
+	if (this->priorityAnimation)
 	{
-		if (this->PriorityAnimation = this->AnimationSheets[key])
+		if (this->priorityAnimation = this->animationSheets[key])
 		{
-			if (this->LastAnimation != this->AnimationSheets[key])
+			if (this->lastAnimation != this->animationSheets[key])
 			{
-				if (this->LastAnimation == NULL)
-					this->LastAnimation = this->AnimationSheets[key];
+				if (this->lastAnimation == NULL)
+					this->lastAnimation = this->animationSheets[key];
 				else
 				{
-					this->LastAnimation->reset();
+					this->lastAnimation->reset();
 
-					this->LastAnimation = this->AnimationSheets[key];
+					this->lastAnimation = this->animationSheets[key];
 				}
 			}
 
-			this->AnimationSheets[key]->play(deltaTime);
+			this->animationSheets[key]->play(deltaTime);
 		}
 	}
 	else //Play animation if there is no priority animation set
 	{
 		if (priority)
 		{
-			this->PriorityAnimation = this->AnimationSheets[key];
+			this->priorityAnimation = this->animationSheets[key];
 		}
 
-		if (this->LastAnimation != this->AnimationSheets[key])
+		if (this->lastAnimation != this->animationSheets[key])
 		{
-			if (this->LastAnimation == NULL)
-				this->LastAnimation = this->AnimationSheets[key];
+			if (this->lastAnimation == NULL)
+				this->lastAnimation = this->animationSheets[key];
 			else
 			{
-				this->LastAnimation->reset();
+				this->lastAnimation->reset();
 
-				this->LastAnimation = this->AnimationSheets[key];
+				this->lastAnimation = this->animationSheets[key];
 			}
 		}
 
-		this->AnimationSheets[key]->play(deltaTime);
+		this->animationSheets[key]->play(deltaTime);
 	}
 
-	return this->AnimationSheets[key]->isDone;
+	return this->animationSheets[key]->isDone;
 }
 
 
@@ -102,45 +105,47 @@ const bool& AnimationComponent::play(
 	const float& modifier, const float& modifier_max
 	)
 {
-	if (this->PriorityAnimation)
+	if (this->priorityAnimation)
 	{
-		if (this->PriorityAnimation = this->AnimationSheets[key])
+		if (this->priorityAnimation = this->animationSheets[key])
 		{
-			if (this->LastAnimation != this->AnimationSheets[key])
+			if (this->lastAnimation != this->animationSheets[key])
 			{
-				if (this->LastAnimation == NULL)
-					this->LastAnimation = this->AnimationSheets[key];
+				if (this->lastAnimation == NULL)
+					this->lastAnimation = this->animationSheets[key];
 				else
 				{
-					this->LastAnimation->reset();
-					this->LastAnimation = this->AnimationSheets[key];
+					this->lastAnimation->reset();
+					this->lastAnimation = this->animationSheets[key];
 				}
 			}
 			//if the priority animation is done, set priorityAnimation to NULL
-			if (this->AnimationSheets[key]->play(deltaTime))
+			if (this->animationSheets[key]->play(deltaTime))
 			{
-				this->PriorityAnimation = NULL;
+				this->priorityAnimation = NULL;
 			}
 		}
 	}
 	else //Play animation if there is no priority animation set
 	{
-		if (this->LastAnimation != this->AnimationSheets[key])
+		if (this->lastAnimation != this->animationSheets[key])
 		{
-			if (this->LastAnimation == NULL)
-				this->LastAnimation = this->AnimationSheets[key];
+			if (this->lastAnimation == NULL)
+				this->lastAnimation = this->animationSheets[key];
 			else
 			{
-				this->LastAnimation->reset();
-				this->LastAnimation = this->AnimationSheets[key];
+				this->lastAnimation->reset();
+				this->lastAnimation = this->animationSheets[key];
 			}
 		}
 	}
 
-	if (this->AnimationSheets[key]->play(deltaTime, abs(modifier / modifier_max)))
+	if (this->animationSheets[key]->play(deltaTime, abs(modifier / modifier_max)))
 	{
-		this->PriorityAnimation = NULL;
+		this->priorityAnimation = NULL;
 	}
 
-	return this->AnimationSheets[key]->isDone;
+	//std::cout << this->sprite.getPosition().x << " " << this->sprite.getPosition().y << "\n";
+
+	return this->animationSheets[key]->isDone;
 }

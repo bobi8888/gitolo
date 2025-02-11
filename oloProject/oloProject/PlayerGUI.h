@@ -15,9 +15,6 @@ private:
 
 	gui::Bar* hpBar;
 
-	//sf::RectangleShape hpBarBack;
-	//sf::RectangleShape hpBar;
-
 	void initFont();
 
 	void initHPBar();

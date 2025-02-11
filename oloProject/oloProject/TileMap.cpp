@@ -289,28 +289,28 @@ void TileMap::loadFromFile(const std::string file_name)
 void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 {
 	//World Bounds collision
-	if (entity->getPosition().x < 0.f)
+	if (entity->getHitboxPosition().x < 0.f)
 	{
-		entity->setPosition(0.f, entity->getPosition().y);
+		entity->setPosition(0.f, entity->getHitboxPosition().y);
 
 		entity->stopVelocityX();
 	}
-	else if (entity->getPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldF.x)
+	else if (entity->getHitboxPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldF.x)
 	{
-		entity->setPosition(this->maxSizeWorldF.x - entity->getGlobalBounds().width, entity->getPosition().y);
+		entity->setPosition(this->maxSizeWorldF.x - entity->getGlobalBounds().width, entity->getHitboxPosition().y);
 		
 		entity->stopVelocityX();
 	}
 
-	if (entity->getPosition().y < 0.f)
+	if (entity->getHitboxPosition().y < 0.f)
 	{
-		entity->setPosition(entity->getPosition().x, 0.f);
+		entity->setPosition(entity->getHitboxPosition().x, 0.f);
 		
 		entity->stopVelocityY();
 	}
-	else if (entity->getPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldF.y)
+	else if (entity->getHitboxPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldF.y)
 	{
-		entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
+		entity->setPosition(entity->getHitboxPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
 
 		entity->stopVelocityY();
 	}		

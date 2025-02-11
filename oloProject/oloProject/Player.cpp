@@ -79,6 +79,11 @@ MovementComponent* Player::getMovementComponent()
 	return this->movementComponent;
 }
 
+HitboxComponent* Player::getHitboxComponent()
+{
+	return this->hitboxComponent;
+}
+
 //Methods
 
 void Player::updateAttack()

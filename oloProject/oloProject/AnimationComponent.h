@@ -25,9 +25,10 @@ private:
 
 			//Constructors & Destructors
 			Animation(
-				sf::Sprite& sprite, sf::Texture& texture_sheet, 
+				sf::Sprite& sprite, sf::Texture& texture_sheet,
 				float animation_timer, 
-				int start_frame_x, int start_frame_y, int frames_x, int frames_y, 
+				int start_frame_x, int start_frame_y, 
+				int frames_x, int frames_y, 
 				int width, int height)
 					: sprite(sprite), textureSheet(texture_sheet), 
 						animationTimer(animation_timer), 
@@ -139,12 +140,12 @@ private:
 			}
 	};
 
-	sf::Sprite& Sprite;
-	sf::Texture& TextureSheet;
+	sf::Sprite& sprite;
+	sf::Texture& textureSheet;
 
-	std::map<std::string, Animation*> AnimationSheets;
-	Animation* LastAnimation;
-	Animation* PriorityAnimation;
+	std::map<std::string, Animation*> animationSheets;
+	Animation* lastAnimation;
+	Animation* priorityAnimation;
 
 public:
 	//Constructors & Destructors

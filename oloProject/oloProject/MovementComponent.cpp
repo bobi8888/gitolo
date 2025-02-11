@@ -30,8 +30,6 @@ const float& MovementComponent::getMaxVelo() const
 	return this->maxVelo;
 }
 
-
-
 const bool MovementComponent::getState(const short unsigned state) const
 {
 	switch (state)

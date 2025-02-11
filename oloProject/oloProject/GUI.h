@@ -78,7 +78,7 @@ namespace gui
 		~Bar();
 
 		//Methods
-		void update(const sf::Vector2f& position);
+		void update(const sf::Vector2f position);
 
 		void render(sf::RenderTarget& target);
 	};

@@ -65,13 +65,16 @@ void Entity::createAttributeComponent(const unsigned level)
 }
 
 //Accessors
-const sf::Vector2f& Entity::getPosition() const
+const sf::Vector2f& Entity::getSpritePosition() const
 {
-	if (this->hitboxComponent)
-		return this->hitboxComponent->getPosition();
-
 	return this->sprite.getPosition();
 }
+
+const sf::Vector2f& Entity::getHitboxPosition() const
+{
+	return this->hitboxComponent->getPosition();
+}
+
 
 const sf::Vector2i Entity::getGridPosition(const int gridSizeI) const
 {

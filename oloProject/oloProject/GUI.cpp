@@ -171,7 +171,7 @@ gui::Bar::~Bar()
 }
 
 //Methods
-void gui::Bar::update(const sf::Vector2f& position)
+void gui::Bar::update(const sf::Vector2f position)
 {
 	this->BarBack.setPosition(position);
 

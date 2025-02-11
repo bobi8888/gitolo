@@ -18,7 +18,7 @@ PlayerGUI::PlayerGUI(Player* player)
 
 	this->initFont();
 
-	this->hpBar = new gui::Bar(player->getPosition());
+	this->hpBar = new gui::Bar(this->player->getSpritePosition());
 }
 
 PlayerGUI::~PlayerGUI()
@@ -29,7 +29,7 @@ PlayerGUI::~PlayerGUI()
 //Methods
 void PlayerGUI::update(const float deltaTime)
 {
-	this->hpBar->update(this->player->getMovementComponent()->getSpritePosition());
+	this->hpBar->update(this->player->getSpritePosition());
 }
 
 void PlayerGUI::render(sf::RenderTarget& target)

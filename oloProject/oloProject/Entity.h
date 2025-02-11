@@ -45,7 +45,9 @@ public:
 	void createAttributeComponent(const unsigned lvl);
 
 	//Accessors
-	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::Vector2f& getSpritePosition() const;
+
+	virtual const sf::Vector2f& getHitboxPosition() const;
 
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 

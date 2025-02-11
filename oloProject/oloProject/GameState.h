@@ -46,15 +46,22 @@ private:
 public:
 	//Constructors & Destructors
 	GameState(StateData* stateData);
+
 	virtual ~GameState();
 
 	//Methods
 	void updateView(const float& deltaTime);
+
 	void updateInput(const float& deltaTime);
+
 	void updatePlayerInput(const float& deltaTime);
-	void updatePlayerGUI(const float& deltaTime);
+
+	//void updatePlayerGUI(const float& deltaTime);
+
 	void updatePauseMenuButtons();
-	void updateTileMap(const float& deltaTime);
+
+	void updateTileMap(const float& deltaTime)
+	;
 	void update(const float& deltaTime);
 
 	void render(sf::RenderTarget* target = NULL);

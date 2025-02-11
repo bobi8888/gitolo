@@ -155,8 +155,8 @@ void GameState::updateView(const float& deltaTime)
 	//look into this for a better explaination
 
 	this->view.setCenter(
-		std::floor(this->player->getPosition().x),
-		std::floor(this->player->getPosition().y)
+		std::floor(this->player->getHitboxPosition().x),
+		std::floor(this->player->getHitboxPosition().y)
 	);
 }
 
@@ -186,10 +186,11 @@ void GameState::updatePlayerInput(const float& deltaTime)
 		this->player->move(0.f, -1.f, deltaTime);
 }
 
-void GameState::updatePlayerGUI(const float& deltaTime)
-{
-	this->playerGUI->update(deltaTime);
-}
+//void GameState::updatePlayerGUI(const float& deltaTime)
+//{
+//	//this->playerGUI->update(deltaTime, this->view.getCenter());
+//	//this->playerGUI->update(deltaTime, this->player->getSpritePosition());
+//}
 
 void GameState::updatePauseMenuButtons()
 {
@@ -260,9 +261,10 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->renderDeferred(this->renderTexture);
 
+		this->playerGUI->render(this->renderTexture);
+
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
 
-	this->playerGUI->render(this->renderTexture);
 
 	if (this->isPaused)
 	{
@@ -275,8 +277,7 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderSprite.setTexture(this->renderTexture.getTexture());
 
 	target->draw(this->renderSprite);
-
-
+		
 	//Debugging
 	//sf::Text mouse_text;
 	//mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));

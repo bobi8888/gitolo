@@ -24,6 +24,8 @@ public:
 
     MovementComponent* getMovementComponent();
 
+    HitboxComponent* getHitboxComponent();
+
     //Methods
     void updateAttack();
 
