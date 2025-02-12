@@ -94,7 +94,7 @@ void Player::updateAttack()
 	}
 }
 
-void Player::gainExp(const unsigned gainedExp)
+void Player::gainExp(const int gainedExp)
 {
 	this->attributeComponent->gainExp(gainedExp);
 }

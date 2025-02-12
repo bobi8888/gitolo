@@ -213,7 +213,7 @@ void gui::Bar::render(sf::RenderTarget& target)
 	target.draw(this->text);
 }
 
-//Sphere
+//Sphere=========================================================================================================
 gui::Sphere::Sphere(float radius, sf::Vector2f position)
 {
 	this->circleBack.setRadius(radius);
@@ -221,10 +221,12 @@ gui::Sphere::Sphere(float radius, sf::Vector2f position)
 	this->circleBack.setOutlineColor(sf::Color::White);
 	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
 	this->circleBack.setPosition(position);
+	this->circleBack.setPointCount(30);
 
 	this->circleFront.setRadius(radius);
 	this->circleFront.setFillColor(sf::Color::Yellow);
 	this->circleFront.setPosition(position);
+	this->circleFront.setPointCount(30);
 
 	this->maxRadius = radius;
 }
@@ -270,18 +272,19 @@ void gui::Sphere::render(sf::RenderTarget& target)
 //Dropdown List===============================================================================================
 //Constructors & Destructor
 gui::DropdownList::DropdownList(
-	float xPos, float yPos, float width, float height, 
+	float xPos, float yPos, 
+	float width, float height, 
 	sf::Font& font, std::string list[], 
 	int elementsNum, unsigned default_index
-	) : ListFont(font), ShowList(false)
+	) : font(font), showList(false)
 {
-	KeytimeMax = 1.f;
+	keytimeMax = 1.f;
 
-	Keytime = KeytimeMax;
+	keytime = keytimeMax;
 
-	this->ActiveElement = new Button(
+	this->activeElement = new Button(
 		xPos, yPos, width, height,
-		&this->ListFont, list[default_index], 20,
+		&this->font, list[default_index], 20,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
@@ -290,24 +293,28 @@ gui::DropdownList::DropdownList(
 
 	for (int i = 0; i < elementsNum; i++)
 	{
-		this->ElementList.push_back(
+		this->elementList.push_back(
 			new Button(
 				xPos, yPos + ((i + 1) * height), width, height,
-				&this->ListFont, list[i], 20,
+				&this->font, list[i], 20,
 				sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 				sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 				sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
 				i
 			)
 		);
+
+		//Makes duplicate resolutions? 
+		//When those duplicate resoluations are selected and applied, each one has a different height
+		//std::cout << "In dropdown constructor: " << list[i] << "\n";
 	}
 }
 
 gui::DropdownList::~DropdownList()
 {
-	delete this->ActiveElement;
+	delete this->activeElement;
 
-	for (auto &i : this->ElementList)
+	for (auto &i : this->elementList)
 		delete i;
 }
 
@@ -316,14 +323,14 @@ gui::DropdownList::~DropdownList()
 
 const unsigned short& gui::DropdownList::getActiveElementId() const
 {
-	return this->ActiveElement->getId();
+	return this->activeElement->getId();
 }
 
 const bool gui::DropdownList::getKeytime()
 {
-	if (this->Keytime >= this->KeytimeMax)
+	if (this->keytime >= this->keytimeMax)
 	{
-		this->Keytime = 0.f;
+		this->keytime = 0.f;
 		return true;
 	}
 
@@ -333,8 +340,8 @@ const bool gui::DropdownList::getKeytime()
 //Methods
 void gui::DropdownList::updateKeytime(const float& deltaTime)
 {
-	if (this->Keytime < this->KeytimeMax)
-		this->Keytime += 10.f * deltaTime;
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f * deltaTime;
 	
 }
 
@@ -342,35 +349,35 @@ void gui::DropdownList::update(const sf::Vector2i& mousePosWindow, const float& 
 {
 	this->updateKeytime(deltaTime);
 
-	this->ActiveElement->update(mousePosWindow);
+	this->activeElement->update(mousePosWindow);
 
-	if (this->ActiveElement->isPressed() && this->getKeytime())
-		this->ShowList ? this->ShowList = false : this->ShowList = true;
+	if (this->activeElement->isPressed() && this->getKeytime())
+		this->showList ? this->showList = false : this->showList = true;
 	
-	if (this->ShowList)
-		for (auto &i : this->ElementList)
+	if (this->showList)
+		for (auto &i : this->elementList)
 		{
 			i->update(mousePosWindow);
 
 			if (i->isPressed() && this->getKeytime())
 			{
-				this->ShowList = false;
+				this->showList = false;
 
-				this->ActiveElement->setText(i->getText());
+				this->activeElement->setText(i->getText());
 
-				this->ActiveElement->centerText();
+				this->activeElement->centerText();
 
-				this->ActiveElement->setId(i->getId());
+				this->activeElement->setId(i->getId());
 			}
 		}	
 }
 
 void gui::DropdownList::render(sf::RenderTarget& target)
 {
-	this->ActiveElement->render(target);
+	this->activeElement->render(target);
 
-	if (this->ShowList)
-		for (auto& i : this->ElementList)
+	if (this->showList)
+		for (auto& i : this->elementList)
 			i->render(target);	
 }
 

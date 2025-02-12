@@ -90,11 +90,11 @@ const sf::Texture* TileMap::getTileTextureSheet() const
 
 const int TileMap::getLayerSize(const sf::Vector2i mousePos, const int z) const
 {
-	if (mousePos.x >= 0 && mousePos.x < this->tileVectors.size())
+	if (mousePos.x >= 0 && mousePos.x < static_cast<int>(this->tileVectors.size()))
 	{
-		if (mousePos.y >= 0 && mousePos.y < this->tileVectors[mousePos.x].size())
+		if (mousePos.y >= 0 && mousePos.y < static_cast<int>(this->tileVectors[mousePos.x].size()))
 		{
-			if (z >= 0 && z < this->tileVectors[mousePos.x][mousePos.y].size())
+			if (z >= 0 && z < static_cast<int>(this->tileVectors[mousePos.x][mousePos.y].size()))
 			{
 				return static_cast<int>(
 					this->tileVectors[mousePos.x][mousePos.y][layer].size()

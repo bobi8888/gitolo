@@ -119,16 +119,16 @@ namespace gui
 	class DropdownList
 	{
 		private:
-			float Keytime;
-			float KeytimeMax;
+			float keytime;
+			float keytimeMax;
 
-			sf::Font& ListFont;
+			sf::Font& font;
 
-			Button* ActiveElement;
+			Button* activeElement;
 
-			std::vector<Button*> ElementList;
+			std::vector<Button*> elementList;
 
-			bool ShowList;
+			bool showList;
 
 		public:
 			//Constructors & Destructor

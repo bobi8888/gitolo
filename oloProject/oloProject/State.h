@@ -57,7 +57,7 @@ protected:
 
 public:
 	//Constructors/Destructors
-	State();
+	//State();
 
 	State(StateData* stateData);
 
@@ -69,6 +69,10 @@ public:
 	const bool getKeyTime();
 
 	//Methods
+	const float convertToPixelsX(const float percent);
+
+	const float convertToPixelsY(const float percent);
+
 	void endState();
 
 	void pauseState();
@@ -80,6 +84,7 @@ public:
 	virtual void updateKeytime(const float& deltaTime);
 
 	virtual void updatePlayerInput(const float& deltaTime) = 0;
+
 	virtual void update(const float& deltaTime) = 0;
 	
 	virtual void render(sf::RenderTarget* target = NULL) = 0;

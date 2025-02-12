@@ -29,7 +29,7 @@ public:
     //Methods
     void updateAttack();
 
-    void gainExp(const unsigned gainedExp);
+    void gainExp(const int gainedExp);
 
     void updateAnimation(const float& deltaTime);
 

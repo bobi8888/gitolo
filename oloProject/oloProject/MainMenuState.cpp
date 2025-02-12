@@ -165,13 +165,12 @@ void MainMenuState::updateButtons()
 void MainMenuState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
+
 	this->updatePlayerInput(deltaTime);
+
 	this->updateButtons();
 
 	//DEBUG
-
-
-	//Debug
 	//system("cls");
 	//std::cout << this->MousePositionView.x << " " << this->MousePositionView.y;
 }

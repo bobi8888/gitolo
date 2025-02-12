@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AttributeComponent.h"
 
-AttributeComponent::AttributeComponent(unsigned lvl)
+AttributeComponent::AttributeComponent(int lvl)
 {
 	this->level = lvl;
 	this->exp = 0;
@@ -52,7 +52,7 @@ void AttributeComponent::calculateExpNext()
 
 }
 
-void AttributeComponent::gainExp(const unsigned exp)
+void AttributeComponent::gainExp(const int exp)
 {
 	this->exp += exp;
 
@@ -101,7 +101,7 @@ void AttributeComponent::updateLevel()
 
 		this->exp -= this->expNext;
 
-		this->expNext = static_cast<unsigned>((50 / 3) * (pow(this->level, 3)	- 6 * pow(this->level, 2) + (this->level * 17) - 12));
+		this->expNext = static_cast<int>((50 / 3) * (pow(this->level, 3)	- 6 * pow(this->level, 2) + (this->level * 17) - 12));
 
 		++this->attributePts;	
 	}

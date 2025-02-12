@@ -4,8 +4,8 @@ class AttributeComponent
 public:
 	//Leveling 
 	int level;
-	unsigned exp;
-	unsigned expNext;
+	int exp;
+	int expNext;
 	int attributePts;
 
 	//Attributes
@@ -42,14 +42,14 @@ public:
 	int totalSteps;
 
 	//Constructors & Destroyer
-	AttributeComponent(unsigned lvl);
+	AttributeComponent(int lvl);
 
 	~AttributeComponent();
 
 	//Methods
 	void calculateExpNext();
 
-	void gainExp(const unsigned exp);
+	void gainExp(const int exp);
 
 	void updateStats(const bool reset);
 

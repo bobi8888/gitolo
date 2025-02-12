@@ -85,10 +85,11 @@ void SettingsState::initGUI()
 
 	for (auto& i : this->videoModes)
 	{
-		videoModesStr.push_back(std::to_string(i.width) + " x " + std::to_string(i.width));
+		videoModesStr.push_back(std::to_string(i.width) + " x " + std::to_string(i.height));
+		//std::cout << "vector string: " << i.width << " x " << i.height << "\n";
 	}
-	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 
+	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
 		this->window->getSize().x / 2.f, 150.f, 
 		150.f, 20.f, 
@@ -107,7 +108,12 @@ void SettingsState::initText()
 
 	this->text.setFillColor(sf::Color::Black);
 
-	this->text.setString("Resolution \nFullscreen \nVsync \nAntialiasing");
+	this->text.setString(
+		"Resolution: " 
+		+ std::to_string(this->stateData->graphicsSettings->Resolution.width) 
+		+ " x " 
+		+ std::to_string(this->stateData->graphicsSettings->Resolution.height) + "\n"
+		+ "Fullscreen \nVsync \nAntialiasing");
 }
 
 //Constructors & Destructor
@@ -160,7 +166,11 @@ void SettingsState::updateGUI(const float& deltaTime)
 	if (this->buttons["APPLY_BTN"]->isPressed())
 	{
 		//for testing, remove later
-		//std::cout << this-> VideoModes[this->DropdownMap["RESOLUTION"]->getActiveElementId()];
+		//RESOLUTION HEIGHT INCORRECT
+		//std::cout 
+		//	<< this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()].width
+		//	<< " x "
+		//	<< this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()].height << "\n";
 
 		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
 
@@ -172,6 +182,13 @@ void SettingsState::updateGUI(const float& deltaTime)
 	{
 		it->second->update(this->mousePositionWindow, deltaTime);
 	}
+	//RESOLUTION HEIGHT INCORRECT
+	this->text.setString(
+		"Resolution: "
+		+ std::to_string(this->stateData->graphicsSettings->Resolution.width)
+		+ " x "
+		+ std::to_string(this->stateData->graphicsSettings->Resolution.height) + "\n"
+		+ "Fullscreen \nVsync \nAntialiasing");
 
 	//DropdownList Functionality
 }
@@ -179,7 +196,9 @@ void SettingsState::updateGUI(const float& deltaTime)
 void SettingsState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
-	this->updatePlayerInput(deltaTime);
+
+	//this->updatePlayerInput(deltaTime);
+
 	this->updateGUI(deltaTime);
 
 	//this->ddl->update(this->MousePositionView, deltaTime);

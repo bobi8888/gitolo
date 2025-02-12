@@ -8,8 +8,11 @@
 void Game::initVariables()
 {
     this->window = nullptr;
+
     this->graphicSettings.IsFullscreen = false;
+
     this->deltaTime = 0.f;
+
     this->gridSize = 64.f;
 }
 
