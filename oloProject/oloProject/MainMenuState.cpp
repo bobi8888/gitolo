@@ -65,33 +65,39 @@ void MainMenuState::initButtons()
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
 	this->buttons["NEW_GAME_BTN"] = new gui::Button(
-		this->window->getSize().x / 2.f, 250.f, 150.f, 50.f,
-		&this->Font, "New Game", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(25.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->Font, "New Game", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 	
 	this->buttons["EDITOR_BTN"] = new  gui::Button(
-		this->window->getSize().x / 2.f, 315.f, 150.f, 50.f,
-		&this->Font, "Editor", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(32.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->Font, "Editor", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
 	this->buttons["SETTINGS_BTN"] = new  gui::Button(
-		this->window->getSize().x / 2.f, 380.f, 150.f, 50.f,
-		&this->Font, "Settings", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(39.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->Font, "Settings", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
 	this->buttons["EXIT_BTN"] = new  gui::Button(
-		this->window->getSize().x / 2.f, 445.f, 150.f, 50.f,
-		&this->Font, "Quit", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(46.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->Font, "Quit", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)

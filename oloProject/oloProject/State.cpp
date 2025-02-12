@@ -40,20 +40,6 @@ const bool State::getKeyTime()
 }
 
 //Methods
-const float State::convertToPixelsX(const float percent)
-{
-	return std::floor(static_cast<float>(
-		this->stateData->graphicsSettings->Resolution.width) * (percent / 100.f)
-	);
-}
-
-const float State::convertToPixelsY(const float percent)
-{
-	return std::floor(static_cast<float>(
-		this->stateData->graphicsSettings->Resolution.height) * (percent / 100.f)
-	);
-}
-
 void State::endState()
 {
 	this->quit = true;

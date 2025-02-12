@@ -69,10 +69,6 @@ public:
 	const bool getKeyTime();
 
 	//Methods
-	const float convertToPixelsX(const float percent);
-
-	const float convertToPixelsY(const float percent);
-
 	void endState();
 
 	void pauseState();

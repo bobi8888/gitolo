@@ -2,6 +2,25 @@
 
 #include "GUI.h"
 
+const float gui::convertToPixelsX(const float percent, const sf::VideoMode& videoMode)
+{
+	return std::floor(static_cast<float>(
+		videoMode.width) * (percent / 100.f)
+	);
+}
+
+const float gui::convertToPixelsY(const float percent, const sf::VideoMode& videoMode)
+{
+	return std::floor(static_cast<float>(
+		videoMode.height) * (percent / 100.f)
+	);
+}
+
+const unsigned gui::calculateCharSize(const int divisor, const sf::VideoMode& videoMode)
+{
+	return static_cast<unsigned>((videoMode.width + videoMode.height) / divisor);
+}
+
 //Constructors & Destructor
 gui::Button::Button(float x, float y, float width, float height, 
 	sf::Font* font, std::string text, unsigned character_size,
@@ -148,6 +167,7 @@ void gui::Button::render(sf::RenderTarget& target)
 }
 
 //Bar===============================================================================
+
 //Constructords & Destructor
 gui::Bar::Bar(
 	float width, float height, 
@@ -214,6 +234,8 @@ void gui::Bar::render(sf::RenderTarget& target)
 }
 
 //Sphere=========================================================================================================
+
+//Constructor & Destructor
 gui::Sphere::Sphere(float radius, sf::Vector2f position)
 {
 	this->circleBack.setRadius(radius);
@@ -270,11 +292,12 @@ void gui::Sphere::render(sf::RenderTarget& target)
 }
 
 //Dropdown List===============================================================================================
+
 //Constructors & Destructor
 gui::DropdownList::DropdownList(
 	float xPos, float yPos, 
 	float width, float height, 
-	sf::Font& font, std::string list[], 
+	sf::Font& font, std::string list[], unsigned char_size,
 	int elementsNum, unsigned default_index
 	) : font(font), showList(false)
 {
@@ -284,7 +307,7 @@ gui::DropdownList::DropdownList(
 
 	this->activeElement = new Button(
 		xPos, yPos, width, height,
-		&this->font, list[default_index], 20,
+		&this->font, list[default_index], char_size,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
@@ -296,17 +319,13 @@ gui::DropdownList::DropdownList(
 		this->elementList.push_back(
 			new Button(
 				xPos, yPos + ((i + 1) * height), width, height,
-				&this->font, list[i], 20,
+				&this->font, list[i], char_size,
 				sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 				sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 				sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
 				i
 			)
 		);
-
-		//Makes duplicate resolutions? 
-		//When those duplicate resoluations are selected and applied, each one has a different height
-		//std::cout << "In dropdown constructor: " << list[i] << "\n";
 	}
 }
 
@@ -318,9 +337,7 @@ gui::DropdownList::~DropdownList()
 		delete i;
 }
 
-
 //Accessors
-
 const unsigned short& gui::DropdownList::getActiveElementId() const
 {
 	return this->activeElement->getId();
@@ -331,6 +348,7 @@ const bool gui::DropdownList::getKeytime()
 	if (this->keytime >= this->keytimeMax)
 	{
 		this->keytime = 0.f;
+
 		return true;
 	}
 
@@ -341,8 +359,7 @@ const bool gui::DropdownList::getKeytime()
 void gui::DropdownList::updateKeytime(const float& deltaTime)
 {
 	if (this->keytime < this->keytimeMax)
-		this->keytime += 10.f * deltaTime;
-	
+		this->keytime += 10.f * deltaTime;	
 }
 
 void gui::DropdownList::update(const sf::Vector2i& mousePosWindow, const float& deltaTime)
@@ -381,8 +398,8 @@ void gui::DropdownList::render(sf::RenderTarget& target)
 			i->render(target);	
 }
 
-
 //Texture Selector===========================================================================================
+
 //Constructors & Destructor
 gui::TextureSelector::TextureSelector(
 	float x, float y,
@@ -478,7 +495,6 @@ const bool gui::TextureSelector::getKeytime()
 //	return this->hide_button->getButtonState();
 //}
 
-
 //Methods
 void gui::TextureSelector::update(const sf::Vector2i& mousePositionWindow, const float& deltaTime)
 {
@@ -545,5 +561,3 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 			target.draw(this->selector);
 	}
 }
-
-

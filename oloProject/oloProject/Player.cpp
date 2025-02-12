@@ -182,5 +182,3 @@ void Player::updateLevel()
 {
 	this->attributeComponent->updateLevel();
 }
-
-

@@ -8,8 +8,11 @@ class Game
 private:
 	//Variables
 	GraphicsSettings graphicSettings;
+
 	StateData stateData;
+
 	sf::RenderWindow *window;
+
 	sf::Event sfEvent;
 
 	sf::Clock deltaTimeClock;

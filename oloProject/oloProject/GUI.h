@@ -4,6 +4,13 @@ enum button_states{BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
 
 namespace gui
 {
+	//Methods
+	const float convertToPixelsX(const float percent, const sf::VideoMode& videoMode);
+
+	const float convertToPixelsY(const float percent, const sf::VideoMode& videoMode);
+
+	const unsigned calculateCharSize(const int divisor, const sf::VideoMode& videoMode);
+
 	class Button
 	{
 	private:
@@ -92,7 +99,7 @@ namespace gui
 		void render(sf::RenderTarget& target);
 	};
 
-	//Sphere
+	//Sphere==============================================================
 	class Sphere
 	{
 	private:
@@ -114,6 +121,7 @@ namespace gui
 
 		void render(sf::RenderTarget& target);
 	};
+
 	//Dropdown List===============================================================================================
 
 	class DropdownList
@@ -135,7 +143,7 @@ namespace gui
 			DropdownList(
 				float xPos, float yPos, 
 				float width, float height, 
-				sf::Font& font, std::string list[],
+				sf::Font& font, std::string list[], unsigned char_size,
 				int elementsNum, unsigned default_index = 0
 			);
 

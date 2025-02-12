@@ -65,17 +65,21 @@ void SettingsState::initGUI()
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
 	this->buttons["BACK_BTN"] = new gui::Button(
-		this->window->getSize().x / 2.f, 500.f, 150.f, 50.f,
-		&this->font, "Back", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(75.f, videoMode), 
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->font, "Back", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 		);
 
 	this->buttons["APPLY_BTN"] = new gui::Button(
-		this->window->getSize().x / 2.f, 600.f, 150.f, 50.f,
-		&this->font, "Apply", 20,
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(85.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->font, "Apply", gui::calculateCharSize(60, videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
@@ -86,14 +90,12 @@ void SettingsState::initGUI()
 	for (auto& i : this->videoModes)
 	{
 		videoModesStr.push_back(std::to_string(i.width) + " x " + std::to_string(i.height));
-		//std::cout << "vector string: " << i.width << " x " << i.height << "\n";
 	}
 
-	//std::string li[] = {"1920x1080", "800x600", "640x480"};
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
-		this->window->getSize().x / 2.f, 150.f, 
-		150.f, 20.f, 
-		font, videoModesStr.data(), 
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
+		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(3.5f, videoMode),
+		font, videoModesStr.data(), gui::calculateCharSize(110, videoMode),
 		static_cast<int>(videoModesStr.size())
 	);
 }
@@ -165,16 +167,13 @@ void SettingsState::updateGUI(const float& deltaTime)
 
 	if (this->buttons["APPLY_BTN"]->isPressed())
 	{
-		//for testing, remove later
-		//RESOLUTION HEIGHT INCORRECT
-		//std::cout 
-		//	<< this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()].width
-		//	<< " x "
-		//	<< this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()].height << "\n";
-
 		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
 
-		this->window->create(this->stateData->graphicsSettings->Resolution, "Spuh", sf::Style::Default);
+		this->window->create(
+			this->stateData->graphicsSettings->Resolution, 
+			this->stateData->graphicsSettings->Title, 
+			sf::Style::Default
+		);
 	}
 
 	//DropdownList
@@ -182,29 +181,20 @@ void SettingsState::updateGUI(const float& deltaTime)
 	{
 		it->second->update(this->mousePositionWindow, deltaTime);
 	}
-	//RESOLUTION HEIGHT INCORRECT
+
 	this->text.setString(
 		"Resolution: "
 		+ std::to_string(this->stateData->graphicsSettings->Resolution.width)
 		+ " x "
 		+ std::to_string(this->stateData->graphicsSettings->Resolution.height) + "\n"
 		+ "Fullscreen \nVsync \nAntialiasing");
-
-	//DropdownList Functionality
 }
 
 void SettingsState::update(const float& deltaTime)
 {
 	this->updateMousePositions();
 
-	//this->updatePlayerInput(deltaTime);
-
 	this->updateGUI(deltaTime);
-
-	//this->ddl->update(this->MousePositionView, deltaTime);
-	//DEBUG
-	//system("cls");
-	//std::cout << this->MousePositionView.x << " " << this->MousePositionView.y;
 }
 
 //Render Methods

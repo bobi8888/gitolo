@@ -106,7 +106,6 @@ const sf::FloatRect Entity::getHitboxGlobalBounds() const
 	return this->hitboxComponent->getGlobalBounds();
 }
 
-
 const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
 {
 	if (this->hitboxComponent && this->movementComponent)
