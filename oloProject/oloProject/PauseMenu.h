@@ -28,10 +28,10 @@ public:
 	const bool isButtonPressed(const std::string key);
 
 	void addButton(
-		const std::string key, 
-		const std::string text, 
-		float xPos, 
-		float yPos
+		float xPos, float yPos, float width, float height,
+		const std::string key, const std::string text, const unsigned char_size 
+		
+		
 	);
 
 	void update(const sf::Vector2i& mousePosWindow);

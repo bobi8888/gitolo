@@ -95,25 +95,24 @@ void EditorState::initPauseMenu()
 {
 	this->pauseMenu = new PauseMenu(*this->window, this->font);
 
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
 	this->pauseMenu->addButton(
-		"QUIT",
-		"Quit Game",
-		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y + 100.f
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(35.f, videoMode),
+		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
+		"SAVE",	"Save texture map", gui::calculateCharSize(75, videoMode)
 	);
 
 	this->pauseMenu->addButton(
-		"SAVE",
-		"Save texture map",
-		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y - 75.f
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(45.f, videoMode),
+		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
+		"LOAD",	"Load texture map", gui::calculateCharSize(75, videoMode)
 	);
 
 	this->pauseMenu->addButton(
-		"LOAD",
-		"Load texture map",
-		this->pauseMenu->getContainer().getPosition().x,
-		this->pauseMenu->getContainer().getPosition().y
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(65.f, videoMode),
+		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
+		"QUIT", "Quit Game", gui::calculateCharSize(75, videoMode)
 	);
 }
 

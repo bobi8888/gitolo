@@ -78,21 +78,20 @@ const bool PauseMenu::isButtonPressed(const std::string key)
 }
 
 void PauseMenu::addButton(
-	const std::string key, 
-	const std::string text, 
-	float xPos, 
-	float yPos
+	float xPos, float yPos,	float width, float height,
+	const std::string key, const std::string text, const unsigned char_size 
 	)
 {
-	float width = 150.f;
-	float height = 50.f;
+	//float width = 150.f;
+	//float height = 50.f;
+	
 	//xPos, yPos, width, height,
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 	this->Buttons[key] = new gui::Button(
 		xPos, yPos, width, height,
-		&this->Font, text, 20,
+		&this->Font, text, char_size,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
