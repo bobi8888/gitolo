@@ -86,14 +86,14 @@ void GameState::initTextures()
 
 void GameState::initPauseMenu()
 {
-	this->pauseMenu = new PauseMenu(*this->window, this->font);
+	this->pauseMenu = new PauseMenu(this->stateData->graphicsSettings->Resolution, this->font);
 
 	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
 
 	this->pauseMenu->addButton(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(50.f, videoMode),
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
-		"QUIT", "Quit Game", gui::calculateCharSize(75, videoMode)
+		"QUIT", "Quit Game", gui::calculateCharSize(videoMode, 75)
 		);
 
 /*		this->pauseMenu->getContainer().getPosition().x, 

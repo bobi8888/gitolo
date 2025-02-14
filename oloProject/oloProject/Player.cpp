@@ -36,7 +36,7 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	);
 
 	this->animationComponent->addAnimation(
-		"IDLE", 20.f, 
+		"IDLE", 5.f, 
 		0, 0, /*startX & startY*/
 		5, 0, /*# of X frames & # of Y frames*/
 		128, 128 /*width & height of frame*/

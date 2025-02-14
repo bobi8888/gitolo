@@ -3,24 +3,6 @@
 #include "SettingsState.h"
 
 //Initializer Methods
-void SettingsState::initBackground()
-{
-	this->background.setSize(
-		sf::Vector2f
-		(
-			static_cast <float>(this->window->getSize().x),
-			static_cast <float>(this->window->getSize().y)
-		)
-	);
-
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
-	{
-		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
 void SettingsState::initVariables()
 {
 	this->videoModes = sf::VideoMode::getFullscreenModes(); 
@@ -60,31 +42,48 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGUI()
 {
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
+	//Init Background
+	this->background.setSize(
+		sf::Vector2f(
+			static_cast <float>(videoMode.width),
+			static_cast <float>(videoMode.height)
+		)
+	);
+
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
+	{
+		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+
+	//Init Buttons	
+	
 	//xPos, yPos, width, height,
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-
-	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
-
-	this->buttons["BACK_BTN"] = new gui::Button(
-		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(75.f, videoMode), 
-		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->font, "Back", gui::calculateCharSize(60, videoMode),
-		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
-		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
-		);
-
 	this->buttons["APPLY_BTN"] = new gui::Button(
-		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(85.f, videoMode),
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(80.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->font, "Apply", gui::calculateCharSize(60, videoMode),
+		&this->font, "Apply", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 	);
 
+	this->buttons["BACK_BTN"] = new gui::Button(
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(90.f, videoMode), 
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
+		&this->font, "Back", gui::calculateCharSize(videoMode),
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
+	);
+
+	//Init Resolution Dropdown List
 	std::vector<std::string> videoModesStr;
 
 	for (auto& i : this->videoModes)
@@ -95,27 +94,50 @@ void SettingsState::initGUI()
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(3.5f, videoMode),
-		font, videoModesStr.data(), gui::calculateCharSize(110, videoMode),
+		font, videoModesStr.data(), gui::calculateCharSize(videoMode, 110),
 		static_cast<int>(videoModesStr.size())
 	);
-}
 
-void SettingsState::initText()
-{
+	//Init Text
 	this->text.setFont(this->font);
 
-	this->text.setPosition(sf::Vector2f(100.f, 400.f));
+	this->text.setPosition(
+		sf::Vector2f(
+			gui::convertToPixelsX(5.f, videoMode),
+			gui::convertToPixelsY(5.f, videoMode)
+		)
+	);
 
-	this->text.setCharacterSize(30);
+	this->text.setCharacterSize(gui::calculateCharSize(videoMode));
 
 	this->text.setFillColor(sf::Color::Black);
 
 	this->text.setString(
-		"Resolution: " 
-		+ std::to_string(this->stateData->graphicsSettings->Resolution.width) 
-		+ " x " 
+		"Resolution: "
+		+ std::to_string(this->stateData->graphicsSettings->Resolution.width)
+		+ " x "
 		+ std::to_string(this->stateData->graphicsSettings->Resolution.height) + "\n"
-		+ "Fullscreen \nVsync \nAntialiasing");
+		+ "Fullscreen \nVsync \nAntialiasing"
+	);
+}
+
+void SettingsState::resetGUI()
+{
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); it++)
+	{
+		delete it->second;
+	}
+
+	this->buttons.clear();
+
+	for (auto it2 = this->dropdownMap.begin(); it2 != this->dropdownMap.end(); it2++)
+	{
+		delete it2->second;
+	}
+
+	this->dropdownMap.clear();
+
+	this->initGUI();
 }
 
 //Constructors & Destructor
@@ -123,11 +145,12 @@ SettingsState::SettingsState(StateData* stateData)
 	: State(stateData)
 {
 	this->initVariables();
-	this->initBackground();
+
 	this->initFonts();
+
 	this->initGUI();
+
 	this->initKeybinds();
-	this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -174,6 +197,8 @@ void SettingsState::updateGUI(const float& deltaTime)
 			this->stateData->graphicsSettings->Title, 
 			sf::Style::Default
 		);
+
+		this->resetGUI();
 	}
 
 	//DropdownList

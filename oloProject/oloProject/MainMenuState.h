@@ -28,7 +28,8 @@ private:
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
-	void initButtons();
+	void initGUI();
+	void resetGUI();
 
 public:
 	//Constructors & Destructor

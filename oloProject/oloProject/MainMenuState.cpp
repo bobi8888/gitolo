@@ -59,7 +59,7 @@ void MainMenuState::initKeybinds()
 	//this->Keybinds["MOVE_UP"] = this->SupportedKeys->at("W");
 }
 
-void MainMenuState::initButtons()
+void MainMenuState::initGUI()
 {	
 	//xPos, yPos, width, height,
 	//font, textString, char_size, 
@@ -70,38 +70,45 @@ void MainMenuState::initButtons()
 	this->buttons["NEW_GAME_BTN"] = new gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(25.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->Font, "New Game", gui::calculateCharSize(60, videoMode),
+		&this->Font, "New Game", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White, 
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
-		);
+	);
 	
 	this->buttons["EDITOR_BTN"] = new  gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(32.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->Font, "Editor", gui::calculateCharSize(60, videoMode),
+		&this->Font, "Editor", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
-		);
+	);
 
 	this->buttons["SETTINGS_BTN"] = new  gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(39.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->Font, "Settings", gui::calculateCharSize(60, videoMode),
+		&this->Font, "Settings", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
-		);
+	);
 
 	this->buttons["EXIT_BTN"] = new  gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(46.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
-		&this->Font, "Quit", gui::calculateCharSize(60, videoMode),
+		&this->Font, "Quit", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
-		);
+	);
+}
+
+void MainMenuState::resetGUI()
+{
+	this->buttons.clear();
+
+	this->initGUI();
 }
 
 //Constructors & Destructor
@@ -109,12 +116,14 @@ MainMenuState::MainMenuState(StateData* stateData)
 	: State(stateData)
 {
 	this->initVariables();
-	this->initBackground();
-	this->initFonts();
-	this->initButtons();
-	this->initKeybinds();
 
-	//DEBUG
+	this->initBackground();
+
+	this->initFonts();
+
+	this->initGUI();
+
+	this->initKeybinds();
 }
 
 MainMenuState::~MainMenuState()

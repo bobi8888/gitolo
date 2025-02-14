@@ -16,7 +16,7 @@ const float gui::convertToPixelsY(const float percent, const sf::VideoMode& vide
 	);
 }
 
-const unsigned gui::calculateCharSize(const int divisor, const sf::VideoMode& videoMode)
+const unsigned gui::calculateCharSize( const sf::VideoMode& videoMode, const unsigned divisor)
 {
 	return static_cast<unsigned>((videoMode.width + videoMode.height) / divisor);
 }

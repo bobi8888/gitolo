@@ -9,7 +9,7 @@ namespace gui
 
 	const float convertToPixelsY(const float percent, const sf::VideoMode& videoMode);
 
-	const unsigned calculateCharSize(const int divisor, const sf::VideoMode& videoMode);
+	const unsigned calculateCharSize(const sf::VideoMode& videoMode, const unsigned divisor = 60);
 
 	class Button
 	{
