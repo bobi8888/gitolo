@@ -9,15 +9,17 @@ class PauseMenu
 private:
 	sf::Font& font;
 	sf::Text text;
+
 	sf::RectangleShape background;
 	sf::RectangleShape container;
+
 	std::map<std::string, gui::Button*> buttons;
 
 	//Private Methods
 
 public:
 	//Constructors & Desctructor
-	PauseMenu(sf::VideoMode& videoMode,sf::Font& font);
+	PauseMenu(sf::VideoMode& video_Mode,sf::Font& font);
 
 	virtual ~PauseMenu();
 
@@ -33,7 +35,7 @@ public:
 		const std::string key, const std::string text, const unsigned char_size 		
 	);
 
-	void update(const sf::Vector2i& mousePosWindow);
+	void update(const sf::Vector2i& mouse_Pos_Window);
 
 	void render(sf::RenderTarget& target);
 

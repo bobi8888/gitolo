@@ -87,6 +87,8 @@ namespace gui
 			std::string font
 		);
 
+		Bar(sf::VideoMode& video_Mode, std::string font);
+
 		~Bar();
 
 		//Methods
@@ -110,7 +112,9 @@ namespace gui
 
 	public:
 		//Constructors & Destructor
-		Sphere(float radius, sf::Vector2f position);
+		//Sphere(float radius, sf::Vector2f position);
+
+		Sphere(sf::VideoMode& video_Mode);
 
 		~Sphere();
 

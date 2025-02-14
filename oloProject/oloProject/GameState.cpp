@@ -107,7 +107,7 @@ void GameState::initPlayers()
 
 void GameState::initPlayerGUI()
 {
-	this->playerGUI = new PlayerGUI(this->player);
+	this->playerGUI = new PlayerGUI(this->player, this->stateData->graphicsSettings->Resolution);
 }
 
 void GameState::initTileMap()

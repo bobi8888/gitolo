@@ -1,26 +1,8 @@
-#include "stdafx.h"
+	#include "stdafx.h"
 
 #include "MainMenuState.h"
 
 //Initializer Methods
-void MainMenuState::initBackground()
-{
-	this->background.setSize(
-		sf::Vector2f
-		(
-			static_cast <float>(this->window->getSize().x),
-			static_cast <float>(this->window->getSize().y)
-		)
-	);
-
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
-	{
-		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
 void MainMenuState::initVariables()
 {
 	//this->BackgroundTexture;
@@ -61,12 +43,29 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initGUI()
 {	
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
+	//Init Background
+	this->background.setSize(
+		sf::Vector2f(
+			static_cast <float>(videoMode.width),
+			static_cast <float>(videoMode.height)
+		)
+	);
+
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
+	{
+		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+
+	//Init Buttons
+
 	//xPos, yPos, width, height,
 	//font, textString, char_size, 
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
-	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
-
 	this->buttons["NEW_GAME_BTN"] = new gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(25.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
@@ -75,7 +74,7 @@ void MainMenuState::initGUI()
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(74, 74, 74, 200), sf::Color(74, 74, 74, 255), sf::Color(24, 74, 74, 200)
 	);
-	
+
 	this->buttons["EDITOR_BTN"] = new  gui::Button(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(32.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
@@ -106,6 +105,11 @@ void MainMenuState::initGUI()
 
 void MainMenuState::resetGUI()
 {
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
+
 	this->buttons.clear();
 
 	this->initGUI();
@@ -116,8 +120,6 @@ MainMenuState::MainMenuState(StateData* stateData)
 	: State(stateData)
 {
 	this->initVariables();
-
-	this->initBackground();
 
 	this->initFonts();
 

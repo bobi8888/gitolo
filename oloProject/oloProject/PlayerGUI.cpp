@@ -8,22 +8,27 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHpBar()
 {
-	this->hpBar = new gui::Bar(
-		20.f, 5.f,
-		this->player->getSpritePosition(),
-		"Fonts/RobotoCondensed-Regular.ttf"
-	);
+	//this->hpBar = new gui::Bar(
+	//	20.f, 5.f,
+	//	this->player->getSpritePosition(),
+	//	"Fonts/RobotoCondensed-Regular.ttf"
+	//);
+
+	this->hpBar = new gui::Bar(this->videoMode, "Fonts/RobotoCondensed-Regular.ttf");
 }
 
 void PlayerGUI::initExpSphere()
 {
-	this->expSphere = new gui::Sphere(
-		10.f, this->player->getSpritePosition()
-	);
+	//this->expSphere = new gui::Sphere(
+	//	10.f, this->player->getSpritePosition()
+	//);
+
+	this->expSphere = new gui::Sphere(this->videoMode);
 }
 
 //Constructors & destructor
-PlayerGUI::PlayerGUI(Player* player)
+PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& video_Mode)
+	:videoMode(video_Mode)
 {
 	this->player = player;
 
@@ -31,8 +36,7 @@ PlayerGUI::PlayerGUI(Player* player)
 
 	this->initHpBar();
 
-	this->initExpSphere();
-	
+	this->initExpSphere();	
 }
 
 PlayerGUI::~PlayerGUI()

@@ -24,11 +24,14 @@ private:
 	std::map<std::string, gui::Button*> buttons;
 
 	//Initializer Methods
-	void initBackground();
 	void initVariables();
+
 	void initFonts();
+
 	void initKeybinds();
+
 	void initGUI();
+
 	void resetGUI();
 
 public:

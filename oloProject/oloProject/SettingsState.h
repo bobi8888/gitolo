@@ -37,18 +37,18 @@ private:
 
 public:
     //Constructors & Destructor
-    SettingsState(StateData* stateData);
+    SettingsState(StateData* state_Data);
 
     virtual ~SettingsState();
 
     //Accessor Methods
 
     //Methods
-	void updatePlayerInput(const float& deltaTime);
+	void updatePlayerInput(const float& delta_Time);
 
-	void updateGUI(const float& deltaTime);
+	void updateGUI(const float& delta_Time);
 
-	void update(const float& deltaTime);	
+	void update(const float& delta_Time);	
 
 	void renderGUI(sf::RenderTarget& target);
 

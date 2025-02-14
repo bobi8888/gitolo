@@ -11,6 +11,7 @@ class PlayerGUI
 private:
 	Player* player;
 
+	sf::VideoMode& videoMode;
 	sf::Font font;
 
 	gui::Bar* hpBar;
@@ -25,7 +26,7 @@ private:
 
 public:
 	//Constructors & destructor
-	PlayerGUI(Player* player);
+	PlayerGUI(Player* player, sf::VideoMode& video_Mode);
 	
 	~PlayerGUI();
 

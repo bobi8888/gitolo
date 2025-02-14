@@ -192,6 +192,32 @@ gui::Bar::Bar(
 	this->text.setCharacterSize(12);
 	this->text.setPosition(sf::Vector2f(position.x - 5.f, position.y));
 }
+
+gui::Bar::Bar(sf::VideoMode& video_Mode, std::string font)
+{
+	float width = gui::convertToPixelsX(1.6f, video_Mode);
+	float height = gui::convertToPixelsY(2.8f, video_Mode);
+	float x = gui::convertToPixelsX(1.1f, video_Mode);
+	float y = gui::convertToPixelsY(1.9f, video_Mode);
+
+	this->barBack.setSize(sf::Vector2f(width, height));
+	this->barBack.setFillColor(sf::Color::Red);
+	this->barBack.setPosition(sf::Vector2f(x, y));
+
+	this->barFront.setSize(sf::Vector2f(width, height));
+	this->barFront.setFillColor(sf::Color::Green);
+	this->barFront.setPosition(sf::Vector2f(x, y));
+
+	this->maxWidth = width;
+	this->height = height;
+
+	this->font.loadFromFile(font);
+
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(12);
+	this->text.setPosition(sf::Vector2f(x - 5.f, y));
+}
+
 gui::Bar::~Bar()
 {
 
@@ -236,18 +262,39 @@ void gui::Bar::render(sf::RenderTarget& target)
 //Sphere=========================================================================================================
 
 //Constructor & Destructor
-gui::Sphere::Sphere(float radius, sf::Vector2f position)
+//gui::Sphere::Sphere(float radius, sf::Vector2f position)
+//{
+//	this->circleBack.setRadius(radius);
+//	this->circleBack.setOutlineThickness(1.f);
+//	this->circleBack.setOutlineColor(sf::Color::White);
+//	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
+//	this->circleBack.setPosition(position);
+//	this->circleBack.setPointCount(30);
+//
+//	this->circleFront.setRadius(radius);
+//	this->circleFront.setFillColor(sf::Color::Yellow);
+//	this->circleFront.setPosition(position);
+//	this->circleFront.setPointCount(30);
+//
+//	this->maxRadius = radius;
+//}
+
+gui::Sphere::Sphere(sf::VideoMode& video_Mode)
 {
+	float radius = gui::convertToPixelsX(1.f, video_Mode);
+	float x = gui::convertToPixelsX(1.1f, video_Mode);
+	float y = gui::convertToPixelsY(1.9f, video_Mode);
+
 	this->circleBack.setRadius(radius);
 	this->circleBack.setOutlineThickness(1.f);
 	this->circleBack.setOutlineColor(sf::Color::White);
 	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
-	this->circleBack.setPosition(position);
+	this->circleBack.setPosition(sf::Vector2f(x, y));
 	this->circleBack.setPointCount(30);
 
 	this->circleFront.setRadius(radius);
 	this->circleFront.setFillColor(sf::Color::Yellow);
-	this->circleFront.setPosition(position);
+	this->circleFront.setPosition(sf::Vector2f(x, y));
 	this->circleFront.setPointCount(30);
 
 	this->maxRadius = radius;

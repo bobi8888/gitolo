@@ -141,8 +141,8 @@ void SettingsState::resetGUI()
 }
 
 //Constructors & Destructor
-SettingsState::SettingsState(StateData* stateData) 
-	: State(stateData)
+SettingsState::SettingsState(StateData* state_Data) 
+	: State(state_Data)
 {
 	this->initVariables();
 
@@ -167,27 +167,26 @@ SettingsState::~SettingsState()
 }
 
 //Update Methods
-void SettingsState::updatePlayerInput(const float& deltaTime)
+void SettingsState::updatePlayerInput(const float& delta_Time)
 {
 
 }
 
-void SettingsState::updateGUI(const float& deltaTime)
+void SettingsState::updateGUI(const float& delta_Time)
 {
-	//Updates all the GUI elements in the state and handle their functionality
 	//Buttons
-	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+		for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
 		it->second->update(this->mousePositionWindow);
 	}
 
-	//Button Functionality
 	//Quit State
 	if (this->buttons["BACK_BTN"]->isPressed())
 	{
 		this->endState();
 	}
-
+	
+	//Apply New Resolution
 	if (this->buttons["APPLY_BTN"]->isPressed())
 	{
 		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
@@ -204,7 +203,7 @@ void SettingsState::updateGUI(const float& deltaTime)
 	//DropdownList
 	for (auto it = this->dropdownMap.begin(); it != this->dropdownMap.end(); ++it)
 	{
-		it->second->update(this->mousePositionWindow, deltaTime);
+		it->second->update(this->mousePositionWindow, delta_Time);
 	}
 
 	this->text.setString(
@@ -215,11 +214,11 @@ void SettingsState::updateGUI(const float& deltaTime)
 		+ "Fullscreen \nVsync \nAntialiasing");
 }
 
-void SettingsState::update(const float& deltaTime)
+void SettingsState::update(const float& delta_Time)
 {
 	this->updateMousePositions();
 
-	this->updateGUI(deltaTime);
+	this->updateGUI(delta_Time);
 }
 
 //Render Methods

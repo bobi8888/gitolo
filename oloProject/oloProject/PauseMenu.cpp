@@ -3,14 +3,14 @@
 #include "PauseMenu.h"
 
 //Constructors & Desctructor
-PauseMenu::PauseMenu(sf::VideoMode& videoMode,sf::Font& font)
+PauseMenu::PauseMenu(sf::VideoMode& video_Mode,sf::Font& font)
 	: font(font)
 {
 	//Init Background
 	this->background.setSize(
 		sf::Vector2f(
-			static_cast<float>(videoMode.width), 
-			static_cast<float>(videoMode.height)
+			static_cast<float>(video_Mode.width),
+			static_cast<float>(video_Mode.height)
 		)
 	);
 
@@ -23,8 +23,8 @@ PauseMenu::PauseMenu(sf::VideoMode& videoMode,sf::Font& font)
 
 	this->background.setPosition(
 		sf::Vector2f(
-			static_cast<float>(videoMode.width / 2.f),
-			static_cast<float>(videoMode.height / 2.f)
+			static_cast<float>(video_Mode.width / 2.f),
+			static_cast<float>(video_Mode.height / 2.f)
 		)
 	);
 
@@ -33,8 +33,8 @@ PauseMenu::PauseMenu(sf::VideoMode& videoMode,sf::Font& font)
 	//Init Container
 	this->container.setSize(
 		sf::Vector2f(
-			static_cast<float>(videoMode.width / 3.f),
-			static_cast<float>(videoMode.height / 2.f)
+			static_cast<float>(video_Mode.width / 3.f),
+			static_cast<float>(video_Mode.height / 2.f)
 		)
 	);
 
@@ -54,7 +54,7 @@ PauseMenu::PauseMenu(sf::VideoMode& videoMode,sf::Font& font)
 
 	this->text.setFillColor(sf::Color::Blue);
 
-	this->text.setCharacterSize(gui::calculateCharSize(videoMode));
+	this->text.setCharacterSize(gui::calculateCharSize(video_Mode));
 
 	this->text.setString("::PAUSED::");
 
@@ -66,7 +66,7 @@ PauseMenu::PauseMenu(sf::VideoMode& videoMode,sf::Font& font)
 
 	this->text.setPosition(
 		container.getPosition().x, 
-		container.getPosition().y - gui::convertToPixelsY(22.5f, videoMode)
+		container.getPosition().y - gui::convertToPixelsY(22.5f, video_Mode)
 	);
 }
 
@@ -108,11 +108,11 @@ void PauseMenu::addButton(
 	);
 }
 
-void PauseMenu::update(const sf::Vector2i& mousePosWindow)
+void PauseMenu::update(const sf::Vector2i& mouse_Pos_Window)
 {
 	for (auto &i : this->buttons)
 	{
-		i.second->update(mousePosWindow);
+		i.second->update(mouse_Pos_Window);
 	}
 }
 
