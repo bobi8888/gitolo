@@ -74,20 +74,20 @@ namespace gui
 	private:
 		sf::Font font;
 		sf::Text text;
+
 		sf::RectangleShape barBack;
 		sf::RectangleShape barFront;
 
-		float maxWidth, height;
+		float maxWidth, height, xOffset, yOffset;
 
 	public:
 		//Constructors & Destructor
 		Bar(
-			float width, float height, 
-			sf::Vector2f position, 
+			const float width, const float height, 
+			const float x_Offset, const float y_Offset,
+			const sf::Vector2f& position,
 			std::string font
 		);
-
-		Bar(sf::VideoMode& video_Mode, std::string font);
 
 		~Bar();
 
@@ -114,7 +114,7 @@ namespace gui
 		//Constructors & Destructor
 		//Sphere(float radius, sf::Vector2f position);
 
-		Sphere(sf::VideoMode& video_Mode);
+		Sphere(sf::VideoMode& video_Mode, float radius, float x, float y);
 
 		~Sphere();
 
