@@ -142,16 +142,19 @@ void gui::Button::update(const sf::Vector2i& mousePosWindow)
 			this->Text.setFillColor(this->TextIdleColor);
 			this->Text.setOutlineColor(this->OutlineIdleColor);
 			break;
+
 		case BTN_HOVER:
 			this->Rectangle.setFillColor(this->HoverColor);
 			this->Text.setFillColor(this->TextHoverColor);
 			this->Text.setOutlineColor(this->OutlineHoverColor);
 			break;
+
 		case BTN_ACTIVE:
 			this->Rectangle.setFillColor(this->ActiveColor);
 			this->Text.setFillColor(this->TextActiveColor);
 			this->Text.setOutlineColor(this->OutlineActiveColor);
 			break;
+
 		default:
 			this->Rectangle.setFillColor(sf::Color::Red);
 			this->Text.setFillColor(sf::Color::Black);
@@ -170,28 +173,40 @@ void gui::Button::render(sf::RenderTarget& target)
 
 //Constructords & Destructor
 gui::Bar::Bar(
+	const sf::VideoMode& video_Mode,
+	const sf::Vector2f& position,
 	const float width, const float height,
 	const float x_Offset, const float y_Offset,
-	const sf::Vector2f& position,
-	std::string font
-	) : maxWidth(width), height(height), xOffset(x_Offset), yOffset(y_Offset)
+	const std::string font
+	)
 {
-	this->barBack.setSize(sf::Vector2f(width, height));
-	this->barBack.setFillColor(sf::Color::Red);
-	this->barBack.setPosition(position.x + xOffset, position.y + yOffset);
+	this->maxWidth = gui::convertToPixelsX(width, video_Mode);
+	this->height = gui::convertToPixelsY(height, video_Mode);
+	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
+	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
 
-	this->barFront.setSize(sf::Vector2f(width, height));
+	this->barBack.setSize(sf::Vector2f(this->maxWidth, this->height));
+	this->barBack.setFillColor(sf::Color::Red);
+	this->barBack.setPosition(
+		position.x + this->xOffset, 
+		position.y + this->yOffset
+	);
+
+	this->barFront.setSize(sf::Vector2f(this->maxWidth, this->height));
 	this->barFront.setFillColor(sf::Color::Green);
-	this->barFront.setPosition(position.x + xOffset, position.y + yOffset);
+	this->barFront.setPosition(
+		position.x + this->xOffset,
+		position.y + this->yOffset
+	);
 
 	this->font.loadFromFile(font);
 
 	this->text.setFont(this->font);
-	this->text.setCharacterSize(12);
+	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 150));
 	this->text.setPosition(
 		sf::Vector2f(
-			position.x - 5.f + xOffset, 
-			position.y + yOffset
+			position.x - this->xOffset, 
+			position.y + this->yOffset
 		)
 	);
 }
@@ -204,16 +219,13 @@ gui::Bar::~Bar()
 //Methods
 void gui::Bar::updatePosition(const sf::Vector2f position)
 {
-	this->barBack.setPosition(position.x + xOffset, position.y + yOffset);
+	//FLOOR these
 
-	this->barFront.setPosition(position.x + xOffset, position.y + yOffset);
+	this->barBack.setPosition(position.x + this->xOffset, position.y + this->yOffset);
 
-	this->text.setPosition(
-		sf::Vector2f(
-			position.x - 5.f + xOffset,
-			position.y + yOffset
-		)
-	);
+	this->barFront.setPosition(position.x + this->xOffset, position.y + this->yOffset);
+
+	this->text.setPosition(position.x - this->xOffset, position.y + this->yOffset);
 }
 
 void gui::Bar::updateText(std::string string)
@@ -262,28 +274,34 @@ void gui::Bar::render(sf::RenderTarget& target)
 //	this->maxRadius = radius;
 //}
 
-gui::Sphere::Sphere(sf::VideoMode& video_Mode, float radius, float xPos, float yPos)
+gui::Sphere::Sphere(
+	const sf::VideoMode& video_Mode, 
+	const sf::Vector2f& position,
+	const float radius, 
+	const float x_Offset, const float y_Offset
+	)
 {
-	float r = gui::convertToPixelsX(radius, video_Mode);
-	float x = gui::convertToPixelsX(xPos, video_Mode);
-	float y = gui::convertToPixelsY(yPos, video_Mode);
+	this->maxRadius = gui::convertToPixelsX(radius, video_Mode);
+	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
+	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
 
-	std::cout << "x: " << x << "\n";
-	std::cout << "y: " << y << "\n";
-
-	this->circleBack.setRadius(r);
+	this->circleBack.setRadius(this->maxRadius);
+	this->circleBack.setPointCount(30);
 	this->circleBack.setOutlineThickness(1.f);
 	this->circleBack.setOutlineColor(sf::Color::White);
 	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
-	this->circleBack.setPosition(sf::Vector2f(x, y));
-	this->circleBack.setPointCount(30);
+	this->circleBack.setPosition(
+		position.x + this->xOffset,
+		position.y + this->yOffset
+	);
 
-	this->circleFront.setRadius(r);
-	this->circleFront.setFillColor(sf::Color::Yellow);
-	this->circleFront.setPosition(sf::Vector2f(x, y));
+	this->circleFront.setRadius(this->maxRadius);
 	this->circleFront.setPointCount(30);
-
-	this->maxRadius = r;
+	this->circleFront.setFillColor(sf::Color::Yellow);
+	this->circleFront.setPosition(
+		position.x + this->xOffset,
+		position.y + this->yOffset
+	);
 }
 
 gui::Sphere::~Sphere()
@@ -293,20 +311,20 @@ gui::Sphere::~Sphere()
 //Methods
 void gui::Sphere::updatePosition(const sf::Vector2f position)
 {
-	this->circleBack.setPosition(position);
+	//FLOOR these
+	this->circleBack.setPosition(
+		position.x + this->xOffset, 
+		position.y + this->yOffset
+	);
 
 	this->circleFront.setOrigin(
-		sf::Vector2f(
-			this->circleFront.getRadius(),
-			this->circleFront.getRadius() 
-		)
+		this->circleFront.getRadius(), 
+		this->circleFront.getRadius()
 	);
 
 	this->circleFront.setPosition(
-		sf::Vector2f(
-			this->circleBack.getPosition().x + this->circleBack.getRadius(),
-			this->circleBack.getPosition().y + this->circleBack.getRadius()
-		)
+		this->circleBack.getPosition().x + this->circleBack.getRadius(),
+		this->circleBack.getPosition().y + this->circleBack.getRadius()
 	);
 }
 

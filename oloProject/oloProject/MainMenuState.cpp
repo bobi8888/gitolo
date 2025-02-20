@@ -211,14 +211,14 @@ void MainMenuState::render(sf::RenderTarget* target)
 	this->renderButtons(*target);
 
 	//Debugging
-	sf::Text mouse_text;
-	mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
-	mouse_text.setFont(this->Font);
-	mouse_text.setCharacterSize(18);
-	std::stringstream ss;
-	ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
-	mouse_text.setString(ss.str());
+		sf::Text mouse_text;
+		mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+		mouse_text.setFont(this->Font);
+		mouse_text.setCharacterSize(18);
+		std::stringstream ss;
+		ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
+		mouse_text.setString(ss.str());
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-		target->draw(mouse_text);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+			target->draw(mouse_text);
 }

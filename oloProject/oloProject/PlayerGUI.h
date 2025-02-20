@@ -15,7 +15,6 @@ private:
 	sf::Font font;
 
 	gui::Bar* hpBar;
-
 	gui::Sphere* expSphere;
 
 	void initFont();

@@ -83,10 +83,11 @@ namespace gui
 	public:
 		//Constructors & Destructor
 		Bar(
+			const sf::VideoMode& video_Mode,
+			const sf::Vector2f& position,
 			const float width, const float height, 
 			const float x_Offset, const float y_Offset,
-			const sf::Vector2f& position,
-			std::string font
+			const std::string font
 		);
 
 		~Bar();
@@ -108,13 +109,18 @@ namespace gui
 		sf::CircleShape circleBack;
 		sf::CircleShape circleFront;
 
-		float maxRadius;
+		float maxRadius, xOffset, yOffset;
 
 	public:
 		//Constructors & Destructor
-		//Sphere(float radius, sf::Vector2f position);
+		Sphere(
+			const sf::VideoMode& video_Mode,
+			const sf::Vector2f& position,
+			const float radius, 
+			const float x_Offset, const float y_Offset
+		);
 
-		Sphere(sf::VideoMode& video_Mode, float radius, float x, float y);
+		//Sphere(sf::VideoMode& video_Mode, float radius, float x, float y);
 
 		~Sphere();
 

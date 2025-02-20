@@ -73,8 +73,8 @@ void GameState::initFonts()
 
 void GameState::initTextures()
 {
-	if (!this->texturesMap["SKIRT_SHEET"].loadFromFile(
-		"Resources/Images/Sprites/Skirt/ROBO_ROBO.png"
+	if (!this->texturesMap["ROBO_100"].loadFromFile(
+		"Resources/Images/Sprites/Robo/ROBO_100.png"
 		)
 	)
 	
@@ -102,7 +102,7 @@ void GameState::initPauseMenu()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->texturesMap["SKIRT_SHEET"], 0, 0);
+	this->player = new Player(this->texturesMap["ROBO_100"], 0, 0);
 }
 
 void GameState::initPlayerGUI()
@@ -159,8 +159,16 @@ void GameState::updateView(const float& deltaTime)
 	//look into this for a better explaination
 
 	this->view.setCenter(
-		std::floor(this->player->getHitboxPosition().x),
-		std::floor(this->player->getHitboxPosition().y)
+		//move camera with player movement
+		std::floor(this->player->getHitboxPosition().x 
+			//move camera with mouse movement
+			+ (static_cast<float>(this->mousePositionWindow.x) 
+			- static_cast<float>(this->stateData->graphicsSettings->Resolution.width / 2)) / 5.f),
+		//move camera with player movement
+		std::floor(this->player->getHitboxPosition().y 
+			//move camera with mouse movement
+			+ (static_cast<float>(this->mousePositionWindow.y)
+			- static_cast<float>(this->stateData->graphicsSettings->Resolution.height / 2)) / 5.f)
 	);
 }
 

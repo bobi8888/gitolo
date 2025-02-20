@@ -9,20 +9,22 @@ void PlayerGUI::initFont()
 void PlayerGUI::initHpBar()
 {
 	this->hpBar = new gui::Bar(
-		100.f, 10.f, 
-		-50.f, 50.f, 
-		this->player->getSpritePosition(), 
+		this->videoMode,
+		this->player->getSpritePosition(),
+		10.f, 2.f, 
+		-0.5f, 1.f, 
 		"Fonts/RobotoCondensed-Regular.ttf"
 	);
 }
 
 void PlayerGUI::initExpSphere()
 {
-	//this->expSphere = new gui::Sphere(
-	//	10.f, this->player->getSpritePosition()
-	//);
-
-	this->expSphere = new gui::Sphere(this->videoMode, 5.f, 5.f, 5.f);
+	this->expSphere = new gui::Sphere(
+		this->videoMode, 
+		this->player->getSpritePosition(),
+		1.5f, 
+		-2.f, 1.f
+	);
 }
 
 //Constructors & destructor

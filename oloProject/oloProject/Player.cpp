@@ -21,42 +21,46 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 
 	this->createAnimationComponent(texture_sheet);
 
-	//_______________________________________key____timer___startX__startY__framesX_framesY__W___H
+	//Animations
+	/*name & speed*/
+	/*startX & startY*/
+	/*# of X frames & # of Y frames*/
+	/*width & height of frame*/
 	
-	//this->animationComponent->addAnimation("WALK",   10.f,    0,     2,      6,      2,   128, 128);
-	//this->animationComponent->addAnimation("IDLE",   10.f,    0,     0,      5,      0,   128, 128);
-	//this->animationComponent->addAnimation("ATTACK", 10.f,    0,     3,      4,      3,   128, 128);
-
 	//Robo sprite
 	this->animationComponent->addAnimation(
-		"WALK", 10.f, 
-		0, 2, 
-		5, 2, 
-		128, 128
+		"IDLE", 8.f, /*name & speed*/
+		0, 0, /* startX & startY*/
+		5, 0, /* index of X frames & index of Y frames*/
+		100, 100 /* width & height of frame*/
 	);
 
 	this->animationComponent->addAnimation(
-		"IDLE", 5.f, 
-		0, 0, /*startX & startY*/
-		5, 0, /*# of X frames & # of Y frames*/
-		128, 128 /*width & height of frame*/
+		"WALK_RIGHT", 6.f, 
+		0, 1, 
+		5, 1, 
+		100, 100
 	);
 
 	this->animationComponent->addAnimation(
-		"ATTACK", 5.f, 
-		0, 2, 
-		5, 2, 
-		128, 128
+		"WALK_LEFT", 6.f,
+		0, 2,
+		5, 2,
+		100, 100
 	);
 
-	//4 frame knight
-	//this->animationComponent->addAnimation("WALK_RIGHT",10.f,   0,     0,      4,      0,   96, 96);
-	//this->animationComponent->addAnimation("WALK_LEFT", 10.f,   0,     1,      4,      1,   96, 96);
-	//this->animationComponent->addAnimation("IDLE_RIGHT",40.f,   0,     2,      3,      2,   96, 96);
-	//this->animationComponent->addAnimation("IDLE_LEFT", 40.f,   0,     3,      3,      3,   96, 96);
+	this->animationComponent->addAnimation(
+		"ATTACK", 4.f, 
+		0, 0, 
+		5, 0, 
+		100, 100
+	);
  
-	//_______________________________sprite________offsetX_offsetY_width_height
-	this->createHitboxComponent(this->sprite, 47.f, 58.f, 30.f, 70.f);
+	this->createHitboxComponent
+		(this->sprite, 
+		0.f, 0.f, /* x & y offset*/
+		100.f, 100.f /* width & height*/
+	);
 
 	//Robo sprite
 	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
@@ -125,19 +129,21 @@ void Player::updateAnimation(const float& deltaTime)
 		this->sprite.setScale(1.f, 1.f);
 
 		this->animationComponent->play(
-			"WALK", deltaTime, 
+			"WALK_RIGHT", deltaTime, 
 			this->movementComponent->getVelo().x, 
 			this->movementComponent->getMaxVelo()
 		);
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		this->sprite.setOrigin(128.f, 0.f);
+		//this->sprite.setOrigin(128.f, 0.f);
+		this->sprite.setOrigin(0.f, 0.f);
 
-		this->sprite.setScale(-1.f, 1.f);
+		//this->sprite.setScale(-1.f, 1.f);
+		this->sprite.setScale(1.f, 1.f);
 
 		this->animationComponent->play(
-			"WALK", deltaTime, 
+			"WALK_LEFT", deltaTime, 
 			this->movementComponent->getVelo().x, 
 			this->movementComponent->getMaxVelo()
 		);
