@@ -13,7 +13,7 @@ void Game::initVariables()
 
     this->deltaTime = 0.f;
 
-    this->gridSize = 64.f;
+    this->gridSize = 50.f;
 }
 
 void Game::initGraphicsSettings()

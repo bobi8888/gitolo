@@ -42,20 +42,20 @@ const bool MovementComponent::getState(const short unsigned state) const
 			if (this->velocity.x != 0.f || this->velocity.y != 0)
 				return true;
 			break;
-		case MOVING_LEFT:
-			if (this->velocity.x < 0.f)
-				return true;
-			break;
-		case MOVING_RIGHT:
-			if (this->velocity.x > 0.f)
-				return true;
-			break;
 		case MOVING_UP:
 			if (this->velocity.y < 0.f)
 				return true;
 			break;
 		case MOVING_DOWN:
 			if (this->velocity.y > 0.f)
+				return true;
+			break;
+		case MOVING_LEFT:
+			if (this->velocity.x < 0.f)
+				return true;
+			break;
+		case MOVING_RIGHT:
+			if (this->velocity.x > 0.f)
 				return true;
 			break;
 	}

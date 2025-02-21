@@ -55,12 +55,6 @@ void GameState::initKeybinds()
 	}
 
 	ifs.close();
-
-	//this->Keybinds["CLOSE"] = this->SupportedKeys->at("Escape");
-	//this->Keybinds["MOVE_LEFT"] = this->SupportedKeys->at("A");
-	//this->Keybinds["MOVE_DOWN"] = this->SupportedKeys->at("S");
-	//this->Keybinds["MOVE_RIGHT"] = this->SupportedKeys->at("D");
-	//this->Keybinds["MOVE_UP"] = this->SupportedKeys->at("W");
 }
 
 void GameState::initFonts()
@@ -78,10 +72,7 @@ void GameState::initTextures()
 		)
 	)
 	
-	//Robo sprite
-	//if (!this->texturesMap["SKIRT_SHEET"].loadFromFile("Resources/Images/Sprites/Robo.png"))
-
-		throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_TEXTURE");
+	throw("ERROR::GameState::COULD_NOT_LOAD_PLAYER_TEXTURE");
 }
 
 void GameState::initPauseMenu()
@@ -116,7 +107,7 @@ void GameState::initTileMap()
 		this->stateData->gridSize, 
 		1000, 1000, 
 		this->texture_rect, 
-		"Resources/Images/Tiles/quadTexture.png"
+		"Resources/Images/Tiles/tiles50.png"
 	);
 
 	this->tileMap->loadFromFile("editorTileMap.txt");

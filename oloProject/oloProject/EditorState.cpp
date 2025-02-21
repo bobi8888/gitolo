@@ -132,7 +132,7 @@ void EditorState::initGui()
 
 	this->textureSelector = new gui::TextureSelector(
 		76.f, 30.f, 
-		300.f, 300.f, 
+		200.f, 200.f, 
 		this->stateData->gridSize, 
 		this->tileMap->getTileTextureSheet(), 
 		this->font, "Show/Hide"
@@ -155,7 +155,7 @@ void EditorState::initTileMap()
 		this->stateData->gridSize, 
 		1000, 1000, 
 		this->tileToolTextureRect, 
-		"Resources/Images/Tiles/quadWithLight.png"
+		"Resources/Images/Tiles/tiles50.png"
 	);
 }
 
@@ -194,7 +194,6 @@ EditorState::~EditorState()
 //Methods
 
 //Update Methods
-
 void EditorState::updatePauseMenuButtons()
 {
 	if (this->pauseMenu->isButtonPressed("QUIT"))

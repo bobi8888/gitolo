@@ -202,11 +202,12 @@ gui::Bar::Bar(
 	this->font.loadFromFile(font);
 
 	this->text.setFont(this->font);
-	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 150));
+	this->text.setFillColor(sf::Color::Black);
+	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 120));
 	this->text.setPosition(
 		sf::Vector2f(
-			position.x - this->xOffset, 
-			position.y + this->yOffset
+			barBack.getPosition().x + 10.f,
+			barBack.getPosition().y + 20.f
 		)
 	);
 }
@@ -225,7 +226,7 @@ void gui::Bar::updatePosition(const sf::Vector2f position)
 
 	this->barFront.setPosition(position.x + this->xOffset, position.y + this->yOffset);
 
-	this->text.setPosition(position.x - this->xOffset, position.y + this->yOffset);
+	this->text.setPosition(this->barBack.getPosition().x, this->barBack.getPosition().y);
 }
 
 void gui::Bar::updateText(std::string string)
@@ -313,8 +314,11 @@ void gui::Sphere::updatePosition(const sf::Vector2f position)
 {
 	//FLOOR these
 	this->circleBack.setPosition(
-		position.x + this->xOffset, 
-		position.y + this->yOffset
+		static_cast<float>(std::floor(position.x + this->xOffset)),
+		static_cast<float>(std::floor(position.y + this->yOffset))
+
+		//position.x + this->xOffset, 
+		//position.y + this->yOffset
 	);
 
 	this->circleFront.setOrigin(
@@ -323,8 +327,8 @@ void gui::Sphere::updatePosition(const sf::Vector2f position)
 	);
 
 	this->circleFront.setPosition(
-		this->circleBack.getPosition().x + this->circleBack.getRadius(),
-		this->circleBack.getPosition().y + this->circleBack.getRadius()
+		static_cast<float>(std::floor(this->circleBack.getPosition().x + this->circleBack.getRadius())),
+		static_cast<float>(std::floor(this->circleBack.getPosition().y + this->circleBack.getRadius()))
 	);
 }
 

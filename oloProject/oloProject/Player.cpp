@@ -9,7 +9,6 @@ void Player::initVariables()
 }
 
 //Constructors/Destructors
-
 Player::Player(sf::Texture& texture_sheet, float x, float y)
 {
 	this->initVariables();
@@ -36,16 +35,30 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	);
 
 	this->animationComponent->addAnimation(
-		"WALK_RIGHT", 6.f, 
-		0, 1, 
-		5, 1, 
+		"WALK_UP", 6.f,
+		0, 1,
+		5, 1,
+		100, 100
+	);
+
+	this->animationComponent->addAnimation(
+		"WALK_DOWN", 6.f,
+		0, 2,
+		5, 2,
 		100, 100
 	);
 
 	this->animationComponent->addAnimation(
 		"WALK_LEFT", 6.f,
-		0, 2,
-		5, 2,
+		0, 3,
+		5, 3,
+		100, 100
+	);
+
+	this->animationComponent->addAnimation(
+		"WALK_RIGHT", 6.f, 
+		0, 4, 
+		5, 4, 
 		100, 100
 	);
 
@@ -58,8 +71,8 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
  
 	this->createHitboxComponent
 		(this->sprite, 
-		0.f, 0.f, /* x & y offset*/
-		100.f, 100.f /* width & height*/
+		30.f, 20.f, /* x & y offset*/
+		40.f, 80.f /* width & height*/
 	);
 
 	//Robo sprite
@@ -89,7 +102,6 @@ HitboxComponent* Player::getHitboxComponent()
 }
 
 //Methods
-
 void Player::updateAttack()
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -110,15 +122,51 @@ void Player::updateAnimation(const float& deltaTime)
 		if (this->animationComponent->play("ATTACK", deltaTime, true))
 			this->isAttacking = false;
 	}
-	else if (this->movementComponent->getDir(UP))
+	//else if (this->movementComponent->getDir(UP))
+	//{
+	//	this->sprite.setOrigin(0.f, 0.f);
+
+	//	this->sprite.setScale(1.f, 1.f);
+
+	//	this->animationComponent->play(
+	//		"WALK", deltaTime,
+	//		this->movementComponent->getVelo().y,
+	//		this->movementComponent->getMaxVelo()
+	//	);
+	//}
+	else if (this->movementComponent->getState(MOVING_UP))
 	{
 		this->sprite.setOrigin(0.f, 0.f);
 
 		this->sprite.setScale(1.f, 1.f);
 
 		this->animationComponent->play(
-			"WALK", deltaTime,
-			this->movementComponent->getVelo().y,
+			"WALK_UP", deltaTime,
+			this->movementComponent->getVelo().x,
+			this->movementComponent->getMaxVelo()
+		);
+	}
+	else if (this->movementComponent->getState(MOVING_DOWN))
+	{
+		this->sprite.setOrigin(0.f, 0.f);
+
+		this->sprite.setScale(1.f, 1.f);
+
+		this->animationComponent->play(
+			"WALK_DOWN", deltaTime,
+			this->movementComponent->getVelo().x,
+			this->movementComponent->getMaxVelo()
+		);
+	}
+	else if (this->movementComponent->getState(MOVING_LEFT))
+	{
+		this->sprite.setOrigin(0.f, 0.f);
+
+		this->sprite.setScale(1.f, 1.f);
+
+		this->animationComponent->play(
+			"WALK_LEFT", deltaTime,
+			this->movementComponent->getVelo().x,
 			this->movementComponent->getMaxVelo()
 		);
 	}
@@ -130,20 +178,6 @@ void Player::updateAnimation(const float& deltaTime)
 
 		this->animationComponent->play(
 			"WALK_RIGHT", deltaTime, 
-			this->movementComponent->getVelo().x, 
-			this->movementComponent->getMaxVelo()
-		);
-	}
-	else if (this->movementComponent->getState(MOVING_LEFT))
-	{
-		//this->sprite.setOrigin(128.f, 0.f);
-		this->sprite.setOrigin(0.f, 0.f);
-
-		//this->sprite.setScale(-1.f, 1.f);
-		this->sprite.setScale(1.f, 1.f);
-
-		this->animationComponent->play(
-			"WALK_LEFT", deltaTime, 
 			this->movementComponent->getVelo().x, 
 			this->movementComponent->getMaxVelo()
 		);

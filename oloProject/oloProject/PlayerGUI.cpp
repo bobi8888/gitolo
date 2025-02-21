@@ -11,8 +11,8 @@ void PlayerGUI::initHpBar()
 	this->hpBar = new gui::Bar(
 		this->videoMode,
 		this->player->getSpritePosition(),
-		10.f, 2.f, 
-		-0.5f, 1.f, 
+		8.f, 2.f, 
+		-4.f, 1.f, 
 		"Fonts/RobotoCondensed-Regular.ttf"
 	);
 }
@@ -23,7 +23,7 @@ void PlayerGUI::initExpSphere()
 		this->videoMode, 
 		this->player->getSpritePosition(),
 		1.5f, 
-		-2.f, 1.f
+		-6.f, 0.75f
 	);
 }
 
