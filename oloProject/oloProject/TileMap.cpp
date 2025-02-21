@@ -419,29 +419,35 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 	}
 }
 
-void TileMap::render(sf::RenderTarget& target, const sf::Vector2i gridPosition)
+void TileMap::render(
+	sf::RenderTarget& target, 
+	const sf::Vector2i& gridPosition,
+	sf::Shader* shader,
+	const sf::Vector2f playerPosition,
+	const bool show_hitbox
+	)
 {
 	this->layer = 0;
 
-	this->fromX = gridPosition.x - 2;
+	this->fromX = gridPosition.x - 12;
 	if (this->fromX < 0)
 		this->fromX = 0;
 	else if (this->fromX > this->maxSizeWorldGrid.x)
 		this->fromX = this->maxSizeWorldGrid.x;
 
-	this->toX = gridPosition.x + 3;
+	this->toX = gridPosition.x + 13;
 	if (this->toX < 0)
 		this->toX = 0;
 	else if (this->toX > this->maxSizeWorldGrid.x)
 		this->toX = this->maxSizeWorldGrid.x;
 
-	this->fromY = gridPosition.y - 1;
+	this->fromY = gridPosition.y - 9;
 	if (this->fromY < 0)
 		this->fromY = 0;
 	else if (this->fromY > this->maxSizeWorldGrid.y)
 		this->fromY = this->maxSizeWorldGrid.y;
 
-	this->toY = gridPosition.y + 4;
+	this->toY = gridPosition.y + 11;
 	if (this->toY < 0)
 		this->toY = 0;
 	else if (this->toY > this->maxSizeWorldGrid.y)
@@ -461,26 +467,35 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i gridPosition)
 				}
 				else
 				{
-					this->tileVectors[x][y][this->layer][k]->render(target);
+					if(shader)
+						this->tileVectors[x][y][this->layer][k]->render(target, shader, playerPosition);
+					else
+						this->tileVectors[x][y][this->layer][k]->render(target);
 				}
 
 
-				if (this->tileVectors[x][y][this->layer][k]->getCollision())
+				if (show_hitbox)
 				{
-					this->collisionBox.setPosition(this->tileVectors[x][y][this->layer][k]->getPosition());
+					if (this->tileVectors[x][y][this->layer][k]->getCollision())
+					{
+						this->collisionBox.setPosition(this->tileVectors[x][y][this->layer][k]->getPosition());
 
-					target.draw(this->collisionBox);
+						target.draw(this->collisionBox);
+					}
 				}
 			}
 		}
 	}
 }
 
-void TileMap::renderDeferred(sf::RenderTarget& target)
+void TileMap::renderDeferred(sf::RenderTarget& target,sf::Shader* shader, const sf::Vector2f playerPosition)
 {
 	while (!this->deferredRenderedStack.empty())
 	{
-		deferredRenderedStack.top()->render(target);
+		if (shader)
+			deferredRenderedStack.top()->render(target, shader, playerPosition);
+		else
+			deferredRenderedStack.top()->render(target);
 
 		deferredRenderedStack.pop();
 	}

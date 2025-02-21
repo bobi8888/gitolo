@@ -46,6 +46,6 @@ public:
 	//Methods
 	void update();
 
-	void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
 };
 

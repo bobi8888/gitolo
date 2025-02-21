@@ -14,18 +14,24 @@ class PlayerGUI;
 class sf::View;
 class sf::Font;
 class sf::RenderTexture;
+class sf::Shader;
 
 class GameState : public State
 {
 private:
 	sf::View view;
 	sf::RenderTexture renderTexture;
+
 	sf::Sprite renderSprite;
+
+	sf::Shader mainShader;
 
 	sf::Font font;
 	sf::Text cursorText;
 
+	//is this needed?
 	PauseMenu* pauseMenu;
+
 	Player* player;
 	PlayerGUI* playerGUI;
 	//Missing a texture here?
@@ -39,6 +45,7 @@ private:
 	void initFonts();
 	void initTextures();
 	void initPauseMenu();
+	void initShaders();
 	void initPlayers();
 	void initPlayerGUI();
 	void initTileMap();

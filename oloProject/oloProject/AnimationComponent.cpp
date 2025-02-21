@@ -99,7 +99,6 @@ const bool& AnimationComponent::play(const std::string key, const float& deltaTi
 	return this->animationSheets[key]->isDone;
 }
 
-
 const bool& AnimationComponent::play(
 	const std::string key, const float& deltaTime, 
 	const float& modifier, const float& modifier_max

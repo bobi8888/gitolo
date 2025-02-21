@@ -86,9 +86,14 @@ void GameState::initPauseMenu()
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
 		"QUIT", "Quit Game", gui::calculateCharSize(videoMode, 75)
 		);
+}
 
-/*		this->pauseMenu->getContainer().getPosition().x, 
-		this->pauseMenu->getContainer().getPosition().y + 200.f	*/	
+void GameState::initShaders()
+{
+	if (!this->mainShader.loadFromFile("vertex_shader.vert", "fragment_shader.frag"))
+	{
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+	}
 }
 
 void GameState::initPlayers()
@@ -123,6 +128,7 @@ GameState::GameState(StateData* stateData)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+	this->initShaders();
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
@@ -258,11 +264,21 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 
-	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
+	this->tileMap->render(
+		this->renderTexture, 
+		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+		&this->mainShader,
+		this->player->getSpriteCenter(),
+		false
+		);
 
-	this->player->render(this->renderTexture);
+	this->player->render(this->renderTexture, &this->mainShader);
 
-	this->tileMap->renderDeferred(this->renderTexture);
+	this->tileMap->renderDeferred(
+		this->renderTexture, 
+		&this->mainShader, 
+		this->player->getSpriteCenter()
+	);
 
 		this->playerGUI->render(this->renderTexture);
 

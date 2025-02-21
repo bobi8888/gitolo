@@ -4,6 +4,11 @@
 
 //static methods
 
+//Clean up void Player::updateAnimation(const float& deltaTime)
+
+//Make a method for determining which animation should be played based on velocity. 
+    //of if it should be based on which key is pressed?
+
 //Initialization methods
 void Game::initVariables()
 {

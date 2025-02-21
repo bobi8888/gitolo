@@ -47,6 +47,8 @@ public:
 	//Accessors
 	virtual const sf::Vector2f& getSpritePosition() const;
 
+	virtual const sf::Vector2f getSpriteCenter() const;
+
 	virtual const sf::Vector2f& getHitboxPosition() const;
 
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
@@ -73,7 +75,7 @@ public:
 
 	virtual void stopVelocityY();
 
-	virtual void update(const float& deltaTime) = 0;
+	virtual void update(const float& delta_Time) = 0;
 
-	virtual void render(sf::RenderTarget& target) = 0;
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_Hitbox) = 0;
 };

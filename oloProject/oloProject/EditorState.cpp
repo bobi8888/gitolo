@@ -386,7 +386,8 @@ void EditorState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 		
-	this->tileMap->render(this->renderTexture, this->mousePositionGrid);
+	//this->tileMap->render(this->renderTexture, this->mousePositionGrid);
+	this->tileMap->render(*target, this->mousePositionGrid, NULL, sf::Vector2f(), true);
 
 	this->tileMap->renderDeferred(this->renderTexture);
 

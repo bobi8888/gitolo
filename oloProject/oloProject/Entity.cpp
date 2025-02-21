@@ -10,6 +10,8 @@ void Entity::initVariables()
 	this->animationComponent = nullptr;
 
 	this->hitboxComponent = nullptr;
+
+	this->attributeComponent = nullptr;
 }
 
 void Entity::initComponents()
@@ -68,6 +70,15 @@ void Entity::createAttributeComponent(const unsigned level)
 const sf::Vector2f& Entity::getSpritePosition() const
 {
 	return this->sprite.getPosition();
+}
+
+const sf::Vector2f Entity::getSpriteCenter() const
+{
+	return this->sprite.getPosition() + 
+		sf::Vector2f(
+			this->sprite.getGlobalBounds().width / 2.f, 
+			this->sprite.getGlobalBounds().height / 2.f
+		);		
 }
 
 const sf::Vector2f& Entity::getHitboxPosition() const
@@ -166,18 +177,4 @@ void Entity::stopVelocityY()
 {
 	if (this->movementComponent)
 		this->movementComponent->stopVelocityY();
-}
-
-void Entity::update(const float& deltaTime)
-{
-	if (this->movementComponent)
-		this->movementComponent->update(deltaTime);
-}
-
-void Entity::render(sf::RenderTarget& target)
-{
-	target.draw(this->sprite);
-
-	if (this->hitboxComponent)
-		this->hitboxComponent->render(target);		
 }
