@@ -14,3 +14,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/OpenGL.hpp>
+
+//GLFW
+#include <GLFW/glfw3.h>
