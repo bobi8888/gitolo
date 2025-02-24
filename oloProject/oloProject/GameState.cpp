@@ -280,7 +280,7 @@ void GameState::render(sf::RenderTarget* target)
 		this->player->getSpriteCenter()
 	);
 
-		this->playerGUI->render(this->renderTexture);
+	this->playerGUI->render(this->renderTexture);
 
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
 

@@ -9,11 +9,11 @@ void Player::initVariables()
 }
 
 //Constructors/Destructors
-Player::Player(sf::Texture& texture_sheet, float x_position, float y_position)
+Player::Player(sf::Texture& texture_sheet, float xPosition, float yPosition)
 {
 	this->initVariables();
 
-	this->setPosition(x_position, y_position);
+	this->setPosition(xPosition, yPosition);
 
 	//---------------------------maxVelo_accel_decel
 	this->createMovementComponent(200.f, 500.f, 200.f);
@@ -211,15 +211,22 @@ void Player::update(const float& deltaTime)
 	this->hitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
+void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitbox)
 {
-	shader->setUniform("hasTexture", true);
+	if (shader)
+	{
+		shader->setUniform("hasTexture", true);
 
-	shader->setUniform("lightPos", this->getSpriteCenter());
+		shader->setUniform("lightPos", this->getSpriteCenter());
 
-	target.draw(this->sprite, shader);
+		target.draw(this->sprite, shader);
+	}
+	else
+	{
+		target.draw(this->sprite);
+	}
 
-	if (show_hitbox)
+	if (showHitbox)
 		this->hitboxComponent->render(target);
 }
 

@@ -14,7 +14,7 @@ class Tile
 private:
 
 protected:
-	sf::RectangleShape tileShape;
+	sf::Sprite sprite;
 	bool hasCollision;
 	short type;
 
@@ -46,6 +46,10 @@ public:
 	//Methods
 	void update();
 
-	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
+	void render(
+		sf::RenderTarget& target, 
+		sf::Shader* shader = NULL, 
+		const sf::Vector2f playerPosition = sf::Vector2f()
+	);
 };
 

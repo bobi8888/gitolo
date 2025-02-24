@@ -12,13 +12,9 @@ Tile::Tile(
 	bool collision, short type
 	)
 {
-	this->tileShape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
-	//this->tileShape.setFillColor(sf::Color::Yellow);
-	//this->tileShape.setOutlineColor(sf::Color::Blue);
-	//this->tileShape.setOutlineThickness(1.5f);
-	this->tileShape.setPosition(static_cast<float>(grid_x) * gridSizeF, static_cast<float>(grid_y) * gridSizeF);
-	this->tileShape.setTexture(&texture);
-	this->tileShape.setTextureRect(texture_rect);
+	this->sprite.setPosition(static_cast<float>(grid_x) * gridSizeF, static_cast<float>(grid_y) * gridSizeF);
+	this->sprite.setTexture(texture);
+	this->sprite.setTextureRect(texture_rect);
 
 	this->hasCollision = collision;
 
@@ -38,14 +34,14 @@ const bool& Tile::getCollision() const
 
 const sf::Vector2f& Tile::getPosition() const
 {
-	return this->tileShape.getPosition();
+	return this->sprite.getPosition();
 }
 
 const std::string Tile::getAsString() const
 {
 	std::stringstream ss;
 
-	ss << this->tileShape.getTextureRect().left << " " << this->tileShape.getTextureRect().top << " " <<
+	ss << this->sprite.getTextureRect().left << " " << this->sprite.getTextureRect().top << " " <<
 	this->hasCollision << " " << this->type;
 
 	return ss.str();
@@ -53,12 +49,12 @@ const std::string Tile::getAsString() const
 
 const bool Tile::isIntersecting(const sf::FloatRect bounds) const
 {
-	return this->tileShape.getGlobalBounds().intersects(bounds);
+	return this->sprite.getGlobalBounds().intersects(bounds);
 }
 
 const sf::FloatRect Tile::getGlobalBounds() const
 {
-	return this->tileShape.getGlobalBounds();
+	return this->sprite.getGlobalBounds();
 }
 
 const short& Tile::getType() const
@@ -72,18 +68,18 @@ void Tile::update()
 
 }
 
-void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f player_position)
+void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f playerPosition)
 {
 	if (shader)
 	{
 		shader->setUniform("hasTexture", true);
 
-		shader->setUniform("lightPos", player_position);
+		shader->setUniform("lightPos", playerPosition);
 
-		target.draw(this->tileShape, shader);
+		target.draw(this->sprite, shader);
 	}
 	else
 	{
-		target.draw(this->tileShape);
+		target.draw(this->sprite);
 	}
 }

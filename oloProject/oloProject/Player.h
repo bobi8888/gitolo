@@ -15,7 +15,7 @@ private:
 
 public:
     //Constructors/Destructors
-    Player(sf::Texture& texture_sheet, float x_position, float y_position);
+    Player(sf::Texture& texture_sheet, float xPosition, float yPosition);
 
     virtual ~Player();
 
@@ -35,7 +35,7 @@ public:
 
     void update(const float& deltaTime);
 
-    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool show_hitbox = false);
+    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool showHitbox = false);
 
     void updateLevel();
 };
