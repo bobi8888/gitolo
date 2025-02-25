@@ -160,13 +160,24 @@ void GameState::updateView(const float& deltaTime)
 		std::floor(this->player->getHitboxPosition().x 
 			//move camera with mouse movement
 			+ (static_cast<float>(this->mousePositionWindow.x) 
-			- static_cast<float>(this->stateData->graphicsSettings->Resolution.width / 2)) / 5.f),
+			- static_cast<float>(this->stateData->graphicsSettings->Resolution.width / 2)) / 10.f),
 		//move camera with player movement
 		std::floor(this->player->getHitboxPosition().y 
 			//move camera with mouse movement
 			+ (static_cast<float>(this->mousePositionWindow.y)
-			- static_cast<float>(this->stateData->graphicsSettings->Resolution.height / 2)) / 5.f)
+			- static_cast<float>(this->stateData->graphicsSettings->Resolution.height / 2)) / 10.f)
 	);
+
+	//3000.f is a placeholder value. Need to find the correct data memeber
+	if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+		this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+	else if (this->view.getCenter().x + this->view.getSize().x / 2.f > 3000.f)
+		this->view.setCenter(3000.f - this->view.getSize().x / 2.f, this->view.getCenter().y);
+
+	if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+		this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+	else if (this->view.getCenter().y + this->view.getSize().y / 2.f > 3000.f)
+		this->view.setCenter(this->view.getCenter().x, 3000.f - this->view.getSize().y / 2.f);
 }
 
 void GameState::updateInput(const float& deltaTime)

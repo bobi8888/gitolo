@@ -6,6 +6,11 @@
 
 //Clean up void Player::updateAnimation(const float& deltaTime)
 
+//EditorState not rendering TileMaps
+//GameState IS rending TileMap...
+//What is the difference between the 2?
+//Editor state only renders type 5???
+
 //Make a method for determining which animation should be played based on velocity. 
     //of if it should be based on which key is pressed?
 

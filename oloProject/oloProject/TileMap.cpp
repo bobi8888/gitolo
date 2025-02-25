@@ -237,6 +237,12 @@ void TileMap::loadFromFile(const std::string file_name)
 		//Basics
 		in_file >> size.x >> size.y >> gridSize >> layers >> texture_file_name;
 	
+		if (size.x != maxSizeWorldGrid.x)
+			std::cout << "ERROR::SIZE.X IN editorTileMap != maxSizeWorldGrid.x" << "\n";
+
+		if (size.y != maxSizeWorldGrid.y)
+			std::cout << "ERROR::SIZE.Y IN editorTileMap != maxSizeWorldGrid.y" << "\n";
+
 		//Tiles
 		this->gridSizeF = static_cast<float>(gridSize);
 		this->gridSizeI = gridSize;
@@ -456,11 +462,15 @@ void TileMap::render(
 
 	for (int x = this->fromX; x < this->toX; x++)
 	{
+		//std::cout << "x: " << x << "\n";
 		for (int y = this->fromY; y < this->toY; y++)
 		{
+			//std::cout << "y: " << y << "\n";
+
 			for (size_t k = 0; k < this->tileVectors[x][y][this->layer].size(); k++)
 			{
-				
+				//std::cout << "k: " << k << "\n";
+
 				if (this->tileVectors[x][y][this->layer][k]->getType() == TileTypes::ABOVE_BRUSH)
 				{
 					this->deferredRenderedStack.push(this->tileVectors[x][y][this->layer][k]);

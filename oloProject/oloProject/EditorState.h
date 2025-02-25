@@ -20,6 +20,7 @@ private:
 	sf::View view;
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
+	sf::Shader mainShader;
 
 	sf::Font font;
 	sf::Text cursorText;
@@ -51,6 +52,7 @@ private:
 	void initKeybinds();
 	//void initButtons();
 	void initPauseMenu();
+	void initShaders();
 	void initGui();
 	void initTileMap();
 

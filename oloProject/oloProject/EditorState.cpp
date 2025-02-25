@@ -388,14 +388,18 @@ void EditorState::render(sf::RenderTarget* target)
 		
 	//this->tileMap->render(this->renderTexture, this->mousePositionGrid);
 	this->tileMap->render(
-		*target, 
+		this->renderTexture,
 		this->mousePositionGrid, 
 		NULL, 
 		sf::Vector2f(), 
 		true
 	);
 
-	this->tileMap->renderDeferred(this->renderTexture);
+	this->tileMap->renderDeferred(
+		this->renderTexture,
+		NULL,
+		sf::Vector2f()
+	);
 
 	if (this->isPaused)
 	{
