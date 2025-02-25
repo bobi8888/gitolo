@@ -478,27 +478,29 @@ gui::TextureSelector::TextureSelector(
 	this->sheet.setTexture(*texture_sheet);
 	this->sheet.setPosition(x, y);
 
+	int textureRectWidth;
+	int textureRectHeight;
+
 	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
-	{
-		this->sheet.setTextureRect(
-			sf::IntRect(
-				0, 0, 
-				static_cast<int>(this->bounds.getGlobalBounds().width),
-				static_cast<int>(this->sheet.getGlobalBounds().height)
-			)
-		);
-	}
+
+		textureRectWidth = static_cast<int>(this->bounds.getGlobalBounds().width);
+	else
+		textureRectWidth = static_cast<int>(this->sheet.getGlobalBounds().width);
+	
 
 	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
-	{
-		this->sheet.setTextureRect(
-			sf::IntRect(
-				0, 0, 
-				static_cast<int>(this->bounds.getGlobalBounds().height), 
-				static_cast<int>(this->sheet.getGlobalBounds().width)
-			)
-		);
-	}
+
+		textureRectHeight = static_cast<int>(this->bounds.getGlobalBounds().height);
+	else 
+		textureRectHeight = static_cast<int>(this->sheet.getGlobalBounds().height);
+	
+	this->sheet.setTextureRect(
+		sf::IntRect(
+			0, 0,
+			textureRectWidth,
+			textureRectHeight
+		)
+	);
 
 	this->selector.setPosition(x, y);
 	this->selector.setSize(sf::Vector2f(gridSize, gridSize));

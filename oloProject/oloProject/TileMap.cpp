@@ -471,7 +471,7 @@ void TileMap::render(
 			{
 				//std::cout << "k: " << k << "\n";
 
-				if (this->tileVectors[x][y][this->layer][k]->getType() == TileTypes::ABOVE_BRUSH)
+				if (this->tileVectors[x][y][this->layer][k]->getType() == TileTypes::DEFER)
 				{
 					this->deferredRenderedStack.push(this->tileVectors[x][y][this->layer][k]);
 				}

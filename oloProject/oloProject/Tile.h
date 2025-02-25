@@ -2,11 +2,7 @@
 
 enum TileTypes {
 	DEFAULT = 0, 
-	WOOD = 1, 
-	GRAVEL = 2, 
-	METAL = 3, 
-	SAND = 4, 
-	ABOVE_BRUSH = 5
+	DEFER = 1, 
 };
 
 class Tile

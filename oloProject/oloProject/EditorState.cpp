@@ -116,6 +116,16 @@ void EditorState::initPauseMenu()
 	);
 }
 
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(
+		this->stateData->gridSize, 
+		1000, 1000, 
+		this->tileToolTextureRect, 
+		"Resources/Images/Tiles/tiles50.png"
+	);
+}
+
 void EditorState::initGui()
 {
 	this->tileToolSelectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
@@ -131,33 +141,24 @@ void EditorState::initGui()
 	this->tileToolSelectorRect.setTextureRect(this->tileToolTextureRect);
 
 	this->textureSelector = new gui::TextureSelector(
-		76.f, 30.f, 
-		200.f, 200.f, 
-		this->stateData->gridSize, 
-		this->tileMap->getTileTextureSheet(), 
+		76.f, 30.f,
+		450.f, 350.f,
+		this->stateData->gridSize,
+		this->tileMap->getTileTextureSheet(),
 		this->font, "Show/Hide"
 	);
 
 	this->sideBar.setSize(
 		sf::Vector2f(
-			75.f, 
+			75.f,
 			static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
 		)
 	);
-	this->sideBar.setFillColor(sf::Color(50,50,50,100));
-	this->sideBar.setOutlineColor(sf::Color(200,200,200,150));
+	this->sideBar.setFillColor(sf::Color(50, 50, 50, 100));
+	this->sideBar.setOutlineColor(sf::Color(200, 200, 200, 150));
 	this->sideBar.setOutlineThickness(2.f);
 }
 
-void EditorState::initTileMap()
-{
-	this->tileMap = new TileMap(
-		this->stateData->gridSize, 
-		1000, 1000, 
-		this->tileToolTextureRect, 
-		"Resources/Images/Tiles/tiles50.png"
-	);
-}
 
 //Constructors & destructor
 EditorState::EditorState(StateData* stateData) 
