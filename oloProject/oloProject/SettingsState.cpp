@@ -96,7 +96,7 @@ void SettingsState::initGUI()
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(3.5f, videoMode),
 		//font, videoModesStr.data(), gui::calculateCharSize(videoMode, 110),
 		font, videoModesStr, gui::calculateCharSize(videoMode, 110),
-		static_cast<int>(videoModesStr.size())
+		static_cast<int>(videoModesStr.size()), valid_Resolutions
 	);
 
 	//Init Text

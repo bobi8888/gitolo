@@ -349,12 +349,13 @@ void gui::Sphere::render(sf::RenderTarget& target)
 //Dropdown List===============================================================================================
 
 //Constructors & Destructor
+// 
+//Settings: Resolution
 gui::DropdownList::DropdownList(
 	float xPos, float yPos, 
 	float width, float height, 
-	//sf::Font& font, std::string list[], unsigned char_size,
-	sf::Font& font, std::vector<std::string> list, unsigned char_size,
-	int elementsNum, unsigned default_index
+	sf::Font& font, std::vector<std::string> list, unsigned char_size, 
+	int elementsNum, std::vector<std::string> counterList
 	) : font(font), showList(false)
 {
 	keytimeMax = 2.f;
@@ -363,17 +364,15 @@ gui::DropdownList::DropdownList(
 
 	this->activeElement = new Button(
 		xPos, yPos, width, height,
-		//&this->font, list[default_index], char_size,
 		&this->font, "Resolutions", char_size,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
 		sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
-
 	);
 
-		int validRes = 0;
-		
-		for (int i = 0; i < elementsNum; i++)
+	int validRes = 0;
+
+	for (int i = 0; i < elementsNum; i++)
 	{
 		for (int j = 0; j < valid_Resolutions.size(); j++) {
 
@@ -391,9 +390,52 @@ gui::DropdownList::DropdownList(
 				);
 
 				j = valid_Resolutions.size();
-			} 
+			}
 		}
 	}
+}
+
+//Basic Constructor
+
+gui::DropdownList::DropdownList(
+	float xPos, float yPos, 
+	float width, float height, 
+	//sf::Font& font, std::string list[], unsigned char_size,
+	sf::Font& font, std::vector<std::string> list, unsigned char_size,
+	int elementsNum, unsigned default_index
+	) : font(font), showList(false)
+{
+	keytimeMax = 2.f;
+
+	keytime = keytimeMax;
+
+	this->activeElement = new Button(
+		xPos, yPos, width, height,
+		&this->font, "Resolutions", char_size,
+		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
+		sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
+	);
+
+	int validRes = 0;
+		
+	for (int i = 0; i < elementsNum; i++) {
+
+		for (int j = 0; j < valid_Resolutions.size(); j++) {
+
+				this->elementList.push_back(
+					new Button(
+						xPos, yPos + ((validRes++ + 1) * height), width, height,
+						&this->font, list[i], char_size,
+						sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+						sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+						sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
+						i
+					)
+				);
+
+		} 	
+	}	
 }
 
 gui::DropdownList::~DropdownList()

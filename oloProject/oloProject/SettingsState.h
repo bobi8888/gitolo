@@ -24,6 +24,22 @@ private:
 
 	std::vector<sf::VideoMode> videoModes;
 
+	std::vector<std::string> valid_Resolutions = {
+	"1920 x 1080",
+	"1760 x 990",
+	"1680 x 1050",
+	"1660 x 900",
+	"1366 x 786",
+	"1280 x 1024",
+	"1280 x 720",
+	"1128 x 634",
+	"1024 x 768",
+	"800 x 600",
+	"720 x 576",
+	"720 x 480",
+	"640 x 480"
+	};
+
 	//Methods
 	void initVariables();
 

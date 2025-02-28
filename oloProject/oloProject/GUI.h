@@ -148,6 +148,7 @@ namespace gui
 
 			bool showList;
 
+			//Put this somewhere that wont show up in other dropdown lists
 			std::vector<std::string> valid_Resolutions = {
 				"1920 x 1080",
 				"1760 x 990",
@@ -169,10 +170,18 @@ namespace gui
 
 		public:
 			//Constructors & Destructor
+			//Settings: Resolution
+			DropdownList(
+				float xPos, float yPos,
+				float width, float height,
+				sf::Font& font, std::vector<std::string> list, unsigned char_size,
+				int elementsNum, std::vector<std::string> counterList
+			);
+
+			//Basic Constructor
 			DropdownList(
 				float xPos, float yPos, 
 				float width, float height, 
-				//sf::Font& font, std::string list[], unsigned char_size,
 				sf::Font& font, std::vector<std::string> list, unsigned char_size,
 				int elementsNum, unsigned default_index = 0
 			);
