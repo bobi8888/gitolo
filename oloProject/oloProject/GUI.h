@@ -148,12 +148,32 @@ namespace gui
 
 			bool showList;
 
+			std::vector<std::string> valid_Resolutions = {
+				"1920 x 1080",
+				"1760 x 990",
+				"1680 x 1050",
+				//"1600 x 1200",
+				"1660 x 900",
+				//"1440 x 576",
+				//"1440 x 480",
+				"1366 x 786",
+				"1280 x 1024",
+				"1280 x 720",
+				"1128 x 634",
+				"1024 x 768",
+				"800 x 600",
+				"720 x 576",
+				"720 x 480",
+				"640 x 480"
+			};
+
 		public:
 			//Constructors & Destructor
 			DropdownList(
 				float xPos, float yPos, 
 				float width, float height, 
-				sf::Font& font, std::string list[], unsigned char_size,
+				//sf::Font& font, std::string list[], unsigned char_size,
+				sf::Font& font, std::vector<std::string> list, unsigned char_size,
 				int elementsNum, unsigned default_index = 0
 			);
 
@@ -161,6 +181,8 @@ namespace gui
 
 			//Accessors
 			const unsigned short& getActiveElementId() const;
+
+			const std::string& getActiveElementTextString() const;
 
 			const bool getKeytime();
 

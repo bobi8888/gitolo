@@ -352,35 +352,47 @@ void gui::Sphere::render(sf::RenderTarget& target)
 gui::DropdownList::DropdownList(
 	float xPos, float yPos, 
 	float width, float height, 
-	sf::Font& font, std::string list[], unsigned char_size,
+	//sf::Font& font, std::string list[], unsigned char_size,
+	sf::Font& font, std::vector<std::string> list, unsigned char_size,
 	int elementsNum, unsigned default_index
 	) : font(font), showList(false)
 {
-	keytimeMax = 1.f;
+	keytimeMax = 2.f;
 
 	keytime = keytimeMax;
 
 	this->activeElement = new Button(
 		xPos, yPos, width, height,
-		&this->font, list[default_index], char_size,
+		//&this->font, list[default_index], char_size,
+		&this->font, "Resolutions", char_size,
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
 		sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200), 
 		sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200)
 
 	);
 
-	for (int i = 0; i < elementsNum; i++)
+		int validRes = 0;
+		
+		for (int i = 0; i < elementsNum; i++)
 	{
-		this->elementList.push_back(
-			new Button(
-				xPos, yPos + ((i + 1) * height), width, height,
-				&this->font, list[i], char_size,
-				sf::Color::Black, sf::Color::Yellow, sf::Color::White,
-				sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
-				sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
-				i
-			)
-		);
+		for (int j = 0; j < valid_Resolutions.size(); j++) {
+
+			if (list[i].compare(valid_Resolutions[j]) == 0) {
+
+				this->elementList.push_back(
+					new Button(
+						xPos, yPos + ((validRes++ + 1) * height), width, height,
+						&this->font, list[i], char_size,
+						sf::Color::Black, sf::Color::Yellow, sf::Color::White,
+						sf::Color(70, 70, 70, 200), sf::Color(70, 70, 70, 255), sf::Color(20, 70, 70, 200),
+						sf::Color(174, 174, 174, 200), sf::Color(174, 174, 174, 255), sf::Color(124, 174, 174, 200),
+						i
+					)
+				);
+
+				j = valid_Resolutions.size();
+			} 
+		}
 	}
 }
 
@@ -396,6 +408,11 @@ gui::DropdownList::~DropdownList()
 const unsigned short& gui::DropdownList::getActiveElementId() const
 {
 	return this->activeElement->getId();
+}
+
+const std::string& gui::DropdownList::getActiveElementTextString() const
+{
+	return this->activeElement->getText();
 }
 
 const bool gui::DropdownList::getKeytime()

@@ -66,7 +66,7 @@ void SettingsState::initGUI()
 	//text idle color, text hover color, text active color,
 	//idle color, hover color, active color
 	this->buttons["APPLY_BTN"] = new gui::Button(
-		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(80.f, videoMode),
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(35.f, videoMode),
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
 		&this->font, "Apply", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
@@ -75,7 +75,7 @@ void SettingsState::initGUI()
 	);
 
 	this->buttons["BACK_BTN"] = new gui::Button(
-		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(90.f, videoMode), 
+		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(45.f, videoMode), 
 		gui::convertToPixelsX(15.f, videoMode), gui::convertToPixelsY(6.f, videoMode),
 		&this->font, "Back", gui::calculateCharSize(videoMode),
 		sf::Color::Black, sf::Color::Yellow, sf::Color::White,
@@ -94,7 +94,8 @@ void SettingsState::initGUI()
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(3.5f, videoMode),
-		font, videoModesStr.data(), gui::calculateCharSize(videoMode, 110),
+		//font, videoModesStr.data(), gui::calculateCharSize(videoMode, 110),
+		font, videoModesStr, gui::calculateCharSize(videoMode, 110),
 		static_cast<int>(videoModesStr.size())
 	);
 
@@ -187,17 +188,17 @@ void SettingsState::updateGUI(const float& delta_Time)
 	}
 	
 	//Apply New Resolution
-	if (this->buttons["APPLY_BTN"]->isPressed())
-	{
+	if (this->buttons["APPLY_BTN"]->isPressed() && dropdownMap["RESOLUTION"]->getActiveElementId() != 0)
+	{		 
 		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
 
 		this->window->create(
-			this->stateData->graphicsSettings->Resolution, 
-			this->stateData->graphicsSettings->Title, 
+			this->stateData->graphicsSettings->Resolution,
+			this->stateData->graphicsSettings->Title,
 			sf::Style::Default
 		);
 
-		this->resetGUI();
+		this->resetGUI();		
 	}
 
 	//DropdownList
