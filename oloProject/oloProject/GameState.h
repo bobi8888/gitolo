@@ -21,6 +21,8 @@ class sf::Shader;
 class GameState : public State
 {
 private:
+	std::string name;
+
 	sf::View view;
 	sf::RenderTexture renderTexture;
 
@@ -41,6 +43,7 @@ private:
 	TileMap* tileMap;
 	const sf::IntRect texture_rect;
 
+	TransitionComponent* transitionComponent;
 
 	//Initializer Methods
 	void initDeferredRender();
@@ -57,7 +60,7 @@ private:
 
 public:
 	//Constructors & Destructors
-	GameState(StateData* stateData);
+	GameState(StateData* stateData, std::string name);
 
 	virtual ~GameState();
 

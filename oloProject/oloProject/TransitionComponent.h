@@ -13,7 +13,7 @@ private:
 		TransitionZone(
 			float xPos, float yPos,
 			float width, float height
-			): isActive(false) 
+			): isActive(true) 
 		{
 			this->hitbox.setSize(sf::Vector2f(width, height));
 
@@ -30,7 +30,7 @@ private:
 		}
 	};
 
-	std::map <std::string, TransitionComponent> transitions;
+	std::map <std::string, TransitionZone*> transitions;
 
 public:
 	//Constructors & Destructor
@@ -40,6 +40,10 @@ public:
 
 	//Methods
 	void render(sf::RenderTarget& target);
-	void addTransitionZone();
+	void addTransitionZone(
+		const std::string key,
+		float xPos, float yPos,
+		float width, float height
+	);
 };
 

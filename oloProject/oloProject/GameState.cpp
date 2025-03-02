@@ -120,13 +120,24 @@ void GameState::initTileMap()
 
 void GameState::initTransitionComponents()
 {
-	
+	this->transitionComponent = new TransitionComponent();
+
+	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+
+	this->transitionComponent->addTransitionZone(
+		"MECHANICS_DOOR", 
+		gui::convertToPixelsX(35.f, videoMode), gui::convertToPixelsY(40.f, videoMode),
+		gui::convertToPixelsX(3.8f, videoMode), gui::convertToPixelsY(3.8f, videoMode)
+	);
+
 }
 
 //Constructors & Destructors
-GameState::GameState(StateData* stateData)
+GameState::GameState(StateData* stateData, std::string name)
 	: State(stateData)
 {
+	this->name = name;
+
 	this->initDeferredRender();
 	this->initView();
 	this->initKeybinds();
@@ -137,6 +148,7 @@ GameState::GameState(StateData* stateData)
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
+	this->initTransitionComponents();
 
 	//DEBUG
 	this->cursorText.setFont(this->font);
@@ -152,6 +164,8 @@ GameState::~GameState()
 	delete this->pauseMenu;
 
 	delete this->tileMap;
+
+	delete this->transitionComponent;
 
 	std::cout << "GameState deleted" << "\n";
 }
@@ -297,6 +311,8 @@ void GameState::render(sf::RenderTarget* target)
 		&this->mainShader, 
 		this->player->getSpriteCenter()
 	);
+
+	this->transitionComponent->render(this->renderTexture);
 
 	this->playerGUI->render(this->renderTexture);
 

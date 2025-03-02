@@ -157,7 +157,7 @@ void MainMenuState::updateButtons()
 	//New game
 	if (this->buttons["NEW_GAME_BTN"]->isPressed())
 	{
-		this->statesStack->push(new GameState(this->stateData));
+		this->statesStack->push(new GameState(this->stateData, "TOWN_SQUARE"));
 	}
 
 	//Editor
