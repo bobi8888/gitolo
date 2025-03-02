@@ -1,20 +1,25 @@
 #include "stdafx.h"
-
 #include "HitboxComponent.h"
 
 //Constructors & Destructor
-HitboxComponent::HitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height)
-	:Sprite(sprite), OffsetX(offset_x), OffsetY(offset_y)
+HitboxComponent::HitboxComponent(
+	sf::Sprite& sprite, 
+	float offset_x, float offset_y, 
+	float width, float height
+	)	:sprite(sprite), xOffset(offset_x), yOffset(offset_y)
 {
-	this->Hitbox.setSize(sf::Vector2f(width, height));
-	this->Hitbox.setPosition(this->Sprite.getPosition().x + offset_x, this->Sprite.getPosition().y + offset_y);
+	this->hitbox.setSize(sf::Vector2f(width, height));
+	this->hitbox.setPosition(
+		this->sprite.getPosition().x + offset_x, 
+		this->sprite.getPosition().y + offset_y
+	);
 
-	this->Hitbox.setFillColor(sf::Color(225, 220, 51, 150));
+	this->hitbox.setFillColor(sf::Color(225, 220, 51, 150));
 
-	this->NextPosition.left = 0.f;
-	this->NextPosition.top = 0.f;
-	this->NextPosition.width = width;
-	this->NextPosition.height = height;
+	this->nextPosition.left = 0.f;
+	this->nextPosition.top = 0.f;
+	this->nextPosition.width = width;
+	this->nextPosition.height = height;
 }
 
 HitboxComponent::~HitboxComponent()
@@ -24,53 +29,59 @@ HitboxComponent::~HitboxComponent()
 //Accessors
 const sf::Vector2f& HitboxComponent::getPosition()
 {
-	return this->Hitbox.getPosition(); 
+	return this->hitbox.getPosition(); 
 }
 
 const sf::FloatRect HitboxComponent::getGlobalBounds() const
 {
-	return this->Hitbox.getGlobalBounds();
+	return this->hitbox.getGlobalBounds();
 }
 
 const sf::FloatRect& HitboxComponent::getNextPosition(const sf::Vector2f& velocity)
 {
-	this->NextPosition.left = this->Hitbox.getPosition().x + velocity.x;
+	this->nextPosition.left = this->hitbox.getPosition().x + velocity.x;
 
-	this->NextPosition.top = this->Hitbox.getPosition().y + velocity.y;
+	this->nextPosition.top = this->hitbox.getPosition().y + velocity.y;
 
-	return this->NextPosition;
+	return this->nextPosition;
 }
 
 //Modifiers
-
 void HitboxComponent::setPosition(const sf::Vector2f& position)
 {
-	this->Hitbox.setPosition(position);
+	this->hitbox.setPosition(position);
 
-	this->Sprite.setPosition(position.x - this->OffsetX, position.y - this->OffsetY);
+	this->sprite.setPosition(
+		position.x - this->xOffset, 
+		position.y - this->yOffset
+	);
 }
 
 void HitboxComponent::setPosition(const float& x, const float& y)
 {
-	this->Hitbox.setPosition(x, y);
+	this->hitbox.setPosition(x, y);
 
-	this->Sprite.setPosition(x - this->OffsetX, y - this->OffsetY);
+	this->sprite.setPosition(
+		x - this->xOffset, 
+		y - this->yOffset
+	);
 }
 
-
 //Methods
-
 bool HitboxComponent::isIntersecting(const sf::FloatRect& rect)
 {
-	return this->Hitbox.getGlobalBounds().intersects(rect);
+	return this->hitbox.getGlobalBounds().intersects(rect);
 }
 
 void HitboxComponent::update()
 {
-	this->Hitbox.setPosition(this->Sprite.getPosition().x + this->OffsetX, this->Sprite.getPosition().y + this->OffsetY);
+	this->hitbox.setPosition(
+		this->sprite.getPosition().x + this->xOffset, 
+		this->sprite.getPosition().y + this->yOffset
+	);
 }
 
 void HitboxComponent::render(sf::RenderTarget& target)
 {
-	target.draw(this->Hitbox);
+	target.draw(this->hitbox);
 }

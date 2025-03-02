@@ -374,9 +374,9 @@ gui::DropdownList::DropdownList(
 
 	for (int i = 0; i < elementsNum; i++)
 	{
-		for (int j = 0; j < valid_Resolutions.size(); j++) {
+		for (int j = 0; j < counterList.size(); j++) {
 
-			if (list[i].compare(valid_Resolutions[j]) == 0) {
+			if (list[i].compare(counterList[j]) == 0) {
 
 				this->elementList.push_back(
 					new Button(
@@ -389,7 +389,7 @@ gui::DropdownList::DropdownList(
 					)
 				);
 
-				j = valid_Resolutions.size();
+				j = counterList.size();
 			}
 		}
 	}
@@ -421,7 +421,7 @@ gui::DropdownList::DropdownList(
 		
 	for (int i = 0; i < elementsNum; i++) {
 
-		for (int j = 0; j < valid_Resolutions.size(); j++) {
+		//for (int j = 0; j < counterList.size(); j++) {
 
 				this->elementList.push_back(
 					new Button(
@@ -434,7 +434,7 @@ gui::DropdownList::DropdownList(
 					)
 				);
 
-		} 	
+		//} 	
 	}	
 }
 

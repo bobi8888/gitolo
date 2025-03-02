@@ -118,6 +118,11 @@ void GameState::initTileMap()
 	this->tileMap->loadFromFile("editorTileMap.txt");
 }
 
+void GameState::initTransitionComponents()
+{
+	
+}
+
 //Constructors & Destructors
 GameState::GameState(StateData* stateData)
 	: State(stateData)
@@ -147,6 +152,8 @@ GameState::~GameState()
 	delete this->pauseMenu;
 
 	delete this->tileMap;
+
+	std::cout << "GameState deleted" << "\n";
 }
 
 //Methods

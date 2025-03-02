@@ -148,26 +148,6 @@ namespace gui
 
 			bool showList;
 
-			//Put this somewhere that wont show up in other dropdown lists
-			std::vector<std::string> valid_Resolutions = {
-				"1920 x 1080",
-				"1760 x 990",
-				"1680 x 1050",
-				//"1600 x 1200",
-				"1660 x 900",
-				//"1440 x 576",
-				//"1440 x 480",
-				"1366 x 786",
-				"1280 x 1024",
-				"1280 x 720",
-				"1128 x 634",
-				"1024 x 768",
-				"800 x 600",
-				"720 x 576",
-				"720 x 480",
-				"640 x 480"
-			};
-
 		public:
 			//Constructors & Destructor
 			//Settings: Resolution

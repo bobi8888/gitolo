@@ -4,12 +4,14 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
+#include "TransitionComponent.h"
 
 class State;
 class PauseMenu;
 class TileMap;
 class Player;
 class PlayerGUI;
+class TransitionComponent;
 
 class sf::View;
 class sf::Font;
@@ -34,9 +36,11 @@ private:
 
 	Player* player;
 	PlayerGUI* playerGUI;
+
 	//Missing a texture here?
 	TileMap* tileMap;
 	const sf::IntRect texture_rect;
+
 
 	//Initializer Methods
 	void initDeferredRender();
@@ -49,6 +53,7 @@ private:
 	void initPlayers();
 	void initPlayerGUI();
 	void initTileMap();
+	void initTransitionComponents();
 
 public:
 	//Constructors & Destructors

@@ -29,8 +29,8 @@ private:
 				float animation_timer, 
 				int start_frame_x, int start_frame_y, 
 				int frames_x, int frames_y, 
-				int width, int height)
-					: sprite(sprite), textureSheet(texture_sheet), 
+				int width, int height
+				)	: sprite(sprite), textureSheet(texture_sheet), 
 						animationTimer(animation_timer), 
 						textureWidth(width), textureHeight(height),
 						timer(0.f), isDone(false)

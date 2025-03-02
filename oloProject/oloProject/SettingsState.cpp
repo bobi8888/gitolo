@@ -94,7 +94,6 @@ void SettingsState::initGUI()
 	this->dropdownMap["RESOLUTION"] = new gui::DropdownList(
 		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(3.5f, videoMode),
-		//font, videoModesStr.data(), gui::calculateCharSize(videoMode, 110),
 		font, videoModesStr, gui::calculateCharSize(videoMode, 110),
 		static_cast<int>(videoModesStr.size()), valid_Resolutions
 	);

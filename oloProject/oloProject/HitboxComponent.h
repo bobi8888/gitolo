@@ -1,18 +1,22 @@
 #pragma once
 
+class sf::Sprite;
+class sf::RectangleShape;
+
 class HitboxComponent
 {
 private:
-	sf::Sprite& Sprite;
-	sf::RectangleShape Hitbox;
-	sf::FloatRect NextPosition;
+	sf::Sprite& sprite;
+	sf::RectangleShape hitbox;
+	sf::FloatRect nextPosition;
 
-	float OffsetX;
-	float OffsetY;
+	float xOffset;
+	float yOffset;
 
 public:
 	//Constructors & Destructor
-	HitboxComponent(sf::Sprite& sprite, 
+	HitboxComponent(
+		sf::Sprite& sprite, 
 		float offset_x, float offset_y, 
 		float width, float height
 	);
