@@ -1,4 +1,5 @@
 #pragma once
+
 class AttributeComponent
 {
 public:
@@ -8,45 +9,49 @@ public:
 	int expNext;
 	int attributePts;
 
-	//Attributes
+//Attributes
 	int health;
 	int strength;
 	int dexterity;
-	int charisma;
 	int intelligence;
+	int charisma;
 	
-	//Status
-	//Health
+//Status
+//Health
 	int hp;
 	int hpMax;
-	//Strength
+//Strength
 	int damageMin;
 	int damageMax;
 	int endurance;
-	//Dexterity
+//Dexterity
 	int buildSpeed;
 	int repairSpeed;
 	int accuracy;
 	int lockpick;
-	//Charisma
+//Charisma
 	int barter;
 	int convince;
 	int conversation;
 	int intimidation;
-	//Intelligence
+//Intelligence
 	int expMultiplier;
 	int science;
 	int hacking;
-	//Other
+//Other
 	int luck;
 	int totalSteps;
 
 	//Constructors & Destroyer
-	AttributeComponent(int lvl);
+	AttributeComponent(bool isPlayer, int lvl);
+
+	AttributeComponent(bool isPlayer);
 
 	~AttributeComponent();
 
 	//Methods
+	void healHP(const int heal);
+
 	void calculateExpNext();
 
 	void gainExp(const int exp);

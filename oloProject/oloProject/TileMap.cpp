@@ -106,6 +106,16 @@ const int TileMap::getLayerSize(const sf::Vector2i mousePos, const int z) const
 	return -1;
 }
 
+const sf::Vector2i& TileMap::getGridMaxSizeInt() const
+{
+	return this->maxSizeWorldGrid;
+}
+
+const sf::Vector2f& TileMap::getGridMaxSizeFloat() const
+{
+	return this->maxSizeWorldF;
+}
+
 //Methods
 void TileMap::addTile(
 	const int x, const int y, const int z, 
@@ -435,25 +445,25 @@ void TileMap::render(
 {
 	this->layer = 0;
 
-	this->fromX = gridPosition.x - 12;
+	this->fromX = gridPosition.x - 17;
 	if (this->fromX < 0)
 		this->fromX = 0;
 	else if (this->fromX > this->maxSizeWorldGrid.x)
 		this->fromX = this->maxSizeWorldGrid.x;
 
-	this->toX = gridPosition.x + 13;
+	this->toX = gridPosition.x + 18;
 	if (this->toX < 0)
 		this->toX = 0;
 	else if (this->toX > this->maxSizeWorldGrid.x)
 		this->toX = this->maxSizeWorldGrid.x;
 
-	this->fromY = gridPosition.y - 9;
+	this->fromY = gridPosition.y - 11;
 	if (this->fromY < 0)
 		this->fromY = 0;
 	else if (this->fromY > this->maxSizeWorldGrid.y)
 		this->fromY = this->maxSizeWorldGrid.y;
 
-	this->toY = gridPosition.y + 11;
+	this->toY = gridPosition.y + 12;
 	if (this->toY < 0)
 		this->toY = 0;
 	else if (this->toY > this->maxSizeWorldGrid.y)

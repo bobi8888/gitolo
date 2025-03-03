@@ -22,6 +22,7 @@ protected:
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
+	HitboxComponent* weaponHitboxComponent;
 	AttributeComponent* attributeComponent;
 
 public:
@@ -38,11 +39,20 @@ public:
 		float width, float height
 	);
 
+	void createWeaponHitboxComponent(
+		sf::Sprite& sprite,
+		float offset_x, float offset_y,
+		float width, float height
+	);
+
 	void createMovementComponent(const float maxVelo, const float acceleration, const float deceleration);
 
 	void createAnimationComponent(sf::Texture& texture_sheet);
 
-	void createAttributeComponent(const unsigned lvl);
+	void createPlayerAttributeComponent(bool isPlayer, const int level);
+
+	void createEnemyAttributeComponent(bool isPlayer);
+
 
 	//Accessors
 	virtual const sf::Vector2f& getSpritePosition() const;
@@ -58,6 +68,8 @@ public:
 	virtual const sf::FloatRect getHitboxGlobalBounds() const;
 
 	virtual const sf::FloatRect getNextPositionBounds(const float& deltaTime) const;
+
+	virtual AttributeComponent* getAttributeComponent();
 
 	//Modifiers
 	virtual void setPosition(const float x, const float y);
@@ -75,7 +87,7 @@ public:
 
 	virtual void stopVelocityY();
 
-	virtual void update(const float& delta_Time) = 0;
+	virtual void update(const float& delta_Time, sf::Vector2f& mouse_pos_view) = 0;
 
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_Hitbox) = 0;
 };

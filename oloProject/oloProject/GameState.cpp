@@ -170,12 +170,17 @@ GameState::~GameState()
 	std::cout << "GameState deleted" << "\n";
 }
 
+void GameState::updateTransitions(const float& deltaTime)
+{
+	//how are states launched in main menu?
+}
+
 //Methods
-void GameState::updateView(const float& deltaTime)
+//void GameState::updateView(const float& deltaTime)
+void GameState::updateView()
 {
 	//std::floor helps with screen tearing because using float values makes it hard to be pixel perfect
 	//look into this for a better explaination
-
 	this->view.setCenter(
 		//move camera with player movement
 		std::floor(this->player->getHitboxPosition().x 
@@ -199,9 +204,18 @@ void GameState::updateView(const float& deltaTime)
 		this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
 	else if (this->view.getCenter().y + this->view.getSize().y / 2.f > 3000.f)
 		this->view.setCenter(this->view.getCenter().x, 3000.f - this->view.getSize().y / 2.f);
+
+	this->viewGridPosition.x = static_cast<int>(
+		this->view.getCenter().x / this->stateData->gridSize
+	);
+
+	this->viewGridPosition.y = static_cast<int>(
+		this->view.getCenter().y / this->stateData->gridSize
+	);
 }
 
-void GameState::updateInput(const float& deltaTime)
+//void GameState::updateInput(const float& deltaTime)
+void GameState::updateInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeyTime())
 	{
@@ -250,7 +264,8 @@ void GameState::update(const float& deltaTime)
 
 	this->updateKeytime(deltaTime);
 
-	this->updateInput(deltaTime);
+	//this->updateInput(deltaTime);
+	this->updateInput();
 
 	//DEBUG
 	this->cursorText.setPosition(
@@ -269,13 +284,14 @@ void GameState::update(const float& deltaTime)
 
 	if (!this->isPaused)
 	{
-		this->updateView(deltaTime);
+		//this->updateView(deltaTime);
+		this->updateView();
 
 		this->updatePlayerInput(deltaTime);
 
 		this->updateTileMap(deltaTime);
 
-		this->player->update(deltaTime);
+		this->player->update(deltaTime, this->mousePositionView);
 
 		this->playerGUI->update(deltaTime);
 	}
@@ -285,6 +301,8 @@ void GameState::update(const float& deltaTime)
 
 		this->updatePauseMenuButtons();
 	}
+		
+		this->transitionComponent->update(this->player->getHitboxGlobalBounds());
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -298,13 +316,19 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->render(
 		this->renderTexture, 
-		this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+
+		//This is showing the whole left side of the map
+		//this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
+
+		//this is cutting off the first 2-3 columns of tiles on the left side of the map
+		this->viewGridPosition,
+
 		&this->mainShader,
 		this->player->getSpriteCenter(),
 		false
 		);
-
-	this->player->render(this->renderTexture, &this->mainShader);
+	
+	this->player->render(this->renderTexture, &this->mainShader, true);
 
 	this->tileMap->renderDeferred(
 		this->renderTexture, 

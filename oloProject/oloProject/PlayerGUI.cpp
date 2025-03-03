@@ -50,13 +50,13 @@ void PlayerGUI::update(const float deltaTime)
 {
 	//HP Bar
 	this->hpBar->updateBarFrontSize(
-		this->player->getAttributeComponent()->hp, 
+		this->player->getAttributeComponent()->hp,
 		this->player->getAttributeComponent()->hpMax
 	); 
 
 	//to_string is an expensive opperation
 	this->hpBar->updateText(
-		std::to_string(this->player->getAttributeComponent()->hp) 
+		std::to_string(this->player->getAttributeComponent()->hp)
 		+ " :|: " 
 		+ std::to_string(this->player->getAttributeComponent()->hpMax)
 	);

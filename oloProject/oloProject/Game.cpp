@@ -6,6 +6,10 @@
 
 //Clean up void Player::updateAnimation(const float& deltaTime)
 
+//Make a resume game button in GameState Pause Menu
+
+//Make enemies able to level up?
+
 //EditorState not rendering TileMaps
 //GameState IS rending TileMap...
 //What is the difference between the 2?

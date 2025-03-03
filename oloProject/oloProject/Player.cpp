@@ -69,26 +69,27 @@ Player::Player(sf::Texture& texture_sheet, float xPosition, float yPosition)
 		100, 100
 	);
  
-	this->createHitboxComponent
-		(this->sprite, 
+	this->createHitboxComponent(
+		this->sprite, 
 		30.f, 20.f, /* x & y offset*/
 		40.f, 80.f /* width & height*/
 	);
 
+	this->createWeaponHitboxComponent(
+		this->sprite,
+		40.f, 20.f, /* x & y offset*/
+		50.f, 80.f /* width & height*/
+	);
+
+	createPlayerAttributeComponent(true, 1);
 	//Robo sprite
 	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
 
-	this->createAttributeComponent(1);
 }
 
 Player::~Player()
 {
 
-}
-
-AttributeComponent* Player::getAttributeComponent()
-{
-	return this->attributeComponent;
 }
 
 MovementComponent* Player::getMovementComponent()
@@ -99,6 +100,11 @@ MovementComponent* Player::getMovementComponent()
 HitboxComponent* Player::getHitboxComponent()
 {
 	return this->hitboxComponent;
+}
+
+AttributeComponent* Player::getAttributeComponent()
+{
+	return this->attributeComponent;
 }
 
 //Methods
@@ -188,7 +194,7 @@ void Player::updateAnimation(const float& deltaTime)
 	}
 }
 
-void Player::update(const float& deltaTime)
+void Player::update(const float& deltaTime, sf::Vector2f& mouse_pos_view)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->gainExp(15);
@@ -209,9 +215,11 @@ void Player::update(const float& deltaTime)
 	this->updateAnimation(deltaTime);
 
 	this->hitboxComponent->update();
+
+	this->weaponHitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitbox)
+void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitboxs)
 {
 	if (shader)
 	{
@@ -226,8 +234,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool sho
 		target.draw(this->sprite);
 	}
 
-	if (showHitbox)
+	if (showHitboxs)
+	{
 		this->hitboxComponent->render(target);
+
+		this->weaponHitboxComponent->render(target);
+	}
 }
 
 void Player::updateLevel()

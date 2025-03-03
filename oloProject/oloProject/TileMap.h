@@ -49,7 +49,12 @@ public:
 
 	//Accessors
 	const sf::Texture* getTileTextureSheet()const ;
+
 	const int getLayerSize(const sf::Vector2i mousePos, const int z) const;
+
+	const sf::Vector2i& getGridMaxSizeInt() const;
+
+	const sf::Vector2f& getGridMaxSizeFloat() const;
 
 
 	//Methods

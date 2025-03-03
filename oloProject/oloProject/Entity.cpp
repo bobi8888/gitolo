@@ -51,6 +51,15 @@ void Entity::createHitboxComponent(
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 
+void Entity::createWeaponHitboxComponent(
+	sf::Sprite& sprite,
+	float offset_x, float offset_y,
+	float width, float height
+)
+{
+	this->weaponHitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+}
+
 void Entity::createMovementComponent(const float maxVelo, const float acceleration, const float deceleration)
 {
 	this->movementComponent = new MovementComponent(this->sprite, maxVelo, acceleration, deceleration);
@@ -61,9 +70,14 @@ void Entity::createAnimationComponent(sf::Texture& texture_sheet)
 	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
 }
 
-void Entity::createAttributeComponent(const unsigned level)
+void Entity::createPlayerAttributeComponent(bool isPlayer, const int level)
 {
-	this->attributeComponent = new AttributeComponent(level);
+	this->attributeComponent = new AttributeComponent(isPlayer, level);
+}
+
+void Entity::createEnemyAttributeComponent(bool isPlayer)
+{
+	this->attributeComponent = new AttributeComponent(isPlayer);
 }
 
 //Accessors
@@ -125,6 +139,11 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
 	}
 
 	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
+}
+
+AttributeComponent* Entity::getAttributeComponent()
+{
+	return this->attributeComponent;
 }
 
 //Modifiers

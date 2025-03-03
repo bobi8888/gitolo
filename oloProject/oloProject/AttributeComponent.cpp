@@ -1,50 +1,107 @@
 #include "stdafx.h"
 #include "AttributeComponent.h"
 
-AttributeComponent::AttributeComponent(int lvl)
+AttributeComponent::AttributeComponent(bool isPlayer, int lvl)
 {
-	this->level = lvl;
-	this->exp = 0;
-	this->expNext = static_cast<int>((50 / 3) * (pow(lvl, 3) - 6 * pow(lvl, 2) + (lvl * 17) - 12));
-	this->attributePts = 2;
+	if (isPlayer)
+	{
+		//Leveling
+		this->level = lvl;
+		this->exp = 0;
+		this->expNext = static_cast<int>((50 / 3) * (pow(lvl, 3) - 6 * pow(lvl, 2) + (lvl * 17) - 12));
+		this->attributePts = 2;
 
-	this->health = 1;
-	this->strength = 1;
-	this->dexterity = 1;
-	this->charisma = 1;
-	this->intelligence = 1;
+		//Attributes
+		this->health = 1;
+		this->strength = 1;
+		this->dexterity = 1;
+		this->intelligence = 1;
+		this->charisma = 1;
 
-	//Health
-	this->hp = 10;
-	this->hpMax = 10;
-	//Strength
-	this->damageMin = 0;
-	this->damageMax = 3;
-	this->endurance = 10;
-	//Dexterity
-	this->buildSpeed = 0;
-	this->repairSpeed = 0;
-	this->accuracy = 0;
-	this->lockpick = 0;
-	//Charisma
-	this->barter = 0;
-	this->convince = 0;
-	this->conversation = 0;
-	this->intimidation = 0;
-	//Intelligence
-	this->expMultiplier = 1;
-	this->science = 0;
-	this->hacking = 0;
-	//Other
-	this->luck = 1;
-	this->totalSteps = 0;
+		//Health
+		this->hp = 10;
+		this->hpMax = 10;
+		//Strength
+		this->damageMin = 0;
+		this->damageMax = 3;
+		this->endurance = 10;
+		//Dexterity
+		this->buildSpeed = 0;
+		this->repairSpeed = 0;
+		this->accuracy = 0;
+		this->lockpick = 0;
+		//Charisma
+		this->barter = 0;
+		this->convince = 0;
+		this->conversation = 0;
+		this->intimidation = 0;
+		//Intelligence
+		this->expMultiplier = 1;
+		this->science = 0;
+		this->hacking = 0;
+		//Other
+		this->luck = 1;
+		this->totalSteps = 0;
 
-	this->updateStats(true);
+		this->updateStats(true);
+	}
+}
+
+AttributeComponent::AttributeComponent(bool isPlayer)
+{
+	if (!isPlayer) {
+		//Leveling
+		this->level = NULL;
+		this->exp = NULL;
+		this->expNext = NULL;
+		this->attributePts = NULL;
+
+		//Attributes
+		this->health = 1;
+		this->strength = 1;
+		this->dexterity = 1;
+		this->intelligence = 1;
+		this->charisma = NULL;
+
+		//Status
+			//Health
+		this->hp = 10;
+		this->hpMax = 10;
+		//Strength
+		this->damageMin = 0;
+		this->damageMax = 3;
+		this->endurance = NULL;
+		//Dexterity
+		this->buildSpeed = NULL;
+		this->repairSpeed = NULL;
+		this->accuracy = NULL;
+		this->lockpick = NULL;
+		//Charisma
+		this->barter = NULL;
+		this->convince = NULL;
+		this->conversation = NULL;
+		this->intimidation = NULL;
+		//Intelligence
+		this->expMultiplier = NULL;
+		this->science = NULL;
+		this->hacking = NULL;
+		//Other
+		this->luck = NULL;
+		this->totalSteps = NULL;
+	}
 }
 
 AttributeComponent::~AttributeComponent()
 {
 
+}
+
+void AttributeComponent::healHP(const int heal)
+{
+	this->hp += heal;
+
+	if (this->hp > this->hpMax)
+		this->hp = this->hpMax;
 }
 
 void AttributeComponent::calculateExpNext()

@@ -24,6 +24,7 @@ private:
 	std::string name;
 
 	sf::View view;
+	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
 
 	sf::Sprite renderSprite;
@@ -65,9 +66,13 @@ public:
 	virtual ~GameState();
 
 	//Methods
-	void updateView(const float& deltaTime);
+	void updateTransitions(const float& deltaTime);
 
-	void updateInput(const float& deltaTime);
+	//void updateView(const float& deltaTime);
+	void updateView();
+
+	//void updateInput(const float& deltaTime);
+	void updateInput();
 
 	void updatePlayerInput(const float& deltaTime);
 

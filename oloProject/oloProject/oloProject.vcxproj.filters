@@ -96,6 +96,9 @@
     <ClCompile Include="TransitionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="InteriorState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="TransitionComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InteriorState.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,8 +7,8 @@ class Player :
     public Entity
 {
 private:
-    //Variables
-    bool isAttacking;
+    //Variables  
+   bool isAttacking;
 
     //Initializer Methods
     void initVariables();
@@ -20,11 +20,11 @@ public:
     virtual ~Player();
 
     //Accessors
-    AttributeComponent* getAttributeComponent();
-
     MovementComponent* getMovementComponent();
 
     HitboxComponent* getHitboxComponent();
+
+    AttributeComponent* getAttributeComponent();
 
     //Methods
     void updateAttack();
@@ -33,9 +33,9 @@ public:
 
     void updateAnimation(const float& deltaTime);
 
-    void update(const float& deltaTime);
+    void update(const float& deltaTime, sf::Vector2f& mouse_pos_view);
 
-    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool showHitbox = false);
+    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool showHitboxs = false);
 
     void updateLevel();
 };
