@@ -80,6 +80,11 @@ void Entity::createEnemyAttributeComponent(bool isPlayer)
 	this->attributeComponent = new AttributeComponent(isPlayer);
 }
 
+const sf::Sprite& Entity::getSprite() const
+{
+	return this->sprite;
+}
+
 //Accessors
 const sf::Vector2f& Entity::getSpritePosition() const
 {

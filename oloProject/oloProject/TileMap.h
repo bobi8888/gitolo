@@ -45,6 +45,8 @@ public:
 		std::string texture_file_name
 	);
 
+	TileMap(const std::string file_name);
+
 	virtual ~TileMap();
 
 	//Accessors

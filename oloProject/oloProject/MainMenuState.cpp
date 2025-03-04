@@ -5,7 +5,8 @@
 //Initializer Methods
 void MainMenuState::initVariables()
 {
-	//this->BackgroundTexture;
+	this->resolutionWidth = this->stateData->graphicsSettings->Resolution.width;
+	this->resolutionHeight = this->stateData->graphicsSettings->Resolution.height;
 }
 
 void MainMenuState::initFonts()
@@ -53,7 +54,7 @@ void MainMenuState::initGUI()
 		)
 	);
 
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/background.png"))
+	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/newBackground.png"))
 	{
 		throw"ERROR::MainMenuState::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
@@ -134,6 +135,8 @@ MainMenuState::~MainMenuState()
 	{
 		delete it->second;
 	}
+
+	std::cout << "Deleted MainMenuState" << "\n";
 }
 
 //Update Methods
@@ -187,6 +190,16 @@ void MainMenuState::update(const float& deltaTime)
 
 	this->updateButtons();
 
+	//Check if the resolution was changed is the settings state
+	if (resolutionWidth != this->stateData->graphicsSettings->Resolution.width ||
+		resolutionHeight != this->stateData->graphicsSettings->Resolution.height
+		)
+	{
+		this->initVariables();
+
+		this->initGUI();
+	}
+	//std::cout << this->stateData->graphicsSettings->Resolution.width << "\n";
 	//DEBUG
 	//system("cls");
 	//std::cout << this->MousePositionView.x << " " << this->MousePositionView.y;

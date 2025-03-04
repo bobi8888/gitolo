@@ -21,6 +21,7 @@ const unsigned gui::calculateCharSize( const sf::VideoMode& videoMode, const uns
 	return static_cast<unsigned>((videoMode.width + videoMode.height) / divisor);
 }
 
+
 //Constructors & Destructor
 gui::Button::Button(float x, float y, float width, float height, 
 	sf::Font* font, std::string text, unsigned character_size,
@@ -172,6 +173,7 @@ void gui::Button::render(sf::RenderTarget& target)
 //Bar===============================================================================
 
 //Constructords & Destructor
+//Constructor for an on screen bar
 gui::Bar::Bar(
 	const sf::VideoMode& video_Mode,
 	const sf::Vector2f& position,
@@ -197,6 +199,49 @@ gui::Bar::Bar(
 	this->barFront.setPosition(
 		position.x + this->xOffset,
 		position.y + this->yOffset
+	);
+
+	this->font.loadFromFile(font);
+
+	this->text.setFont(this->font);
+	this->text.setFillColor(sf::Color::Black);
+	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 120));
+	this->text.setPosition(
+		sf::Vector2f(
+			barBack.getPosition().x + 10.f,
+			barBack.getPosition().y + 20.f
+		)
+	);
+}
+
+//Constructor for an on sprite bar
+gui::Bar::Bar(
+	const sf::Sprite& sprite, 
+	const sf::VideoMode& video_Mode,
+	const float x_Ratio, const float y_Ratio, 
+	const float x_Offset, const float y_Offset, 
+	const std::string font
+	)
+{
+	this->maxWidth = sprite.getGlobalBounds().width * x_Ratio;
+	this->height = sprite.getGlobalBounds().height * y_Ratio;
+	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
+	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
+
+	this->barBack.setSize(sf::Vector2f(this->maxWidth, this->height));
+	this->barBack.setFillColor(sf::Color::Red);
+	this->barBack.setOrigin(sf::Vector2f(this->maxWidth / 2.f, this->height / 2.f));
+	this->barBack.setPosition(
+		sprite.getPosition().x + this->xOffset,
+		sprite.getPosition().y + this->yOffset
+	);
+
+	this->barFront.setSize(sf::Vector2f(this->maxWidth, this->height));
+	this->barFront.setFillColor(sf::Color::Green);
+	this->barFront.setOrigin(sf::Vector2f(this->maxWidth / 2.f, this->height / 2.f));
+	this->barFront.setPosition(
+		sprite.getPosition().x + this->xOffset,
+		sprite.getPosition().y + this->yOffset
 	);
 
 	this->font.loadFromFile(font);

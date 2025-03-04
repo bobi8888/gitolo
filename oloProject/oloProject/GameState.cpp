@@ -82,7 +82,7 @@ void GameState::initPauseMenu()
 	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
 
 	this->pauseMenu->addButton(
-		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(50.f, videoMode),
+		gui::convertToPixelsX(50.f, videoMode), gui::convertToPixelsY(65.f, videoMode),
 		gui::convertToPixelsX(12.f, videoMode), gui::convertToPixelsY(5.f, videoMode),
 		"QUIT", "Quit Game", gui::calculateCharSize(videoMode, 75)
 		);
@@ -108,14 +108,15 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(
-		this->stateData->gridSize, 
-		1000, 1000, 
-		this->texture_rect, 
-		"Resources/Images/Tiles/tiles50.png"
-	);
+	//this->tileMap = new TileMap(
+	//	this->stateData->gridSize, 
+	//	100, 100, 
+	//	this->texture_rect, 
+	//	"Resources/Images/Tiles/tiles50.png"
+	//);
 
-	this->tileMap->loadFromFile("editorTileMap.txt");
+	//this->tileMap->loadFromFile("editorTileMap.txt");
+	this->tileMap = new TileMap("editorTileMap.txt");
 }
 
 void GameState::initTransitionComponents()
@@ -194,16 +195,21 @@ void GameState::updateView()
 			- static_cast<float>(this->stateData->graphicsSettings->Resolution.height / 2)) / 10.f)
 	);
 
-	//3000.f is a placeholder value. Need to find the correct data memeber
-	if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
-		this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
-	else if (this->view.getCenter().x + this->view.getSize().x / 2.f > 3000.f)
-		this->view.setCenter(3000.f - this->view.getSize().x / 2.f, this->view.getCenter().y);
+	if (this->tileMap->getGridMaxSizeFloat().x >= this->view.getSize().x)
+	{
+		if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+			this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+		else if (this->view.getCenter().x + this->view.getSize().x / 2.f > this->tileMap->getGridMaxSizeFloat().x)
+			this->view.setCenter(this->tileMap->getGridMaxSizeFloat().x - this->view.getSize().x / 2.f, this->view.getCenter().y);
+	}
 
-	if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
-		this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
-	else if (this->view.getCenter().y + this->view.getSize().y / 2.f > 3000.f)
-		this->view.setCenter(this->view.getCenter().x, 3000.f - this->view.getSize().y / 2.f);
+	if (this->tileMap->getGridMaxSizeFloat().y >= this->view.getSize().y)
+	{
+		if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+			this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+		else if (this->view.getCenter().y + this->view.getSize().y / 2.f > this->tileMap->getGridMaxSizeFloat().y)
+			this->view.setCenter(this->view.getCenter().x, this->tileMap->getGridMaxSizeFloat().y - this->view.getSize().y / 2.f);
+	}
 
 	this->viewGridPosition.x = static_cast<int>(
 		this->view.getCenter().x / this->stateData->gridSize

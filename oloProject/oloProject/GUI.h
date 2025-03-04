@@ -90,6 +90,14 @@ namespace gui
 			const std::string font
 		);
 
+		Bar(
+			const sf::Sprite& sprite,
+			const sf::VideoMode& video_Mode,
+			const float x_Ratio, const float y_Ratio,
+			const float x_Offset, const float y_Offset,
+			const std::string font
+		);
+
 		~Bar();
 
 		//Methods

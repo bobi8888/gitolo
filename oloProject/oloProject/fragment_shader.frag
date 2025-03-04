@@ -15,9 +15,10 @@ void main()
 	//gl_ModelViewProjectionMatrix can only be multiplied by a vec4?
 		lightPosTemp = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
 
+	//Need to fix this to make the light circular
 	//Calculate the vector from light to pixel (Make circular)
 		vec2 lightToFrag = lightPosTemp - vert_pos.xy;
-	
+		
 	//Length of the vector (distance)
 	/*the factor multiplied against length(lightToFrag is the 'size of the light' 
 	2.0f is a larger light that 4.0f*/

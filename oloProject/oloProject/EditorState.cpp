@@ -122,7 +122,7 @@ void EditorState::initTileMap()
 {
 	this->tileMap = new TileMap(
 		this->stateData->gridSize, 
-		1000, 1000, 
+		100, 100, 
 		this->tileToolTextureRect, 
 		"Resources/Images/Tiles/tiles50.png"
 	);
@@ -178,7 +178,7 @@ EditorState::EditorState(StateData* stateData)
 	this->initTileMap();
 	this->initGui();
 
-	this->keytimeMax = 0.5f;
+	this->keytimeMax = 3.f;
 	//DEBUG
 }
 

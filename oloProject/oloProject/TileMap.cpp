@@ -5,29 +5,31 @@
 
 void TileMap::clearTileVectors()
 {
-	for (int i = 0; i < this->maxSizeWorldGrid.x; i++)
+	if (!this->tileVectors.empty())
 	{
-		for (int j = 0; j < this->maxSizeWorldGrid.y; j++)
+		for (int i = 0; i < this->maxSizeWorldGrid.x; i++)
 		{
-			for (int k = 0; k < this->layers; k++)
+			for (int j = 0; j < this->maxSizeWorldGrid.y; j++)
 			{
-				for (size_t l = 0; l < this->tileVectors[i][j][k].size(); l++)
+				for (int k = 0; k < this->layers; k++)
 				{
-					delete this->tileVectors[i][j][k][l];
+					for (size_t l = 0; l < this->tileVectors[i][j][k].size(); l++)
+					{
+						delete this->tileVectors[i][j][k][l];
 
-					//this->tileVectors[i][j][k][l] = nullptr;
+						//this->tileVectors[i][j][k][l] = nullptr;
+					}
+					this->tileVectors[i][j][k].clear();
+
 				}
-				this->tileVectors[i][j][k].clear();
+				this->tileVectors[i][j].clear();
 
 			}
-			this->tileVectors[i][j].clear();
+			this->tileVectors[i].clear();
 
 		}
-		this->tileVectors[i].clear();
-
+		this->tileVectors.clear();
 	}
-	this->tileVectors.clear();
-
 }
 
 TileMap::TileMap(
@@ -39,8 +41,10 @@ TileMap::TileMap(
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeI = static_cast<int>(this->gridSizeF);
+
 	this->maxSizeWorldGrid.x = width;
 	this->maxSizeWorldGrid.y = height;
+
 	this->maxSizeWorldF.x = static_cast<float>(width) * gridSize;
 	this->maxSizeWorldF.y = static_cast<float>(height) * gridSize;
 
@@ -72,6 +76,22 @@ TileMap::TileMap(
 		std::cout << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET" << texture_file_name << "\n";
 
 	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
+	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setOutlineColor(sf::Color::Red);
+	this->collisionBox.setOutlineThickness(1.f);
+}
+
+TileMap::TileMap(const std::string file_name)
+{
+	this->fromX = 0;
+	this->toX = 0;
+	this->fromY = 0;
+	this->toY = 0;
+	this->layer = 0;
+
+	this->loadFromFile(file_name);
+
+	this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
 	this->collisionBox.setOutlineColor(sf::Color::Red);
 	this->collisionBox.setOutlineThickness(1.f);
@@ -258,6 +278,8 @@ void TileMap::loadFromFile(const std::string file_name)
 		this->gridSizeI = gridSize;
 		this->maxSizeWorldGrid.x = size.x;
 		this->maxSizeWorldGrid.y = size.y;
+		this->maxSizeWorldF.x = static_cast<float>(size.x) * gridSize;
+		this->maxSizeWorldF.y = static_cast<float>(size.y) * gridSize;
 		this->layers = layers;
 		this->texture_file_name = texture_file_name;
 

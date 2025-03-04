@@ -20,7 +20,7 @@ private:
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font Font;
-
+	int resolutionWidth, resolutionHeight;
 	std::map<std::string, gui::Button*> buttons;
 
 	//Initializer Methods

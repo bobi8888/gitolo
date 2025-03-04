@@ -55,6 +55,8 @@ public:
 
 
 	//Accessors
+	virtual const sf::Sprite& getSprite() const;
+
 	virtual const sf::Vector2f& getSpritePosition() const;
 
 	virtual const sf::Vector2f getSpriteCenter() const;

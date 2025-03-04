@@ -31,6 +31,12 @@
     <Filter Include="Map">
       <UniqueIdentifier>{7fadb4f5-c325-4d74-a6fd-c6d584f1e523}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{e349c430-dbbd-473a-a613-f70b82d9d6c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item\MeleeWeapon">
+      <UniqueIdentifier>{8f0c624f-eeb4-422a-88cc-2dd5c4b6bd32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +105,12 @@
     <ClCompile Include="InteriorState.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Item\MeleeWeapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -166,6 +178,12 @@
     </ClInclude>
     <ClInclude Include="InteriorState.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Item\MeleeWeapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

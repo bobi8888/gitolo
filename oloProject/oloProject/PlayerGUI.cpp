@@ -8,13 +8,22 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHpBar()
 {
+	//this->hpBar = new gui::Bar(
+	//	this->videoMode,
+	//	this->player->getSpritePosition(),
+	//	this->player->getSpriteGlobalBounds().width, this->player->getSpriteGlobalBounds().height,
+	//	-1.f, 1.f, 
+	//	"Fonts/RobotoCondensed-Regular.ttf"
+	//);
+
 	this->hpBar = new gui::Bar(
+		this->player->getSprite(),
 		this->videoMode,
-		this->player->getSpritePosition(),
-		8.f, 2.f, 
-		-4.f, 1.f, 
+		0.8f, 0.15f,
+		0.f, 1.5f,
 		"Fonts/RobotoCondensed-Regular.ttf"
 	);
+
 }
 
 void PlayerGUI::initExpSphere()
@@ -42,7 +51,7 @@ PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& video_Mode)
 
 PlayerGUI::~PlayerGUI()
 {
-
+	std::cout << "Deleted PlayerGUI" << "\n";
 }
 
 //Methods
