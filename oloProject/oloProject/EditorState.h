@@ -41,6 +41,7 @@ private:
 	float cameraSpeed;
 	bool collision;
 	short type;
+	bool tileAddLock;
 
 	//Methods
 	void initRender();

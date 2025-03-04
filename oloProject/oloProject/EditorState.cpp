@@ -37,6 +37,8 @@ void EditorState::initVariables()
 	this->cameraSpeed = 750.f;
 
 	this->layer = 0;
+
+	this->tileAddLock = false;
 }
 
 void EditorState::initView()
@@ -164,7 +166,7 @@ void EditorState::initGui()
 EditorState::EditorState(StateData* stateData) 
 	: State(stateData)
 {
-	this->initRender();
+	this->initRender(); 
 	this->initVariables();
 	this->initView();
 	//this->initBackground();
@@ -176,6 +178,7 @@ EditorState::EditorState(StateData* stateData)
 	this->initTileMap();
 	this->initGui();
 
+	this->keytimeMax = 0.5f;
 	//DEBUG
 }
 
@@ -247,7 +250,8 @@ void EditorState::updateGUI(const float& deltaTime)
 		this->tileToolTextureRect.left << " " << this->tileToolTextureRect.top << "\n" <<
 		"Collision:" << this->collision << "\n" <<
 		"Type: " << this->type << "\n" <<
-		"# of Tiles: " << this->tileMap->getLayerSize(this->mousePositionGrid, this->layer);
+		"# of Tiles: " << this->tileMap->getLayerSize(this->mousePositionGrid, this->layer) << "\n" << 
+		"TileLock: " << this->tileAddLock;
 
 	this->cursorText.setString(ss.str());
 }
@@ -272,18 +276,24 @@ void EditorState::updateEditorInput(const float& deltaTime)
 		this->view.move(std::floor(this->cameraSpeed * deltaTime), 0.f);
 	}
 
-	//add a tile
+	//Adding a tile
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTime())
 	{
 		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(this->mousePositionWindow)))
 		{
 			if (!this->textureSelector->getIsActive())
 			{
-				this->tileMap->addTile(
-					this->mousePositionGrid.x, this->mousePositionGrid.y, 0, 
-					this->tileToolTextureRect, 
-					this->collision, this->type
+				if (
+					(this->tileMap->getLayerSize(this->mousePositionGrid, this->layer) < 1 && this->tileAddLock) 
+					|| !this->tileAddLock
+					)
+				{
+					this->tileMap->addTile(
+						this->mousePositionGrid.x, this->mousePositionGrid.y, 0,
+						this->tileToolTextureRect,
+						this->collision, this->type
 					);
+				}
 			}
 			else
 			{
@@ -293,7 +303,8 @@ void EditorState::updateEditorInput(const float& deltaTime)
 			}
 		}
 	}
-	//remove a tile
+
+	//Removing a tile
 	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeyTime())
 	{
 		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(this->mousePositionWindow)))
@@ -322,6 +333,14 @@ void EditorState::updateEditorInput(const float& deltaTime)
 	{
 		if (this->type > 0)
 			--this->type;
+	}
+	//Toggle TileAddLock
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TILEADDLOCK"))) && this->getKeyTime())
+	{
+		if(this->tileAddLock) 
+			this->tileAddLock = false; 
+		else 
+			this->tileAddLock = true;
 	}
 }
 
