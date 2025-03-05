@@ -127,10 +127,9 @@ void GameState::initTransitionComponents()
 
 	this->transitionComponent->addTransitionZone(
 		"MECHANICS_DOOR", 
-		gui::convertToPixelsX(35.f, videoMode), gui::convertToPixelsY(40.f, videoMode),
-		gui::convertToPixelsX(3.8f, videoMode), gui::convertToPixelsY(3.8f, videoMode)
+		550.f, 400.f,
+		50.f, 50.f
 	);
-
 }
 
 //Constructors & Destructors

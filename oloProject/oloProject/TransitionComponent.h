@@ -13,27 +13,19 @@ private:
 		TransitionZone(
 			float xPos, float yPos,
 			float width, float height
-			): isActive(true)
+			):	isActive(true)
 		{
 			this->hitbox.setSize(sf::Vector2f(width, height));
 
-			this->hitbox.setOrigin(
-				sf::Vector2f(
-					width / 2.f,
-					height / 2.f
-				)
-			);
-
 			this->hitbox.setPosition(xPos, yPos);
 
-			this->hitbox.setFillColor(sf::Color(255, 125, 0, 150));
+			this->hitbox.setFillColor(sf::Color(255, 125, 0, 50));
 		}
 
 		const bool isIntersecting(const sf::FloatRect& rect)
 		{
 			return this->hitbox.getGlobalBounds().intersects(rect);
 		}
-
 	};
 
 	std::map <std::string, TransitionZone*> transitions;
