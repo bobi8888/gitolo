@@ -173,88 +173,72 @@ void gui::Button::render(sf::RenderTarget& target)
 //Bar===============================================================================
 
 //Constructords & Destructor
-//Constructor for an on screen bar
-gui::Bar::Bar(
-	const sf::VideoMode& video_Mode,
-	const sf::Vector2f& position,
-	const float width, const float height,
-	const float x_Offset, const float y_Offset,
-	const std::string font
-	)
-{
-	this->maxWidth = gui::convertToPixelsX(width, video_Mode);
-	this->height = gui::convertToPixelsY(height, video_Mode);
-	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
-	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
 
-	this->barBack.setSize(sf::Vector2f(this->maxWidth, this->height));
-	this->barBack.setFillColor(sf::Color::Red);
-	this->barBack.setPosition(
-		position.x + this->xOffset, 
-		position.y + this->yOffset
-	);
+//Static on screen
+//gui::Bar::Bar(
+//	const sf::VideoMode& video_Mode,
+//	const sf::Vector2f& position,
+//	const float width, const float height,
+//	const float x_Offset, const float y_Offset,
+//	const std::string font
+//	)
+//{
+//	this->maxWidth = gui::convertToPixelsX(width, video_Mode);
+//	this->height = gui::convertToPixelsY(height, video_Mode);
+//	this->xOffsetBar = gui::convertToPixelsX(x_Offset, video_Mode);
+//	this->yOffsetBar = gui::convertToPixelsY(y_Offset, video_Mode);
+//
+//	this->barBack.setSize(sf::Vector2f(this->maxWidth, this->height));
+//	this->barBack.setFillColor(sf::Color::Red);
+//	this->barBack.setPosition(
+//		position.x + this->xOffsetBar, 
+//		position.y + this->yOffsetBar
+//	);
+//
+//	this->barFront.setSize(sf::Vector2f(this->maxWidth, this->height));
+//	this->barFront.setFillColor(sf::Color::Green);
+//	this->barFront.setPosition(
+//		position.x + this->xOffsetBar,
+//		position.y + this->yOffsetBar
+//	);
+//
+//	this->font.loadFromFile(font);
+//
+//	this->text.setFont(this->font);
+//	this->text.setFillColor(sf::Color::Black);
+//	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 260));
+//	this->text.setPosition(
+//		sf::Vector2f(
+//			barBack.getPosition().x + 10.f,
+//			barBack.getPosition().y + 20.f
+//		)
+//	);
+//}
 
-	this->barFront.setSize(sf::Vector2f(this->maxWidth, this->height));
-	this->barFront.setFillColor(sf::Color::Green);
-	this->barFront.setPosition(
-		position.x + this->xOffset,
-		position.y + this->yOffset
-	);
-
-	this->font.loadFromFile(font);
-
-	this->text.setFont(this->font);
-	this->text.setFillColor(sf::Color::Black);
-	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 120));
-	this->text.setPosition(
-		sf::Vector2f(
-			barBack.getPosition().x + 10.f,
-			barBack.getPosition().y + 20.f
-		)
-	);
-}
-
-//Constructor for an on sprite bar
+//Moving with a sprite
 gui::Bar::Bar(
 	const sf::Sprite& sprite, 
-	const sf::VideoMode& video_Mode,
-	const float x_Ratio, const float y_Ratio, 
-	const float x_Offset, const float y_Offset, 
+	const float widthRatio, const float barHeight, 
+	const float x_OffsetBar, const float y_OffsetBar,
+	const float x_OffsetText, const float y_OffsetText,
 	const std::string font
-	)
+	) : height(barHeight), 
+		xOffsetBar(x_OffsetBar), yOffsetBar(y_OffsetBar), 
+		xOffsetText(x_OffsetText), yOffsetText(y_OffsetText)
 {
-	this->maxWidth = sprite.getGlobalBounds().width * x_Ratio;
-	this->height = sprite.getGlobalBounds().height * y_Ratio;
-	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
-	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
+	this->maxWidth = sprite.getGlobalBounds().width * widthRatio;
 
 	this->barBack.setSize(sf::Vector2f(this->maxWidth, this->height));
 	this->barBack.setFillColor(sf::Color::Red);
-	this->barBack.setOrigin(sf::Vector2f(this->maxWidth / 2.f, this->height / 2.f));
-	this->barBack.setPosition(
-		sprite.getPosition().x + this->xOffset,
-		sprite.getPosition().y + this->yOffset
-	);
 
 	this->barFront.setSize(sf::Vector2f(this->maxWidth, this->height));
 	this->barFront.setFillColor(sf::Color::Green);
-	this->barFront.setOrigin(sf::Vector2f(this->maxWidth / 2.f, this->height / 2.f));
-	this->barFront.setPosition(
-		sprite.getPosition().x + this->xOffset,
-		sprite.getPosition().y + this->yOffset
-	);
 
 	this->font.loadFromFile(font);
 
 	this->text.setFont(this->font);
 	this->text.setFillColor(sf::Color::Black);
-	this->text.setCharacterSize(gui::calculateCharSize(video_Mode, 120));
-	this->text.setPosition(
-		sf::Vector2f(
-			barBack.getPosition().x + 10.f,
-			barBack.getPosition().y + 20.f
-		)
-	);
+	this->text.setCharacterSize(static_cast<int>(barHeight));
 }
 
 gui::Bar::~Bar()
@@ -265,13 +249,20 @@ gui::Bar::~Bar()
 //Methods
 void gui::Bar::updatePosition(const sf::Vector2f position)
 {
-	//FLOOR these
+	this->barBack.setPosition(
+		position.x + this->xOffsetBar, 
+		position.y + this->yOffsetBar
+	);
 
-	this->barBack.setPosition(position.x + this->xOffset, position.y + this->yOffset);
+	this->barFront.setPosition(
+		position.x + this->xOffsetBar, 
+		position.y + this->yOffsetBar
+	);
 
-	this->barFront.setPosition(position.x + this->xOffset, position.y + this->yOffset);
-
-	this->text.setPosition(this->barBack.getPosition().x, this->barBack.getPosition().y);
+	this->text.setPosition(
+		this->barBack.getPosition().x + xOffsetText, 
+		this->barBack.getPosition().y + yOffsetText
+	);
 }
 
 void gui::Bar::updateText(std::string string)
@@ -303,77 +294,74 @@ void gui::Bar::render(sf::RenderTarget& target)
 //Sphere=========================================================================================================
 
 //Constructor & Destructor
-//gui::Sphere::Sphere(float radius, sf::Vector2f position)
+ 
+//Static on screen
+ 
+//gui::Sphere::Sphere(
+//	const sf::VideoMode& video_Mode, 
+//	const sf::Vector2f& position,
+//	const float radius, 
+//	const float x_Offset, const float y_Offset
+//	)
 //{
-//	this->circleBack.setRadius(radius);
+//	this->maxRadius = gui::convertToPixelsX(radius, video_Mode);
+//	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
+//	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
+//
+//	this->circleBack.setRadius(this->maxRadius);
+//	this->circleBack.setPointCount(30);
 //	this->circleBack.setOutlineThickness(1.f);
 //	this->circleBack.setOutlineColor(sf::Color::White);
 //	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
-//	this->circleBack.setPosition(position);
-//	this->circleBack.setPointCount(30);
+//	this->circleBack.setPosition(
+//		position.x + this->xOffset,
+//		position.y + this->yOffset
+//	);
 //
-//	this->circleFront.setRadius(radius);
-//	this->circleFront.setFillColor(sf::Color::Yellow);
-//	this->circleFront.setPosition(position);
+//	this->circleFront.setRadius(this->maxRadius);
 //	this->circleFront.setPointCount(30);
-//
-//	this->maxRadius = radius;
+//	this->circleFront.setFillColor(sf::Color::Yellow);
+//	this->circleFront.setPosition(
+//		position.x + this->xOffset,
+//		position.y + this->yOffset
+//	);
 //}
 
+//Moving with a sprite
 gui::Sphere::Sphere(
-	const sf::VideoMode& video_Mode, 
-	const sf::Vector2f& position,
-	const float radius, 
+	const float radius,
 	const float x_Offset, const float y_Offset
-	)
+	) : maxRadius(radius), xOffset(x_Offset), yOffset(y_Offset)
 {
-	this->maxRadius = gui::convertToPixelsX(radius, video_Mode);
-	this->xOffset = gui::convertToPixelsX(x_Offset, video_Mode);
-	this->yOffset = gui::convertToPixelsY(y_Offset, video_Mode);
-
 	this->circleBack.setRadius(this->maxRadius);
-	this->circleBack.setPointCount(30);
 	this->circleBack.setOutlineThickness(1.f);
 	this->circleBack.setOutlineColor(sf::Color::White);
 	this->circleBack.setFillColor(sf::Color(250, 250, 250, 75));
-	this->circleBack.setPosition(
-		position.x + this->xOffset,
-		position.y + this->yOffset
-	);
 
 	this->circleFront.setRadius(this->maxRadius);
-	this->circleFront.setPointCount(30);
+	this->circleFront.setOutlineThickness(1.f);
+	this->circleFront.setOutlineColor(sf::Color(255, 125, 0, 255));
 	this->circleFront.setFillColor(sf::Color::Yellow);
-	this->circleFront.setPosition(
-		position.x + this->xOffset,
-		position.y + this->yOffset
-	);
 }
 
 gui::Sphere::~Sphere()
 {
+	std::cout << "Deleted gui::Sphere" << "\n";
 }
 
 //Methods
 void gui::Sphere::updatePosition(const sf::Vector2f position)
 {
-	//FLOOR these
 	this->circleBack.setPosition(
-		static_cast<float>(std::floor(position.x + this->xOffset)),
-		static_cast<float>(std::floor(position.y + this->yOffset))
-
-		//position.x + this->xOffset, 
-		//position.y + this->yOffset
+		position.x + this->xOffset,
+		position.y + this->yOffset
 	);
 
-	this->circleFront.setOrigin(
-		this->circleFront.getRadius(), 
-		this->circleFront.getRadius()
-	);
+	this->circleFront.setOrigin(this->circleFront.getRadius(), this->circleFront.getRadius());
 
 	this->circleFront.setPosition(
-		static_cast<float>(std::floor(this->circleBack.getPosition().x + this->circleBack.getRadius())),
-		static_cast<float>(std::floor(this->circleBack.getPosition().y + this->circleBack.getRadius()))
+		this->circleBack.getPosition().x + this->circleBack.getRadius(),
+		this->circleBack.getPosition().y + this->circleBack.getRadius()
 	);
 }
 
@@ -381,7 +369,7 @@ void gui::Sphere::updateCircleFrontSize(int value, int valueMax)
 {
 	float percent = static_cast<float>(value) / static_cast<float>(valueMax);
 
-	this->circleFront.setRadius(static_cast<float>(std::floor(this->maxRadius * percent)));
+	this->circleFront.setRadius(this->maxRadius * percent);
 }
 
 void gui::Sphere::render(sf::RenderTarget& target)

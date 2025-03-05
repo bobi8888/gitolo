@@ -21,12 +21,6 @@ Player::Player(sf::Texture& texture_sheet, float xPosition, float yPosition)
 	this->createAnimationComponent(texture_sheet);
 
 	//Animations
-	/*name & speed*/
-	/*startX & startY*/
-	/*# of X frames & # of Y frames*/
-	/*width & height of frame*/
-	
-	//Robo sprite
 	this->animationComponent->addAnimation(
 		"IDLE", 8.f, /*name & speed*/
 		0, 0, /* startX & startY*/
@@ -82,9 +76,6 @@ Player::Player(sf::Texture& texture_sheet, float xPosition, float yPosition)
 	);
 
 	createPlayerAttributeComponent(true, 1);
-	//Robo sprite
-	//this->createHitboxComponent(this->EntitySprite,  0.f,   0.f,  0.f,  0.f);
-
 }
 
 Player::~Player()

@@ -14,6 +14,8 @@ private:
 	sf::VideoMode& videoMode;
 	sf::Font font;
 
+	sf::Vector2f* guiAnchor;
+
 	gui::Bar* hpBar;
 	gui::Sphere* expSphere;
 

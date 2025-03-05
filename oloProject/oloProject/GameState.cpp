@@ -286,7 +286,6 @@ void GameState::update(const float& deltaTime)
 	ss << this->mousePositionView.x << "  " << this->mousePositionView.y << "\n";
 
 	this->cursorText.setString(ss.str());
-	//DEBUG
 
 	if (!this->isPaused)
 	{

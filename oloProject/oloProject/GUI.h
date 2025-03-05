@@ -78,23 +78,27 @@ namespace gui
 		sf::RectangleShape barBack;
 		sf::RectangleShape barFront;
 
-		float maxWidth, height, xOffset, yOffset;
+		float maxWidth, height, xOffsetBar, yOffsetBar, xOffsetText, yOffsetText;
 
 	public:
 		//Constructors & Destructor
-		Bar(
-			const sf::VideoMode& video_Mode,
-			const sf::Vector2f& position,
-			const float width, const float height, 
-			const float x_Offset, const float y_Offset,
-			const std::string font
-		);
+		
+		//Static on screen
+		 
+		//Bar(
+		//	const sf::VideoMode& video_Mode,
+		//	const sf::Vector2f& position,
+		//	const float width, const float height, 
+		//	const float x_Offset, const float y_Offset,
+		//	const std::string font
+		//);
 
+		//Moving with a sprite
 		Bar(
 			const sf::Sprite& sprite,
-			const sf::VideoMode& video_Mode,
-			const float x_Ratio, const float y_Ratio,
-			const float x_Offset, const float y_Offset,
+			const float widthRatio, const float barHeight,
+			const float x_OffsetBar, const float y_OffsetBar,
+			const float x_OffsetText, const float y_OffsetText,
 			const std::string font
 		);
 
@@ -121,14 +125,18 @@ namespace gui
 
 	public:
 		//Constructors & Destructor
-		Sphere(
-			const sf::VideoMode& video_Mode,
-			const sf::Vector2f& position,
-			const float radius, 
-			const float x_Offset, const float y_Offset
-		);
+		
+		//Static on screen
+	
+		//Sphere(
+		//	const sf::VideoMode& video_Mode,
+		//	const sf::Vector2f& position,
+		//	const float radius, 
+		//	const float x_Offset, const float y_Offset
+		//);
 
-		//Sphere(sf::VideoMode& video_Mode, float radius, float x, float y);
+		//Moving with a sprite
+		Sphere(const float radius, const float x_Offset, const float y_Offset);
 
 		~Sphere();
 

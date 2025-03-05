@@ -8,32 +8,18 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHpBar()
 {
-	//this->hpBar = new gui::Bar(
-	//	this->videoMode,
-	//	this->player->getSpritePosition(),
-	//	this->player->getSpriteGlobalBounds().width, this->player->getSpriteGlobalBounds().height,
-	//	-1.f, 1.f, 
-	//	"Fonts/RobotoCondensed-Regular.ttf"
-	//);
-
 	this->hpBar = new gui::Bar(
 		this->player->getSprite(),
-		this->videoMode,
-		0.8f, 0.15f,
-		0.f, 1.5f,
+		0.75f, 15.f, //widthRatio, barHeight
+		-35.f, 2.f,  //x&y bar offset
+		1.5f, -1.5f,  //x&y text offset
 		"Fonts/RobotoCondensed-Regular.ttf"
 	);
-
 }
 
 void PlayerGUI::initExpSphere()
 {
-	this->expSphere = new gui::Sphere(
-		this->videoMode, 
-		this->player->getSpritePosition(),
-		1.5f, 
-		-6.f, 0.75f
-	);
+	this->expSphere = new gui::Sphere(15.f, -50.f, -5.f);
 }
 
 //Constructors & destructor
@@ -41,6 +27,9 @@ PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& video_Mode)
 	:videoMode(video_Mode)
 {
 	this->player = player;
+
+	//guiAnchor = new sf::Vector2f(2,5
+	//);
 
 	this->initFont();
 
