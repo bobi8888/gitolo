@@ -191,7 +191,7 @@ void SettingsState::updateGUI(const float& delta_Time)
 	{		 
 		this->stateData->graphicsSettings->Resolution = this->videoModes[this->dropdownMap["RESOLUTION"]->getActiveElementId()];
 
-		this->window->create(
+		this->stateWindow->create(
 			this->stateData->graphicsSettings->Resolution,
 			this->stateData->graphicsSettings->Title,
 			sf::Style::Default
@@ -238,7 +238,7 @@ void SettingsState::renderGUI(sf::RenderTarget& target)
 void SettingsState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->window;
+		target = this->stateWindow;
 
 	target->draw(this->background);
 

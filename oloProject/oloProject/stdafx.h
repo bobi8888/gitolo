@@ -16,4 +16,4 @@
 #include <SFML/OpenGL.hpp>
 
 //GLFW
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>

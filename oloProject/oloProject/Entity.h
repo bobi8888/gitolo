@@ -71,6 +71,8 @@ public:
 
 	virtual const sf::FloatRect getNextPositionBounds(const float& deltaTime) const;
 
+	virtual const sf::Vector2i getSpriteGlobalBoundsI() const;
+
 	virtual AttributeComponent* getAttributeComponent();
 
 	//Modifiers

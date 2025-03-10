@@ -10,18 +10,13 @@
 
 //Make enemies able to level up?
 
-//EditorState not rendering TileMaps
-//GameState IS rending TileMap...
-//What is the difference between the 2?
-//Editor state only renders type 5???
-
 //Make a method for determining which animation should be played based on velocity. 
     //of if it should be based on which key is pressed?
 
 //Initialization methods
 void Game::initVariables()
 {
-    this->window = nullptr;
+    this->gameWindow = nullptr;
 
     this->graphicSettings.IsFullscreen = false;
 
@@ -37,7 +32,7 @@ void Game::initGraphicsSettings()
 
 void Game::initStateData()
 {
-    this->stateData.window = this->window;
+    this->stateData.stateDataWindow = this->gameWindow;
     this->stateData.graphicsSettings = &this->graphicSettings;
     this->stateData.supportedKeys = &this->supportedKeys;
     this->stateData.statesStack = &this->statesStack;
@@ -47,23 +42,23 @@ void Game::initStateData()
 void Game::initWindow()
 {
     if (this->graphicSettings.IsFullscreen)
-	    this->window = new sf::RenderWindow(
+	    this->gameWindow = new sf::RenderWindow(
             this->graphicSettings.Resolution,
             this->graphicSettings.Title,
             sf::Style::Fullscreen, 
             this->graphicSettings.ContextSettings
             );
     else
-        this->window = new sf::RenderWindow(
+        this->gameWindow = new sf::RenderWindow(
             this->graphicSettings.Resolution,
             this->graphicSettings.Title,
             sf::Style::Titlebar | sf::Style::Close, 
             this->graphicSettings.ContextSettings
             );
 
-    this->window->setFramerateLimit(this->graphicSettings.FramerateLimit);
+    this->gameWindow->setFramerateLimit(this->graphicSettings.FramerateLimit);
 
-    this->window->setVerticalSyncEnabled(this->graphicSettings.VsyncEnabled);
+    this->gameWindow->setVerticalSyncEnabled(this->graphicSettings.VsyncEnabled);
 }
 
 void Game::initKeys()
@@ -108,7 +103,7 @@ Game::Game()
 
 Game::~Game()
 {
-	delete this->window;
+	delete this->gameWindow;
 
     while (!this->statesStack.empty())
     {
@@ -129,10 +124,10 @@ void Game::updateDeltaTime()
 
 void Game::updateSFMLEvents()
 {
-    while (this->window->pollEvent(this->sfEvent))
+    while (this->gameWindow->pollEvent(this->sfEvent))
     {
         if (this->sfEvent.type == sf::Event::Closed)
-            this->window->close();
+            this->gameWindow->close();
     }
 }
 
@@ -142,7 +137,7 @@ void Game::update()
     
     if (!this->statesStack.empty())
     {
-        if (this->window->hasFocus())
+        if (this->gameWindow->hasFocus())
         {
             this->statesStack.top()->update(this->deltaTime);
 
@@ -165,19 +160,19 @@ void Game::update()
 
 void Game::render()
 {
-    this->window->clear();
+    this->gameWindow->clear();
 
     //Rendering
     if (!this->statesStack.empty())
-        this->statesStack.top()->render(this->window);
+        this->statesStack.top()->render(this->gameWindow);
 
-    this->window->display();
+    this->gameWindow->display();
 }
 
 void Game::run()
 {
 
-    while (this->window->isOpen())
+    while (this->gameWindow->isOpen())
     {
         this->updateDeltaTime();
 
@@ -186,47 +181,169 @@ void Game::run()
         this->render();
     }
 
-    //GLFWwindow* window;
 
-    ///* Initialize the library */
-    //if (!glfwInit())
-    //    std::cout << "INIT ERROR" << "\n";
+        //sf::RenderWindow window(sf::VideoMode(800, 600), "Sprite Lighting with Ambient Light");
+        //window.setVerticalSyncEnabled(true);
+        // 
+        //sprite for shader test
+        //sf::Texture texture;
+        //if (!texture.loadFromFile("sprite.png"))
+        //{
+        //    std::cerr << "Error: Could not load sprite.png" << std::endl;
+        //}
 
-    ///* Create a windowed mode window and its OpenGL context */
-    //window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    //if (!window)
-    //{
-    //    glfwTerminate();
-    //    std::cout << "WINDOW ERROR" << "\n";
-    //}
+        //sf::Sprite sprite(texture);
+        //sprite.setPosition(100.f, 100.f);
 
-    ///* Make the window's context current */
-    //glfwMakeContextCurrent(window);
 
-    ///* Loop until the user closes the window */
-    //while (!glfwWindowShouldClose(window))
-    //{
-    //    /* Render here */
-    //    glClear(GL_COLOR_BUFFER_BIT);
+        // Vertex shader: Passes texture coordinates to the fragment shader.
+        //const std::string vertexShaderCode = R"(
+        //    // Uniform texSize holds the texture size (in pixels)
+        //    uniform vec2 texSize;
 
-    //    glBegin(GL_TRIANGLES);
-    //    glVertex2f(-0.5f, -0.5f);
-    //    glVertex2f(0.0f, 0.5f);
-    //    glVertex2f(0.5f, -0.5f);
-    //    glEnd();
+        //    void main()
+        //    {
+        //        // Normalize the texture coordinates by dividing by the texture size.
+        //        vec2 normTexCoord = gl_MultiTexCoord0.xy / texSize;
+        //        gl_TexCoord[0] = vec4(normTexCoord, 0.0, 1.0);
 
-    //    /* Swap front and back buffers */
-    //    glfwSwapBuffers(window);
+        //        // Standard vertex position transformation.
+        //        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+        //    }
+        //)";
 
-    //    /* Poll for and process events */
-    //    glfwPollEvents();
-    //}
+        // Fragment shader: Applies ambient and diffuse lighting.
+        //const std::string fragmentShaderCode = R"(
+        //    //Uniform texture is not set externally? Just declared here? Needed to work however
+        //        uniform sampler2D texture;
 
-    //glfwTerminate();
+        //    // Light position in normalized texture coordinate space [0, 1], set in while loop
+        //        uniform vec2 lightPos; 
+        //   
+        //    // Light radius in texture coordinate space
+        //        uniform float lightRadius;  
+
+        //    // Color of the diffuse light
+        //        uniform vec3 lightColor;    
+        //    
+        //    // Ambient light color
+        //        uniform vec3 ambientLight;  
+
+        //    void main()
+        //    {
+        //    // Sample the sprite's texture color.
+        //        vec4 texColor = texture2D(texture, gl_TexCoord[0].xy);
+
+        //    // Compute the distance from the current fragment to the light's position.
+        //        float dist = distance(gl_TexCoord[0].xy, lightPos);
+
+        //    // Calculate attenuation: fragments closer than the light radius are lit more intensely.
+        //        float attenuation = clamp(1.0 - (dist / lightRadius), 0.0, 1.0);
+
+        //    // Diffuse component scales with the attenuation.
+        //        vec3 diffuse = lightColor * attenuation;
+
+        //    // Combine ambient lighting with the diffuse component.
+        //        vec3 finalLight = ambientLight + diffuse;
+
+        //    // Multiply the texture color by the final light value.
+        //        gl_FragColor = vec4(texColor.rgb * finalLight, texColor.a);
+        //    }
+        //)";
+
+        //sf::Shader shader;
+        //if (!shader.loadFromMemory(vertexShaderCode, fragmentShaderCode))
+        //{
+        //    std::cerr << "Error: Could not load shader" << std::endl;
+        //}
+
+        // Uniform texSize holds the texture size (in pixels)
+        // Pass the texture size so the vertex shader can normalize texture coordinates (0-1).
+
+    //is this the whole map? check and see where SS changed the map to sprites?
+/*        sf::Vector2u texSize = texture.getSize();
+        shader.setUniform("texSize", sf::Glsl::Vec2(static_cast<float>(texSize.x), static_cast<float>(texSize.y)));
+
+        shader.setUniform("lightRadius", 0.5f);
+        shader.setUniform("lightColor", sf::Glsl::Vec3(1.0f, 1.0f, 1.0f));  
+        shader.setUniform("ambientLight", sf::Glsl::Vec3(0.5f, 0.5f, 0.5f));  */    
+
+        //while (window.isOpen())
+        //{
+        //    sf::Event event;
+        //    while (window.pollEvent(event))
+        //    {
+        //        if (event.type == sf::Event::Closed)
+        //            window.close();
+        //    }
+
+//ALL THIS IS NEEDED IN THE UPDATE
+            // Update the light position using the current mouse position.
+
+        //should this be the map as well?
+        //    sf::FloatRect spriteBounds = sprite.getGlobalBounds();
+
+        ////This should be the player's position?
+        //    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+        //    // Convert mouse window coordinates to sprite-local normalized coordinates.
+        //    float localX = (mousePos.x - spriteBounds.left) / spriteBounds.width;
+        //    float localY = (mousePos.y - spriteBounds.top) / spriteBounds.height;
+
+        //    shader.setUniform("lightPos", sf::Glsl::Vec2(localX, localY));
+//ALL THIS IS NEEDED IN THE UPDATE
+
+            //window.clear(sf::Color::Black);
+            //window.draw(sprite, &shader);
+            //window.display();
+       
+
+        //SS fragment_shader
+        //in vec4 vert_pos;
+
+        //uniform sampler2D texture; //unknown how this is being set? there is no setUniform for this?
+        //uniform bool hasTexture;
+        //uniform vec2 lightPos;
+
+        //void main()
+        //{
+        //    //Ambient light
+        //    //1.0f is max light, 0.0f is no light, the last value is alpha
+        //    vec4 ambient = vec4(0.1f, 0.1f, 0.1f, 1.f);
+
+        //    //Convert light to view coords
+        //    vec2 lightPosTemp = lightPos;
+        //    //gl_ModelViewProjectionMatrix can only be multiplied by a vec4?
+        //    lightPosTemp = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
+
+        //    //Need to fix this to make the light circular
+        //    //Calculate the vector from light to pixel (Make circular)
+        //    vec2 lightToFrag = lightPosTemp - vert_pos.xy;
+
+        //    //Length of the vector (distance)
+        //    /*the factor multiplied against length(lightToFrag is the 'size of the light'
+        //    2.0f is a larger light that 4.0f*/
+        //    float vecLength = clamp(length(lightToFrag) * 2.0f, 0.0f, 1.0f);
+
+        //    //lookup the pixel in the texture
+        //    vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
+
+        //    //Muliply by the color & lighting
+        //    if (hasTexture == true)
+        //    {
+        //        gl_FragColor = gl_Color * pixel * (clamp(ambient + vec4(1 - vecLength, 1 - vecLength, 1 - vecLength, 1), 0.0f, 1.f));
+        //    }
+        //    else
+        //    {
+        //        gl_FragColor = gl_Color;
+        //    }
+        //}
+    
+
 }
 
 void Game::endApplication()
 {
     std::cout << "ending application" << "\n";
-    this->window->close();
+    this->gameWindow->close();
 }

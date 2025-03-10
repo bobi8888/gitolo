@@ -1,4 +1,4 @@
-graphics.txt title
+Window header set in graphics.txt 
 1680 1050
 0
 200

@@ -14,6 +14,8 @@ class sf::RenderTexture;
 
 class EditorState :
     public State
+
+
 {
 private:
 	//Variables
@@ -21,6 +23,18 @@ private:
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 	sf::Shader mainShader;
+
+		sf::Texture* testTile;
+		sf::Texture* testPlayerTexture;
+		sf::Sprite* testPlayer; 
+		sf::Shader lightShader;
+		float speed;
+		sf::Vector2f movement;
+		sf::Vector2i lightScreenPosition;
+		std::vector<sf::Sprite*> backgroundTiles;
+
+		sf::VertexArray* vertices;
+		sf::VertexBuffer* vertexBuffer;
 
 	sf::Font font;
 	sf::Text cursorText;
@@ -47,17 +61,17 @@ private:
 	void initRender();
 	void initVariables();
 	void initView();
-	//void initBackground();
 	void initFonts();
 	void initText();
 	void initKeybinds();
-	//void initButtons();
 	void initPauseMenu();
-	void initShaders();
-	void initGui();
+	//void initShaders();
 	void initTileMap();
+	void initGui();
 
 public:
+
+
 	//Constructors & Desctructor
 	EditorState(StateData* stateData);
 	virtual ~EditorState();

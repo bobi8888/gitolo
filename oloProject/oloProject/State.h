@@ -10,12 +10,9 @@ class State;
 class StateData
 {
 public:
-	//StateData(){};
-
-	//Variables
 	float gridSize;
 
-	sf::RenderWindow* window; 
+	sf::RenderWindow* stateDataWindow; 
 
 	GraphicsSettings* graphicsSettings;
 
@@ -32,8 +29,8 @@ protected:
 	StateData* stateData;
 	std::stack<State*>* statesStack;
 
-	sf::RenderWindow* window;
-
+	sf::RenderWindow* stateWindow;
+	sf::RenderWindow* testWindow;
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keybinds;
 
@@ -57,8 +54,6 @@ protected:
 
 public:
 	//Constructors/Destructors
-	//State();
-
 	State(StateData* stateData);
 
 	virtual ~State();

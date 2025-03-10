@@ -3,11 +3,6 @@
 #include "EditorState.h"
 
 //Initializer Methods
-//void EditorState::initBackground()
-//{
-//
-//}
-
 void EditorState::initRender()
 {
 	this->renderTexture.create(
@@ -39,6 +34,98 @@ void EditorState::initVariables()
 	this->layer = 0;
 
 	this->tileAddLock = false;
+
+		this->testTile = new sf::Texture();
+		this->testTile->loadFromFile("testTile.png");
+
+		this->testPlayerTexture = new sf::Texture();
+		this->testPlayerTexture->loadFromFile("testPlayer.png");
+
+		const int gridRows = 5;
+		const int gridCols = 5;
+		const int spriteSize = 100; 
+
+		for (int row = 0; row < gridRows; ++row)
+		{
+			for (int col = 0; col < gridCols; ++col)
+			{
+				sf::Sprite* sprite = new sf::Sprite();
+				sprite->setTexture(*this->testTile);
+				sprite->setPosition(col * spriteSize, row * spriteSize);
+				backgroundTiles.push_back(sprite);
+			}
+		}
+
+		this->testPlayer = new sf::Sprite();
+		this->testPlayer->setTexture(*this->testPlayerTexture);
+		this->testPlayer->setPosition(this->stateWindow->getSize().x /2.f, this->stateWindow->getSize().y / 2.f);
+		this->testPlayer->setOrigin(
+			this->testPlayer->getGlobalBounds().width / 2.f, 
+			this->testPlayer->getGlobalBounds().height / 2.f
+		);
+
+
+
+
+
+		//Create vertices of the triagle
+		std::vector<sf::Vertex> vertices = {
+				sf::Vertex(sf::Vector2f(100.f, 100.f), sf::Color::Red),
+				sf::Vertex(sf::Vector2f(150.f, 50.f),  sf::Color::Red),
+				sf::Vertex(sf::Vector2f(200.f, 100.f), sf::Color::Red)
+		};
+
+		//set the VertexBuffer 
+		this->vertexBuffer = new sf::VertexBuffer(sf::Triangles, sf::VertexBuffer::Usage::Static);
+		this->vertexBuffer->create(vertices.size());
+		this->vertexBuffer->update(&vertices[0]);
+
+		//sets the shape of the shader?
+		lightShader.setUniform("aPos", this->vertexBuffer);
+
+		const std::string vertexShaderCode = R"(
+			#version 330 core
+
+			//layout (location = 0) causes problems with sfml?
+
+			uniform vec3 aPos;
+
+			void main()
+			{
+				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+			}
+		)";
+
+		if(!lightShader.loadFromMemory(vertexShaderCode, sf::Shader::Vertex))
+		{
+			std::cout << "ERROR LOADING LIGHTSHADER VERTEXSHADERCODE" << "\n";
+		}
+		else 
+		{
+			std::cout << "LIGHTSHADER VERTEXSHADERCODE LOADED CORRECTLY" << "\n";
+		}
+
+
+		const std::string fragmentShaderCode = R"(
+ 			#version 330 core
+			out vec4 FragColor;
+
+			void main()
+			{
+				FragColor = vec4(1.0f, 0.5f, 0.0f, 0.5f);
+			} 
+		)";
+		
+		if(!lightShader.loadFromMemory(fragmentShaderCode, sf::Shader::Fragment))
+		{
+			std::cout << "ERROR LOADING LIGHTSHADER FRAGMENTSHADERCODE" << "\n";
+		}
+		else
+		{
+			std::cout << "LIGHTSHADER FRAGMENTSHADERCODE LOADED CORRECTLY" << "\n";
+		}
+
+
 }
 
 void EditorState::initView()
@@ -88,11 +175,6 @@ void EditorState::initKeybinds()
 	ifs.close();
 }
 
-//void EditorState::initButtons()
-//{
-//
-//}
-
 void EditorState::initPauseMenu()
 {
 	this->pauseMenu = new PauseMenu(this->stateData->graphicsSettings->Resolution, this->font);
@@ -122,9 +204,10 @@ void EditorState::initTileMap()
 {
 	this->tileMap = new TileMap(
 		this->stateData->gridSize, 
-		100, 100, 
-		this->tileToolTextureRect, 
+		25, 25, 
+		//this->tileToolTextureRect, 
 		"Resources/Images/Tiles/tiles50.png"
+
 	);
 }
 
@@ -161,7 +244,6 @@ void EditorState::initGui()
 	this->sideBar.setOutlineThickness(2.f);
 }
 
-
 //Constructors & destructor
 EditorState::EditorState(StateData* stateData) 
 	: State(stateData)
@@ -169,12 +251,10 @@ EditorState::EditorState(StateData* stateData)
 	this->initRender(); 
 	this->initVariables();
 	this->initView();
-	//this->initBackground();
 	this->initFonts();
 	this->initText();
 	this->initKeybinds();
 	this->initPauseMenu();
-	//this->initButtons();
 	this->initTileMap();
 	this->initGui();
 
@@ -195,8 +275,8 @@ EditorState::~EditorState()
 
 	delete this->textureSelector;
 }
-//Methods
 
+//Methods
 //Update Methods
 void EditorState::updatePauseMenuButtons()
 {
@@ -366,6 +446,25 @@ void EditorState::update(const float& deltaTime)
 
 		this->updatePauseMenuButtons();
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		movement.x -= this->speed * deltaTime;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		movement.x += this->speed * deltaTime;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		movement.y -= this->speed * deltaTime;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		movement.y += this->speed * deltaTime;
+
+	testPlayer->move(movement);
+
+	//update position of the shader? 
+	//giving aPos is not found in shader error message
+	this->lightShader.setUniform("aPos", this->vertexBuffer);
+
 }
 
 //Render Methods
@@ -386,7 +485,7 @@ void EditorState::renderGUI(sf::RenderTarget& target)
 		target.draw(this->tileToolSelectorRect);
 	}
 
-	target.setView(this->window->getDefaultView());
+	target.setView(this->stateWindow->getDefaultView());
 
 	this->textureSelector->render(target);
 
@@ -400,17 +499,18 @@ void EditorState::renderGUI(sf::RenderTarget& target)
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->window;
+		target = this->stateWindow;
 
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-		
+
 	//this->tileMap->render(this->renderTexture, this->mousePositionGrid);
 	this->tileMap->render(
 		this->renderTexture,
 		this->mousePositionGrid, 
-		NULL, 
+		//&lightShader, 
+		NULL,
 		sf::Vector2f(), 
 		true
 	);
@@ -436,4 +536,15 @@ void EditorState::render(sf::RenderTarget* target)
 	target->draw(this->renderSprite);
 
 	this->renderGUI(*target);
+
+		//for (const auto& tile : backgroundTiles)
+		//{
+		//	this->stateWindow->draw(*tile, &lightShader);
+		//}
+
+		this->stateWindow->draw(*testPlayer);
+
+		//this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
+		this->stateWindow->draw(*vertexBuffer, &this->lightShader);
+
 }

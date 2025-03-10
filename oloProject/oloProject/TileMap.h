@@ -41,7 +41,7 @@ public:
 	TileMap(
 		float gridSize, 
 		int width, int height, 
-		const sf::IntRect texture_rect,
+		//const sf::IntRect texture_rect,
 		std::string texture_file_name
 	);
 

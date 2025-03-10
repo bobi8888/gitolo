@@ -217,7 +217,7 @@ void MainMenuState::renderButtons(sf::RenderTarget& target)
 void MainMenuState::render(sf::RenderTarget* target)
 {
 	if (!target)
-		target = this->window;
+		target = this->stateWindow;
 
 	target->draw(this->background);
 

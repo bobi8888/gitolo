@@ -146,6 +146,14 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& deltaTime) const
 	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
 }
 
+const sf::Vector2i Entity::getSpriteGlobalBoundsI() const
+{
+	return sf::Vector2i(
+		this->sprite.getGlobalBounds().left,
+		this->sprite.getGlobalBounds().top
+	);
+}
+
 AttributeComponent* Entity::getAttributeComponent()
 {
 	return this->attributeComponent;

@@ -2,6 +2,7 @@
 
 #include "GameState.h"
 
+//Initializer Methods
 void GameState::initDeferredRender()
 {
 	this->renderTexture.create(
@@ -10,10 +11,10 @@ void GameState::initDeferredRender()
 	);
 
 	this->renderSprite.setTexture(this->renderTexture.getTexture());
+
 	this->renderSprite.setTextureRect(
 		sf::IntRect(
-			0,
-			0, 
+			0, 0, 
 			this->stateData->graphicsSettings->Resolution.width, 
 			this->stateData->graphicsSettings->Resolution.height
 		)
@@ -23,22 +24,19 @@ void GameState::initDeferredRender()
 
 void GameState::initView()
 {
+	this->testView = new sf::View();
+	
 	this->view.setSize(
-		sf::Vector2f( 
-			static_cast<float>(this->stateData->graphicsSettings->Resolution.width),
-			static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
-		)
+		static_cast<float>(this->stateData->graphicsSettings->Resolution.width),
+		static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
 	);
 
-	this->view.setCenter(
-		sf::Vector2f(
-			this->stateData->graphicsSettings->Resolution.width / 2.f,
-			this->stateData->graphicsSettings->Resolution.height / 2.f
-		)
+	this->view.setCenter(		
+		this->stateData->graphicsSettings->Resolution.width / 2.f,
+		this->stateData->graphicsSettings->Resolution.height / 2.f		
 	);
 }
 
-//Initializer Methods
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("Config/gamestateKeybinds.txt");
@@ -90,10 +88,74 @@ void GameState::initPauseMenu()
 
 void GameState::initShaders()
 {
-	if (!this->mainShader.loadFromFile("vertex_shader.vert", "fragment_shader.frag"))
+	//Make this work 
+	const std::string vertexShaderCode = R"(
+        uniform vec2 texSize; //texture size (in pixels)
+
+        void main()
+        {            
+            vec2 normTexCoord = gl_MultiTexCoord0.xy / texSize; // Normalize texture coords by dividing by the texture size.
+            gl_TexCoord[0] = vec4(normTexCoord, 0.0, 1.0);
+
+            gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex; // Standard vertex position transformation.
+        }
+    )";
+
+	const std::string fragmentShaderCode = R"(
+        uniform sampler2D texture; // A declaration needed to work
+
+        uniform vec2 lightPos; // SET IN UPDATE: Light position in normalized texture coordinate space [0, 1]
+           
+        uniform float lightRadius; // Light radius in texture coordinate space
+
+        uniform vec3 playerLightColor; // Color of the light coming from the player
+		            
+        uniform vec3 ambientLight;  
+
+        void main()
+        {
+            vec4 texColor = texture2D(texture, gl_TexCoord[0].xy); // Sample the sprite's texture color.
+
+            float dist = distance(gl_TexCoord[0].xy, lightPos); // Compute dist from current fragment to light's pos.
+
+            float attenuation = clamp(1.0 - (dist / lightRadius), 0.0, 1.0); // Calc attenuation: 
+			                                                                 // fragments closer than the light 
+																			 // radius are lit more intensely.
+
+            vec3 diffuse = playerLightColor * attenuation; // Diffuse component scales with the attenuation.
+
+            vec3 finalLight = ambientLight + diffuse; // Combine ambient lighting with the diffuse component.
+
+            gl_FragColor = vec4(texColor.rgb * finalLight, texColor.a); // Multiply the texture color by the final light value.
+        }
+    )";
+
+	if (!mainShader.loadFromMemory(vertexShaderCode, fragmentShaderCode))
 	{
-		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+		std::cerr << "Error: Could not load shader" << std::endl;
 	}
+
+		if (!this->testTexture.loadFromFile("rock.png"))
+		{
+			std::cerr << "Error: Could not load sprite.png" << std::endl;
+		}
+
+		this->testSprite.setTexture(this->testTexture);
+
+		this->testSprite.setPosition(500.f, 500.f);
+
+	//this is what is getting the light applied to it
+		sf::Vector2u texSize = this->testSprite.getTexture()->getSize();
+		//sf::Vector2u texSize = sf::Vector2u(
+		//	static_cast<unsigned>(this->tileMap->getGridMaxSizeInt().x),
+		//	static_cast<unsigned>(this->tileMap->getGridMaxSizeInt().y)
+		//);
+
+	mainShader.setUniform("texSize", sf::Glsl::Vec2(static_cast<float>(texSize.x), static_cast<float>(texSize.y)));
+	mainShader.setUniform("lightRadius", 0.5f);
+	mainShader.setUniform("playerLightColor", sf::Glsl::Vec3(0.9f, 0.9f, 0.9f));
+	mainShader.setUniform("ambientLight", sf::Glsl::Vec3(0.5f, 0.5f, 0.5f));
+
 }
 
 void GameState::initPlayers()
@@ -108,14 +170,20 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
+	//this declaration is working for the EditorState
 	//this->tileMap = new TileMap(
 	//	this->stateData->gridSize, 
-	//	100, 100, 
-	//	this->texture_rect, 
+	//	25, 25, 
+	//	//this->tileToolTextureRect, 
 	//	"Resources/Images/Tiles/tiles50.png"
 	//);
 
+	//This is giving an error
 	//this->tileMap->loadFromFile("editorTileMap.txt");
+	
+	//This is maping the textures weird, grass is ok, other tiles are smaller? 
+	//Collision works, but the tile sheet is taking some sort of ratio instead of 50 x 50 pxl
+	//This declaration works fine in editorState
 	this->tileMap = new TileMap("editorTileMap.txt");
 }
 
@@ -123,7 +191,7 @@ void GameState::initTransitionComponents()
 {
 	this->transitionComponent = new TransitionComponent();
 
-	const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
+	//const sf::VideoMode& videoMode = this->stateData->graphicsSettings->Resolution;
 
 	this->transitionComponent->addTransitionZone(
 		"MECHANICS_DOOR", 
@@ -144,10 +212,16 @@ GameState::GameState(StateData* stateData, std::string name)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
-	this->initShaders();
+
+	//this->initShaders();
+
 	this->initPlayers();
-	this->initPlayerGUI();
+
 	this->initTileMap();
+	this->initShaders();
+
+	this->initPlayerGUI();
+
 	this->initTransitionComponents();
 
 	//DEBUG
@@ -176,6 +250,7 @@ void GameState::updateTransitions(const float& deltaTime)
 }
 
 //Methods
+ 
 //void GameState::updateView(const float& deltaTime)
 void GameState::updateView()
 {
@@ -263,8 +338,30 @@ void GameState::updateTileMap(const float& deltaTime)
 	this->tileMap->updateCollision(this->player, deltaTime);
 }
 
+void GameState::updateShader()
+{
+	//start by putting the test sprite in the center of the map and make the light position be the player
+
+	//Whats getting lit
+	sf::FloatRect spriteBounds = this->testSprite.getGlobalBounds();
+
+	//Light position
+	sf::Vector2i mousePos = sf::Mouse::getPosition(*this->stateWindow);
+
+	// Convert mouse window coordinates to sprite-local normalized coordinates.
+	float localX = (mousePos.x - spriteBounds.left) / spriteBounds.width;
+
+	float localY = (mousePos.y - spriteBounds.top) / spriteBounds.height;
+
+	std::cout << localX << " " << localY <<  "\n";
+
+	mainShader.setUniform("lightPos", sf::Glsl::Vec2(localX, localY));
+}
+
 void GameState::update(const float& deltaTime)
 {
+	this->updateShader();
+		
 	this->updateMousePositions(&this->view);
 
 	this->updateKeytime(deltaTime);
@@ -312,7 +409,7 @@ void GameState::update(const float& deltaTime)
 void GameState::render(sf::RenderTarget* target)
 {	
 	if(!target)
-		target = this->window;
+		target = this->stateWindow;
 
 	this->renderTexture.clear();
 
@@ -320,25 +417,24 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->render(
 		this->renderTexture, 
-
-		//This is showing the whole left side of the map
-		//this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)),
-
-		//this is cutting off the first 2-3 columns of tiles on the left side of the map
 		this->viewGridPosition,
-
-		&this->mainShader,
+		//&this->mainShader,
+		NULL,
 		this->player->getSpriteCenter(),
 		false
 		);
 	
-	this->player->render(this->renderTexture, &this->mainShader, true);
+	//this->player->render(this->renderTexture, &this->mainShader, true);
+	this->player->render(this->renderTexture, NULL, true);
 
 	this->tileMap->renderDeferred(
 		this->renderTexture, 
-		&this->mainShader, 
+		//&this->mainShader,
+		NULL,
 		this->player->getSpriteCenter()
 	);
+
+		
 
 	this->transitionComponent->render(this->renderTexture);
 
@@ -359,20 +455,22 @@ void GameState::render(sf::RenderTarget* target)
 
 	target->draw(this->renderSprite);
 		
-	//Debugging
-	//sf::Text mouse_text;
-	//mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
-	//mouse_text.setFont(this->font);
-	//mouse_text.setCharacterSize(18);
-	//std::stringstream ss;
-	//ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
-	//mouse_text.setString(ss.str());
+target->draw(this->testSprite, &mainShader);
+
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
+		//Debugging
+
 		//target->draw(mouse_text);
+		//sf::Text mouse_text;
+		//mouse_text.setPosition(sf::Vector2f(this->mousePositionView.x, this->mousePositionView.y + 15));
+		//mouse_text.setFont(this->font);
+		//mouse_text.setCharacterSize(18);
+		//std::stringstream ss;
+		//ss << this->mousePositionView.x << "  " << this->mousePositionView.y;
+		//mouse_text.setString(ss.str());
 
 		target->draw(this->cursorText);
-	}
-	
+	}	
 }

@@ -24,6 +24,7 @@ private:
 	std::string name;
 
 	sf::View view;
+	sf::View* testView;
 	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
 
@@ -33,6 +34,9 @@ private:
 
 	sf::Font font;
 	sf::Text cursorText;
+
+		sf::Texture testTexture;
+		sf::Sprite testSprite;
 
 	//is this needed?
 	PauseMenu* pauseMenu;
@@ -55,8 +59,9 @@ private:
 	void initPauseMenu();
 	void initShaders();
 	void initPlayers();
-	void initPlayerGUI();
 	void initTileMap();
+	void initPlayerGUI();
+	
 	void initTransitionComponents();
 
 public:
@@ -80,8 +85,10 @@ public:
 
 	void updatePauseMenuButtons();
 
-	void updateTileMap(const float& deltaTime)
-	;
+	void updateTileMap(const float& deltaTime);
+
+	void updateShader();
+
 	void update(const float& deltaTime);
 
 	void render(sf::RenderTarget* target = NULL);

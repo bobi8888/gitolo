@@ -35,7 +35,7 @@ void TileMap::clearTileVectors()
 TileMap::TileMap(
 	float gridSize, 
 	int width, int height, 
-	const sf::IntRect texture_rect,
+	//const sf::IntRect texture_rect,
 	std::string texture_file_name
 	) : texture_file_name(texture_file_name)
 {
@@ -267,12 +267,6 @@ void TileMap::loadFromFile(const std::string file_name)
 		//Basics
 		in_file >> size.x >> size.y >> gridSize >> layers >> texture_file_name;
 	
-		if (size.x != maxSizeWorldGrid.x)
-			std::cout << "ERROR::SIZE.X IN editorTileMap != maxSizeWorldGrid.x" << "\n";
-
-		if (size.y != maxSizeWorldGrid.y)
-			std::cout << "ERROR::SIZE.Y IN editorTileMap != maxSizeWorldGrid.y" << "\n";
-
 		//Tiles
 		this->gridSizeF = static_cast<float>(gridSize);
 		this->gridSizeI = gridSize;
@@ -282,6 +276,12 @@ void TileMap::loadFromFile(const std::string file_name)
 		this->maxSizeWorldF.y = static_cast<float>(size.y) * gridSize;
 		this->layers = layers;
 		this->texture_file_name = texture_file_name;
+
+		if (size.x != this->maxSizeWorldGrid.x)
+			std::cout << "ERROR::SIZE.X IN editorTileMap != maxSizeWorldGrid.x" << "\n";
+
+		if (size.y != this->maxSizeWorldGrid.y)
+			std::cout << "ERROR::SIZE.Y IN editorTileMap != maxSizeWorldGrid.y" << "\n";
 
 		this->clearTileVectors();
 
@@ -490,7 +490,6 @@ void TileMap::render(
 		this->toY = 0;
 	else if (this->toY > this->maxSizeWorldGrid.y)
 		this->toY = this->maxSizeWorldGrid.y;
-
 
 	for (int x = this->fromX; x < this->toX; x++)
 	{

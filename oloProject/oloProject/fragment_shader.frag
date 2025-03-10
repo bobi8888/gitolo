@@ -1,39 +1,37 @@
-in vec4 vert_pos;
+        //Uniform texture is not set externally? Just declared here? Needed to work however
+            uniform sampler2D texture;
 
-uniform sampler2D texture; //unknown how this is being set? there is no setUniform for this?
+        // Light position in normalized texture coordinate space [0, 1], set in while loop
+            uniform vec2 lightPos; 
+           
+        // Light radius in texture coordinate space
+            uniform float lightRadius;  
+
+        // Color of the diffuse light
+            uniform vec3 lightColor;    
+            
+        // Ambient light color
+            uniform vec3 ambientLight;  
+
 uniform bool hasTexture;
-uniform vec2 lightPos;
 
-void main()
-{
-	//Ambient light
-	//1.0f is max light, 0.0f is no light, the last value is alpha
-		vec4 ambient = vec4(0.1f, 0.1f, 0.1f, 1.f);
+        void main()
+        {
+        // Sample the sprite's texture color.
+            vec4 texColor = texture2D(texture, gl_TexCoord[0].xy);
 
-	//Convert light to view coords
-		vec2 lightPosTemp = lightPos;
-	//gl_ModelViewProjectionMatrix can only be multiplied by a vec4?
-		lightPosTemp = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
+        // Compute the distance from the current fragment to the light's position.
+            float dist = distance(gl_TexCoord[0].xy, lightPos);
 
-	//Need to fix this to make the light circular
-	//Calculate the vector from light to pixel (Make circular)
-		vec2 lightToFrag = lightPosTemp - vert_pos.xy;
-		
-	//Length of the vector (distance)
-	/*the factor multiplied against length(lightToFrag is the 'size of the light' 
-	2.0f is a larger light that 4.0f*/
-		float vecLength = clamp(length(lightToFrag) * 2.0f, 0.0f, 1.0f);
+        // Calculate attenuation: fragments closer than the light radius are lit more intensely.
+            float attenuation = clamp(1.0 - (dist / lightRadius), 0.0, 1.0);
 
-	//lookup the pixel in the texture
-		vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
+        // Diffuse component scales with the attenuation.
+            vec3 diffuse = lightColor * attenuation;
 
-	//Muliply by the color & lighting
-		if (hasTexture == true)
-		{
-			gl_FragColor = gl_Color * pixel * (clamp(ambient + vec4(1 - vecLength, 1 - vecLength,1 - vecLength, 1), 0.0f, 1.f));
-		}
-		else
-		{
-			gl_FragColor = gl_Color;
-		}
-}
+        // Combine ambient lighting with the diffuse component.
+            vec3 finalLight = ambientLight + diffuse;
+
+        // Multiply the texture color by the final light value.
+            gl_FragColor = vec4(texColor.rgb * finalLight, texColor.a);
+        }

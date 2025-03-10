@@ -13,8 +13,8 @@ private:
 
 			sf::IntRect startRect;
 			sf::IntRect currentRect;
-			sf::IntRect endRect
-			;
+			sf::IntRect endRect;
+
 			int textureWidth;
 			int textureHeight;
 

@@ -11,7 +11,7 @@ private:
 
 	StateData stateData;
 
-	sf::RenderWindow *window;
+	sf::RenderWindow *gameWindow;
 
 	sf::Event sfEvent;
 
