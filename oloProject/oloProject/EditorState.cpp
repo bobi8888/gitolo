@@ -66,8 +66,7 @@ void EditorState::initVariables()
 
 
 
-
-
+		
 		//Create vertices of the triagle
 		std::vector<sf::Vertex> vertices = {
 				sf::Vertex(sf::Vector2f(100.f, 100.f), sf::Color::Red),
@@ -81,42 +80,60 @@ void EditorState::initVariables()
 		this->vertexBuffer->update(&vertices[0]);
 
 		//sets the shape of the shader?
-		lightShader.setUniform("aPos", this->vertexBuffer);
+		sf::Glsl::Vec3 vec;
+		vec.x = 100.f;
+		vec.x = 200.f;
+		vec.x =  300.f;
 
 		const std::string vertexShaderCode = R"(
 			#version 330 core
 
-			//layout (location = 0) causes problems with sfml?
+			layout(location = 0) in vec2 position;
+			layout(location = 1) in vec2 texCoords;
 
-			uniform vec3 aPos;
+			uniform mat4 transform;
+			out vec2 TexCoords;
 
 			void main()
 			{
-				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+				TexCoords = texCoords / vec2(800.0, 600.0);
+				gl_Position = transform * vec4(position, 0.0, 1.0);
 			}
 		)";
 
-		if(!lightShader.loadFromMemory(vertexShaderCode, sf::Shader::Vertex))
-		{
-			std::cout << "ERROR LOADING LIGHTSHADER VERTEXSHADERCODE" << "\n";
-		}
-		else 
-		{
-			std::cout << "LIGHTSHADER VERTEXSHADERCODE LOADED CORRECTLY" << "\n";
-		}
+		//if(!this->lightShader->loadFromMemory(vertexShaderCode, sf::Shader::Vertex))
+		//{
+		//	std::cout << "ERROR LOADING LIGHTSHADER VERTEXSHADERCODE" << "\n";
+		//}
+		//else 
+		//{
+		//	std::cout << "LIGHTSHADER VERTEXSHADERCODE LOADED CORRECTLY" << "\n";
+		//}
 
 
 		const std::string fragmentShaderCode = R"(
  			#version 330 core
+
+			in vec2 TexCoords;
 			out vec4 FragColor;
+
+			uniform vec2 lightPos;
+			uniform float lightRadius;
+			uniform vec3 lightColor;
 
 			void main()
 			{
-				FragColor = vec4(1.0f, 0.5f, 0.0f, 0.5f);
+				vec2 pixelPos = TexCoords * vec2(800.0, 600.0);
+
+				float dist = distance(pixelPos, lightPos);
+
+				float intensity = 1.0 - smoothstep(lightRadius * 0.5, lightRadius, dist);
+
+				FragColor = vec4(lightColor * intensity, intensity);
 			} 
 		)";
 		
-		if(!lightShader.loadFromMemory(fragmentShaderCode, sf::Shader::Fragment))
+		if(!lightShader.loadFromMemory(vertexShaderCode,fragmentShaderCode))
 		{
 			std::cout << "ERROR LOADING LIGHTSHADER FRAGMENTSHADERCODE" << "\n";
 		}
@@ -125,7 +142,18 @@ void EditorState::initVariables()
 			std::cout << "LIGHTSHADER FRAGMENTSHADERCODE LOADED CORRECTLY" << "\n";
 		}
 
+		lightShader.setUniform("lightPos", sf::Vector2f(400.f, 300.f));
+		lightShader.setUniform("lightRadius", 200.f);
+		lightShader.setUniform("lightColor", sf::Glsl::Vec3(1.0f, 1.0f, 0.8f));
 
+		background = sf::RectangleShape(sf::Vector2f(800.f, 600.f));
+		background.setFillColor(sf::Color(30, 30, 30));
+
+		lightOverlay = sf::RectangleShape(sf::Vector2f(800.f, 600.f));
+		lightOverlay.setPosition(0, 0);
+		dummyTexture.create(800,600);
+		lightOverlay.setTexture(&dummyTexture);
+		lightOverlay.setTextureRect(sf::IntRect(0,0,1,1));
 }
 
 void EditorState::initView()
@@ -448,7 +476,9 @@ void EditorState::update(const float& deltaTime)
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
 		movement.x -= this->speed * deltaTime;
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		movement.x += this->speed * deltaTime;
@@ -462,8 +492,10 @@ void EditorState::update(const float& deltaTime)
 	testPlayer->move(movement);
 
 	//update position of the shader? 
-	//giving aPos is not found in shader error message
-	this->lightShader.setUniform("aPos", this->vertexBuffer);
+	sf::Vector2i mousePos = sf::Mouse::getPosition(*this->stateWindow);
+	std::cout << mousePos.x << " " << mousePos.y;
+	system("cls");
+	lightShader.setUniform("lightPos", sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)));
 
 }
 
@@ -542,9 +574,18 @@ void EditorState::render(sf::RenderTarget* target)
 		//	this->stateWindow->draw(*tile, &lightShader);
 		//}
 
-		this->stateWindow->draw(*testPlayer);
+		this->stateWindow->draw(background);
+
+		sf::RenderStates states;
+		states.shader = &lightShader;
+		states.blendMode = sf::BlendAdd;
+
+		this->stateWindow->draw(lightOverlay, states);
+
+		//this->stateWindow->draw(*testPlayer, states);
 
 		//this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
-		this->stateWindow->draw(*vertexBuffer, &this->lightShader);
+		
+		//this->stateWindow->draw(*vertexBuffer, states);
 
 }

@@ -27,8 +27,7 @@ private:
 		sf::Texture* testTile;
 		sf::Texture* testPlayerTexture;
 		sf::Sprite* testPlayer; 
-		sf::Shader lightShader;
-		float speed;
+		float speed = 0.2f;
 		sf::Vector2f movement;
 		sf::Vector2i lightScreenPosition;
 		std::vector<sf::Sprite*> backgroundTiles;
@@ -70,6 +69,10 @@ private:
 	void initGui();
 
 public:
+	sf::RectangleShape lightOverlay;
+	sf::Shader lightShader;
+	sf::RectangleShape background;
+	sf::Texture dummyTexture;
 
 
 	//Constructors & Desctructor
