@@ -193,5 +193,17 @@
     <None Include="vertex_shader.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="oscoBlueFragment.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="blueFilterFragment.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="blueLight.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="light_shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -24,16 +24,19 @@ private:
 	sf::Sprite renderSprite;
 	sf::Shader mainShader;
 
-		sf::Texture* testTile;
+		sf::Sprite* testPlayer;
 		sf::Texture* testPlayerTexture;
-		sf::Sprite* testPlayer; 
-		float speed = 0.2f;
-		sf::Vector2f movement;
-		sf::Vector2i lightScreenPosition;
+		float testPlayerSpeed = 0.5f;
+		sf::Vector2f playerMovementVec;
+
+		sf::Texture* targetTexture;
 		std::vector<sf::Sprite*> backgroundTiles;
 
 		sf::VertexArray* vertices;
 		sf::VertexBuffer* vertexBuffer;
+
+		sf::Shader* lightShader;
+		float att = 0.02;
 
 	sf::Font font;
 	sf::Text cursorText;
@@ -69,15 +72,12 @@ private:
 	void initGui();
 
 public:
-	sf::RectangleShape lightOverlay;
-	sf::Shader lightShader;
-	sf::RectangleShape background;
-	sf::Texture dummyTexture;
-
-
 	//Constructors & Desctructor
 	EditorState(StateData* stateData);
 	virtual ~EditorState();
+
+	//GLSL testing methods
+
 
 	//Update Methods
 	void updatePauseMenuButtons();

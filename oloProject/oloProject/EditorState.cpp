@@ -35,38 +35,52 @@ void EditorState::initVariables()
 
 	this->tileAddLock = false;
 
-		this->testTile = new sf::Texture();
-		this->testTile->loadFromFile("testTile.png");
 
+	//SHADER
+		this->testPlayer = new sf::Sprite();
 		this->testPlayerTexture = new sf::Texture();
-		this->testPlayerTexture->loadFromFile("testPlayer.png");
+		this->testPlayerTexture->loadFromFile("rock.png");
+		this->testPlayer->setTexture(*this->testPlayerTexture);
 
-		const int gridRows = 5;
-		const int gridCols = 5;
-		const int spriteSize = 100; 
+		this->testPlayer->setOrigin(
+			this->testPlayer->getGlobalBounds().width / 2.f, 
+			this->testPlayer->getGlobalBounds().height / 2.f
+		);
+
+		this->testPlayer->setPosition(
+			this->stateWindow->getSize().x / 2.f, 
+			this->stateWindow->getSize().y / 2.f
+		);
+
+		this->targetTexture = new sf::Texture();
+		this->targetTexture->loadFromFile("testTile.png");
+
+		const int gridRows = 10;
+		const int gridCols = 15;
+		const int spriteSize = 100;
 
 		for (int row = 0; row < gridRows; ++row)
 		{
 			for (int col = 0; col < gridCols; ++col)
 			{
 				sf::Sprite* sprite = new sf::Sprite();
-				sprite->setTexture(*this->testTile);
+				sprite->setTexture(*this->targetTexture);
 				sprite->setPosition(col * spriteSize, row * spriteSize);
 				backgroundTiles.push_back(sprite);
 			}
 		}
-
-		this->testPlayer = new sf::Sprite();
-		this->testPlayer->setTexture(*this->testPlayerTexture);
-		this->testPlayer->setPosition(this->stateWindow->getSize().x /2.f, this->stateWindow->getSize().y / 2.f);
-		this->testPlayer->setOrigin(
-			this->testPlayer->getGlobalBounds().width / 2.f, 
-			this->testPlayer->getGlobalBounds().height / 2.f
-		);
-
-
-
 		
+		//look up what renderstates are & try using vetex buffer?
+		/*	sf::RenderStates states;
+	states.shader = lightShader;
+	states.blendMode = sf::BlendAdd;*/
+
+	//make notes on this
+//this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
+
+//make notes on this
+//this->stateWindow->draw(*vertexBuffer, states);
+
 		//Create vertices of the triagle
 		std::vector<sf::Vertex> vertices = {
 				sf::Vertex(sf::Vector2f(100.f, 100.f), sf::Color::Red),
@@ -83,77 +97,21 @@ void EditorState::initVariables()
 		sf::Glsl::Vec3 vec;
 		vec.x = 100.f;
 		vec.x = 200.f;
-		vec.x =  300.f;
-
-		const std::string vertexShaderCode = R"(
-			#version 330 core
-
-			layout(location = 0) in vec2 position;
-			layout(location = 1) in vec2 texCoords;
-
-			uniform mat4 transform;
-			out vec2 TexCoords;
-
-			void main()
-			{
-				TexCoords = texCoords / vec2(800.0, 600.0);
-				gl_Position = transform * vec4(position, 0.0, 1.0);
-			}
-		)";
-
-		//if(!this->lightShader->loadFromMemory(vertexShaderCode, sf::Shader::Vertex))
-		//{
-		//	std::cout << "ERROR LOADING LIGHTSHADER VERTEXSHADERCODE" << "\n";
-		//}
-		//else 
-		//{
-		//	std::cout << "LIGHTSHADER VERTEXSHADERCODE LOADED CORRECTLY" << "\n";
-		//}
+		vec.x = 300.f;
 
 
-		const std::string fragmentShaderCode = R"(
- 			#version 330 core
+		this->lightShader = new sf::Shader();
 
-			in vec2 TexCoords;
-			out vec4 FragColor;
-
-			uniform vec2 lightPos;
-			uniform float lightRadius;
-			uniform vec3 lightColor;
-
-			void main()
-			{
-				vec2 pixelPos = TexCoords * vec2(800.0, 600.0);
-
-				float dist = distance(pixelPos, lightPos);
-
-				float intensity = 1.0 - smoothstep(lightRadius * 0.5, lightRadius, dist);
-
-				FragColor = vec4(lightColor * intensity, intensity);
-			} 
-		)";
-		
-		if(!lightShader.loadFromMemory(vertexShaderCode,fragmentShaderCode))
+		if (!this->lightShader->loadFromFile("light_shader.frag", sf::Shader::Fragment))
 		{
-			std::cout << "ERROR LOADING LIGHTSHADER FRAGMENTSHADERCODE" << "\n";
-		}
+			std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+		}		
 		else
 		{
-			std::cout << "LIGHTSHADER FRAGMENTSHADERCODE LOADED CORRECTLY" << "\n";
+			std::cout << "SHADER LOADED CORRECTLY" << "\n";
 		}
 
-		lightShader.setUniform("lightPos", sf::Vector2f(400.f, 300.f));
-		lightShader.setUniform("lightRadius", 200.f);
-		lightShader.setUniform("lightColor", sf::Glsl::Vec3(1.0f, 1.0f, 0.8f));
-
-		background = sf::RectangleShape(sf::Vector2f(800.f, 600.f));
-		background.setFillColor(sf::Color(30, 30, 30));
-
-		lightOverlay = sf::RectangleShape(sf::Vector2f(800.f, 600.f));
-		lightOverlay.setPosition(0, 0);
-		dummyTexture.create(800,600);
-		lightOverlay.setTexture(&dummyTexture);
-		lightOverlay.setTextureRect(sf::IntRect(0,0,1,1));
+		this->lightShader->setUniform("windowHeight", static_cast<float>(this->stateWindow->getSize().y));
 }
 
 void EditorState::initView()
@@ -475,28 +433,24 @@ void EditorState::update(const float& deltaTime)
 		this->updatePauseMenuButtons();
 	}
 
+	//SHADER
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		movement.x -= this->speed * deltaTime;
-	}
-
+		playerMovementVec.x -= testPlayerSpeed * deltaTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		movement.x += this->speed * deltaTime;
-
+		playerMovementVec.x += testPlayerSpeed * deltaTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		movement.y -= this->speed * deltaTime;
-
+		playerMovementVec.y -= testPlayerSpeed * deltaTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		movement.y += this->speed * deltaTime;
+		playerMovementVec.y += testPlayerSpeed * deltaTime;
+	testPlayer->move(playerMovementVec);
 
-	testPlayer->move(movement);
-
-	//update position of the shader? 
-	sf::Vector2i mousePos = sf::Mouse::getPosition(*this->stateWindow);
-	std::cout << mousePos.x << " " << mousePos.y;
-	system("cls");
-	lightShader.setUniform("lightPos", sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)));
-
+	this->lightShader->setUniform(
+		"lightPos",
+		sf::Glsl::Vec2(
+			this->testPlayer->getPosition().x,
+			this->testPlayer->getPosition().y
+		)
+	);
 }
 
 //Render Methods
@@ -573,19 +527,11 @@ void EditorState::render(sf::RenderTarget* target)
 		//{
 		//	this->stateWindow->draw(*tile, &lightShader);
 		//}
+	//SHADER TESTING
+	this->stateWindow->draw(*testPlayer);
 
-		this->stateWindow->draw(background);
-
-		sf::RenderStates states;
-		states.shader = &lightShader;
-		states.blendMode = sf::BlendAdd;
-
-		this->stateWindow->draw(lightOverlay, states);
-
-		//this->stateWindow->draw(*testPlayer, states);
-
-		//this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
-		
-		//this->stateWindow->draw(*vertexBuffer, states);
-
+	for (auto sprites : backgroundTiles)
+	{
+		this->stateWindow->draw(*sprites, this->lightShader);
+	}
 }

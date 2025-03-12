@@ -206,6 +206,10 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blueFilterFragment.frag" />
+    <None Include="blueLight.frag" />
+    <None Include="light_shader.frag" />
+    <None Include="oscoBlueFragment.frag" />
     <None Include="fragment_shader.frag" />
     <None Include="vertex_shader.vert" />
   </ItemGroup>
