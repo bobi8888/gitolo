@@ -392,7 +392,7 @@ void GameState::update(const float& deltaTime)
 
 		this->updateTileMap(deltaTime);
 
-		this->player->update(deltaTime, this->mousePositionView);
+		this->player->update(deltaTime);
 
 		this->playerGUI->update(deltaTime);
 	}
@@ -415,11 +415,13 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 
+	sf::RenderStates test;
+
 	this->tileMap->render(
 		this->renderTexture, 
 		this->viewGridPosition,
-		//&this->mainShader,
-		NULL,
+		this->mainShader,
+		test,
 		this->player->getSpriteCenter(),
 		false
 		);
@@ -429,8 +431,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->renderDeferred(
 		this->renderTexture, 
-		//&this->mainShader,
-		NULL,
+		this->mainShader,
+		test,
 		this->player->getSpriteCenter()
 	);
 

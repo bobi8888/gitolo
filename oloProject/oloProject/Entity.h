@@ -91,7 +91,7 @@ public:
 
 	virtual void stopVelocityY();
 
-	virtual void update(const float& delta_Time, sf::Vector2f& mouse_pos_view) = 0;
+	virtual void update(const float& delta_Time) = 0;
 
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_Hitbox) = 0;
 };

@@ -33,7 +33,7 @@ public:
 
     void updateAnimation(const float& deltaTime);
 
-    void update(const float& deltaTime, sf::Vector2f& mouse_pos_view);
+    void update(const float& deltaTime);
 
     void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool showHitboxs = false);
 

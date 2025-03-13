@@ -14,36 +14,25 @@ class sf::RenderTexture;
 
 class EditorState :
     public State
-
-
 {
 private:
-	//Variables
 	sf::View view;
+
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
-	sf::Shader mainShader;
 
-		sf::Sprite* testPlayer;
-		sf::Texture* testPlayerTexture;
-		float testPlayerSpeed = 0.5f;
-		sf::Vector2f playerMovementVec;
-
-		sf::Texture* targetTexture;
-		std::vector<sf::Sprite*> backgroundTiles;
-
-		sf::VertexArray* vertices;
-		sf::VertexBuffer* vertexBuffer;
-
-		sf::Shader* lightShader;
-		float att = 0.02;
-
+	sf::RenderStates* renderState;
+	sf::Shader* lightShader;
+		
 	sf::Font font;
 	sf::Text cursorText;
 
 	sf::RectangleShape sideBar;
 	sf::IntRect tileToolTextureRect; //the rectangle that is showing which texture of the texture mao
 	sf::RectangleShape tileToolSelectorRect; //the rectangle that is visible on the editor
+
+	sf::VertexArray* vertices;
+	sf::VertexBuffer* vertexBuffer;
 
 	PauseMenu* pauseMenu;
 

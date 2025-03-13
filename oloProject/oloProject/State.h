@@ -41,9 +41,14 @@ protected:
 	float keytimeMax;
 	float gridSize;
 
-	sf::Vector2i mousePositionScreen;
-	sf::Vector2i mousePositionWindow;
-	sf::Vector2f mousePositionView;
+	//sf::Vector2i mousePositionScreen;
+
+	sf::Vector2i mousePositionWindow; //used updateButtons, updateGUI, gameState::updateView, pause menus
+
+	sf::Vector2f mousePositionWindowFloat; //used for adding light at mouse position, testing for shaders
+
+	sf::Vector2f mousePositionView; //used editorState::updateGUI, text @ mouse position, updating mousePositionGrid
+
 	sf::Vector2i mousePositionGrid;
 
 	//Resources

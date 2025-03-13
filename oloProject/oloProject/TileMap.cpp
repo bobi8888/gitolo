@@ -460,7 +460,8 @@ void TileMap::updateCollision(Entity* entity, const float& deltaTime)
 void TileMap::render(
 	sf::RenderTarget& target, 
 	const sf::Vector2i& gridPosition,
-	sf::Shader* shader,
+	sf::Shader& shader,
+	sf::RenderStates& renderState,
 	const sf::Vector2f playerPosition,
 	const bool show_hitbox
 	)
@@ -508,10 +509,15 @@ void TileMap::render(
 				}
 				else
 				{
-					if(shader)
-						this->tileVectors[x][y][this->layer][k]->render(target, shader, playerPosition);
+					if(&renderState)
+						this->tileVectors[x][y][this->layer][k]->render(
+							target, 
+							shader, 
+							renderState,
+							playerPosition
+						);
 					else
-						this->tileVectors[x][y][this->layer][k]->render(target);
+						this->tileVectors[x][y][this->layer][k]->render(target, shader, renderState);
 				}
 
 
@@ -529,14 +535,23 @@ void TileMap::render(
 	}
 }
 
-void TileMap::renderDeferred(sf::RenderTarget& target,sf::Shader* shader, const sf::Vector2f playerPosition)
+void TileMap::renderDeferred(
+	sf::RenderTarget& target,
+	sf::Shader& shader, 
+	sf::RenderStates& renderState,
+	const sf::Vector2f playerPosition)
 {
 	while (!this->deferredRenderedStack.empty())
 	{
-		if (shader)
-			deferredRenderedStack.top()->render(target, shader, playerPosition);
+		if (&shader)
+			deferredRenderedStack.top()->render(
+				target, 
+				shader, 
+				renderState,
+				playerPosition
+			);
 		else
-			deferredRenderedStack.top()->render(target);
+			deferredRenderedStack.top()->render(target, shader, renderState);
 
 		deferredRenderedStack.pop();
 	}

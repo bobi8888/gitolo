@@ -34,53 +34,20 @@ void EditorState::initVariables()
 	this->layer = 0;
 
 	this->tileAddLock = false;
+	
+	this->renderState = new sf::RenderStates();
+	this->lightShader = new sf::Shader();
 
+	this->renderState->shader = this->lightShader;
 
-	//SHADER
-		this->testPlayer = new sf::Sprite();
-		this->testPlayerTexture = new sf::Texture();
-		this->testPlayerTexture->loadFromFile("rock.png");
-		this->testPlayer->setTexture(*this->testPlayerTexture);
+	this->renderState->blendMode = sf::BlendAdd;
 
-		this->testPlayer->setOrigin(
-			this->testPlayer->getGlobalBounds().width / 2.f, 
-			this->testPlayer->getGlobalBounds().height / 2.f
-		);
-
-		this->testPlayer->setPosition(
-			this->stateWindow->getSize().x / 2.f, 
-			this->stateWindow->getSize().y / 2.f
-		);
-
-		this->targetTexture = new sf::Texture();
-		this->targetTexture->loadFromFile("testTile.png");
-
-		const int gridRows = 10;
-		const int gridCols = 15;
-		const int spriteSize = 100;
-
-		for (int row = 0; row < gridRows; ++row)
-		{
-			for (int col = 0; col < gridCols; ++col)
-			{
-				sf::Sprite* sprite = new sf::Sprite();
-				sprite->setTexture(*this->targetTexture);
-				sprite->setPosition(col * spriteSize, row * spriteSize);
-				backgroundTiles.push_back(sprite);
-			}
-		}
-		
-		//look up what renderstates are & try using vetex buffer?
-		/*	sf::RenderStates states;
-	states.shader = lightShader;
-	states.blendMode = sf::BlendAdd;*/
-
-	//make notes on this
+//make notes on this
 //this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
 
 //make notes on this
 //this->stateWindow->draw(*vertexBuffer, states);
-
+	//try using vetex buffer ?
 		//Create vertices of the triagle
 		std::vector<sf::Vertex> vertices = {
 				sf::Vertex(sf::Vector2f(100.f, 100.f), sf::Color::Red),
@@ -98,9 +65,6 @@ void EditorState::initVariables()
 		vec.x = 100.f;
 		vec.x = 200.f;
 		vec.x = 300.f;
-
-
-		this->lightShader = new sf::Shader();
 
 		if (!this->lightShader->loadFromFile("light_shader.frag", sf::Shader::Fragment))
 		{
@@ -431,26 +395,7 @@ void EditorState::update(const float& deltaTime)
 		this->pauseMenu->update(this->mousePositionWindow);
 
 		this->updatePauseMenuButtons();
-	}
-
-	//SHADER
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		playerMovementVec.x -= testPlayerSpeed * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		playerMovementVec.x += testPlayerSpeed * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		playerMovementVec.y -= testPlayerSpeed * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		playerMovementVec.y += testPlayerSpeed * deltaTime;
-	testPlayer->move(playerMovementVec);
-
-	this->lightShader->setUniform(
-		"lightPos",
-		sf::Glsl::Vec2(
-			this->testPlayer->getPosition().x,
-			this->testPlayer->getPosition().y
-		)
-	);
+	}	
 }
 
 //Render Methods
@@ -491,20 +436,20 @@ void EditorState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 
-	//this->tileMap->render(this->renderTexture, this->mousePositionGrid);
 	this->tileMap->render(
 		this->renderTexture,
 		this->mousePositionGrid, 
-		//&lightShader, 
-		NULL,
-		sf::Vector2f(), 
+		*this->lightShader,
+		*this->renderState, 
+		this->mousePositionWindowFloat,
 		true
 	);
 
 	this->tileMap->renderDeferred(
 		this->renderTexture,
-		NULL,
-		sf::Vector2f()
+		*this->lightShader,
+		*this->renderState,
+		this->mousePositionWindowFloat
 	);
 
 	if (this->isPaused)
@@ -522,16 +467,4 @@ void EditorState::render(sf::RenderTarget* target)
 	target->draw(this->renderSprite);
 
 	this->renderGUI(*target);
-
-		//for (const auto& tile : backgroundTiles)
-		//{
-		//	this->stateWindow->draw(*tile, &lightShader);
-		//}
-	//SHADER TESTING
-	this->stateWindow->draw(*testPlayer);
-
-	for (auto sprites : backgroundTiles)
-	{
-		this->stateWindow->draw(*sprites, this->lightShader);
-	}
 }

@@ -185,7 +185,7 @@ void Player::updateAnimation(const float& deltaTime)
 	}
 }
 
-void Player::update(const float& deltaTime, sf::Vector2f& mouse_pos_view)
+void Player::update(const float& deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 		this->attributeComponent->gainExp(15);
@@ -195,9 +195,6 @@ void Player::update(const float& deltaTime, sf::Vector2f& mouse_pos_view)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		gainHp(1);
-
-	//system("cls");
-	//std::cout << this->attributeComponent->debugPrint();
 	
 	this->movementComponent->update(deltaTime);
 

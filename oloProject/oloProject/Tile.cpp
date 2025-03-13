@@ -70,17 +70,18 @@ void Tile::update()
 
 void Tile::render(
 	sf::RenderTarget& target, 
-	sf::Shader* shader, 
+	sf::Shader& shader, 
+	const sf::RenderStates& renderState, 
 	const sf::Vector2f playerPosition
 	)
 {
-	if (shader)
+	if (&renderState)
 	{
-		shader->setUniform("hasTexture", true);
+		//shader->setUniform("hasTexture", true);
 
-		shader->setUniform("lightPos", playerPosition);
+		shader.setUniform("lightPos", playerPosition);
 
-		target.draw(this->sprite, shader);
+		target.draw(this->sprite, renderState);
 	}
 	else
 	{

@@ -44,7 +44,8 @@ public:
 
 	void render(
 		sf::RenderTarget& target, 
-		sf::Shader* shader = NULL, 
+		sf::Shader& shader,
+		const sf::RenderStates& renderState,
 		const sf::Vector2f playerPosition = sf::Vector2f()
 	);
 };

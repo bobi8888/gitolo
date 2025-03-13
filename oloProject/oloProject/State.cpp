@@ -59,7 +59,13 @@ void State::unpauseState()
 
 void State::updateMousePositions(sf::View* view)
 {
-	this->mousePositionScreen = sf::Mouse::getPosition();
+	//this->mousePositionScreen = sf::Mouse::getPosition();
+
+	this->mousePositionWindowFloat = sf::Vector2f(
+		static_cast<float>(sf::Mouse::getPosition(*this->stateWindow).x),
+		static_cast<float>(sf::Mouse::getPosition(*this->stateWindow).y)
+	);
+
 	this->mousePositionWindow = sf::Mouse::getPosition(*this->stateWindow);
 
 	if (view)
@@ -72,6 +78,7 @@ void State::updateMousePositions(sf::View* view)
 			static_cast<int>(this->mousePositionView.y) / static_cast<int>(this->gridSize)
 		);
 
+	//this shouldn't be here
 	this->stateWindow->setView(this->stateWindow->getDefaultView());
 }
 
