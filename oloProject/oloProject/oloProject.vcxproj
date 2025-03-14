@@ -164,6 +164,8 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="ParticleBurst.cpp" />
+    <ClCompile Include="ParticleTrickle.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
@@ -194,6 +196,8 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="ParticleBurst.h" />
+    <ClInclude Include="ParticleTrickle.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGUI.h" />
@@ -208,9 +212,11 @@
   <ItemGroup>
     <None Include="blueFilterFragment.frag" />
     <None Include="blueLight.frag" />
+    <None Include="dust_particle_shader.frag" />
     <None Include="light_shader.frag" />
     <None Include="oscoBlueFragment.frag" />
     <None Include="fragment_shader.frag" />
+    <None Include="particle_burst.frag" />
     <None Include="vertex_shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

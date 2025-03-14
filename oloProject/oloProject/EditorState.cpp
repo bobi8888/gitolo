@@ -38,9 +38,19 @@ void EditorState::initVariables()
 	this->renderState = new sf::RenderStates();
 	this->lightShader = new sf::Shader();
 
-	this->renderState->shader = this->lightShader;
+	//this->renderState->shader = this->lightShader;
+	this->renderState->shader = &particleShader;
 
 	this->renderState->blendMode = sf::BlendAdd;
+
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+	this->particleBurst = new ParticleBurst(300, 45, 135);
+	this->particleBurst->setPosition(300.f, 300.f);
+
+	this->particleTrickle = new ParticleTrickle(3, "dust.png", 170.f, 190.f);
+	this->particleTrickle->setPosition(400.f, 400.f);
+
 
 //make notes on this
 //this->stateWindow->draw(*this->vertexBuffer, &this->lightShader);
@@ -66,16 +76,24 @@ void EditorState::initVariables()
 		vec.x = 200.f;
 		vec.x = 300.f;
 
-		if (!this->lightShader->loadFromFile("light_shader.frag", sf::Shader::Fragment))
+		//if (!this->lightShader->loadFromFile("light_shader.frag", sf::Shader::Fragment))
+		//{
+		//	std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+		//}		
+		//else
+		//{
+		//	std::cout << "SHADER LOADED CORRECTLY" << "\n";
+		//}
+		//this->lightShader->setUniform("windowHeight", static_cast<float>(this->stateWindow->getSize().y));
+
+		if (particleShader.loadFromFile("dust_particle_shader.frag", sf::Shader::Fragment))
 		{
-			std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
-		}		
+			std::cout << "ERROR::GAMESTATE::COULD NOT LOAD DUST_PARTICLE_SHADER.FRAG" << "\n";
+		}
 		else
 		{
-			std::cout << "SHADER LOADED CORRECTLY" << "\n";
+			std::cout << "DUST PARTICLE SHADER LOADED CORRECTLY" << "\n";
 		}
-
-		this->lightShader->setUniform("windowHeight", static_cast<float>(this->stateWindow->getSize().y));
 }
 
 void EditorState::initView()
@@ -396,6 +414,13 @@ void EditorState::update(const float& deltaTime)
 
 		this->updatePauseMenuButtons();
 	}	
+
+	sf::Time elapsed = clock.restart();
+	this->particleBurst->update(elapsed);
+	this->particleTrickle->update(elapsed);
+
+	particleShader.setUniform("time", clock.getElapsedTime().asSeconds());
+
 }
 
 //Render Methods
@@ -467,4 +492,7 @@ void EditorState::render(sf::RenderTarget* target)
 	target->draw(this->renderSprite);
 
 	this->renderGUI(*target);
+
+	target->draw(*particleBurst, *this->renderState);
+	target->draw(*particleTrickle, *this->renderState);
 }

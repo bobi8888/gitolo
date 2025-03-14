@@ -7,6 +7,9 @@
 #include<vector>
 #include<stack>
 #include<map>
+#include<cmath>
+#include<ctime>
+#include <cstdlib>
 
 //SFML
 #include <SFML/System.hpp>

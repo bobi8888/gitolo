@@ -37,6 +37,9 @@
     <Filter Include="Item\MeleeWeapon">
       <UniqueIdentifier>{8f0c624f-eeb4-422a-88cc-2dd5c4b6bd32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{b60efa8e-4f06-4bbc-849d-df3dabc734ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,12 @@
     </ClCompile>
     <ClCompile Include="MeleeWeapon.cpp">
       <Filter>Item\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleBurst.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleTrickle.cpp">
+      <Filter>Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +194,12 @@
     <ClInclude Include="MeleeWeapon.h">
       <Filter>Item\MeleeWeapon</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleBurst.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleTrickle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment_shader.frag">
@@ -203,6 +218,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="light_shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="particle_burst.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dust_particle_shader.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

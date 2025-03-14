@@ -1,9 +1,11 @@
 #pragma once
 
 #include "State.h"
-#include"GUI.h"
-#include"PauseMenu.h"
-#include"TileMap.h"
+#include "GUI.h"
+#include "PauseMenu.h"
+#include "TileMap.h"
+#include "ParticleBurst.h"
+#include "ParticleTrickle.h"
 
 class State;
 class GUI;
@@ -23,7 +25,11 @@ private:
 
 	sf::RenderStates* renderState;
 	sf::Shader* lightShader;
-		
+	sf::Shader particleShader;
+	sf::Clock clock;
+	ParticleBurst* particleBurst;
+	ParticleTrickle* particleTrickle;
+	
 	sf::Font font;
 	sf::Text cursorText;
 
