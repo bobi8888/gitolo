@@ -19,8 +19,7 @@ void ParticleTrickle::resetParticle(std::size_t i)
     float angleDeg = minAngle + randomFactor * (maxAngle - minAngle);
     float angle = angleDeg * 3.14159265f / 180.f;
 
-    // Choose a random speed between 50 and 100.
-    float speed = 50.f + std::rand() % 50;
+    float speed = speedMin + std::rand() % speedMax;
 
     particles[i].position = sf::Vector2f(0.f, 0.f);
 
@@ -40,17 +39,14 @@ void ParticleTrickle::resetParticle(std::size_t i)
 
     sf::Time randomLifetime = sf::seconds(lifetimeSeconds);
 
-    // Set the particle's lifetime and store the original lifetime.
     particles[i].lifetime = randomLifetime;
     particles[i].initLifetime = randomLifetime;
 
-    // Reset particle's position and color.
     vertices[i].position = sf::Vector2f(0.f, 0.f);
-    vertices[i].color = sf::Color::White;
 
     // Also update the quad for this particle.
     std::size_t index = i * 4;
-    float halfSize = particleSize / 2.f;
+    float halfSize = texturePixelSize / 2.f;
     sf::Vector2f pos = particles[i].position;
     vertices[index + 0].position = pos + sf::Vector2f(-halfSize, -halfSize);
     vertices[index + 1].position = pos + sf::Vector2f(halfSize, -halfSize);
@@ -73,17 +69,17 @@ void ParticleTrickle::resetParticle(std::size_t i)
 
 //Constructors & Deconstructor
 ParticleTrickle::ParticleTrickle(
-	unsigned int count, 
-    const std::string& textureFile,
-	float minAngle, float maxAngle, 
+    const std::string& textureFile,	unsigned int count, 
+	float speedMin,int speedMax,
+    float minAngle, float maxAngle, 
 	sf::Time minLifetime, sf::Time maxLifetime
 	) : particles(count),
+        texturePixelSize(16.f),
         vertices(sf::Quads, count * 4),
-        minAngle(minAngle),
-        maxAngle(maxAngle),
-        minLifetime(minLifetime),
-        maxLifetime(maxLifetime),
-        particleSize(16.f)
+        speedMin(speedMin), speedMax(speedMax),
+        minAngle(minAngle), maxAngle(maxAngle),
+        minLifetime(minLifetime), maxLifetime(maxLifetime)
+   
 {
     if (!texture.loadFromFile(textureFile))
         std::cout << "ERROR::PARTICLETRICKLE::COULD NOT LOAD TEXTURE FILE" << "\n";
@@ -101,7 +97,6 @@ void ParticleTrickle::update(sf::Time elapsed)
 
         p.lifetime -= elapsed;
 
-        // If the particle's lifetime is over, reset it.
         if (p.lifetime <= sf::Time::Zero)
             resetParticle(i);
            
@@ -110,13 +105,12 @@ void ParticleTrickle::update(sf::Time elapsed)
 
         //used for individual particles
         //vertices[i].position += p.velo * elapsed.asSeconds();
-
+        
         // Fade the particle based on its remaining lifetime.
         float ratio = p.lifetime.asSeconds() / p.initLifetime.asSeconds();
-
         std::size_t index = i * 4;
 
-        float halfSize = particleSize / 2.f;
+        float halfSize = texturePixelSize / 2.f;
 
         // Update positions for a quad centered at p.position.
         vertices[index + 0].position = p.position + sf::Vector2f(-halfSize, -halfSize);

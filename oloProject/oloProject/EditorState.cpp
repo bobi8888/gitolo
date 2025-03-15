@@ -2,6 +2,14 @@
 
 #include "EditorState.h"
 
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <vector>
+
+std::vector<int> v{ 3, 1, -14, 1, 5, 9, -14, 9 };
+std::vector<int>::iterator result = std::max_element(v.begin(), v.end());
+
 //Initializer Methods
 void EditorState::initRender()
 {
@@ -48,7 +56,13 @@ void EditorState::initVariables()
 	this->particleBurst = new ParticleBurst(300, 45, 135);
 	this->particleBurst->setPosition(300.f, 300.f);
 
-	this->particleTrickle = new ParticleTrickle(3, "dust.png", 170.f, 190.f);
+	this->particleTrickle = new ParticleTrickle(
+		"dust.png",3, 
+		10.f, 25,
+		160.f, 200.f,
+		sf::seconds(0.5f), sf::seconds(1.f)
+	);
+
 	this->particleTrickle->setPosition(400.f, 400.f);
 
 

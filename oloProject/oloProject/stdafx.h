@@ -1,14 +1,15 @@
 #pragma once
 
 //C
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<vector>
-#include<stack>
-#include<map>
-#include<cmath>
-#include<ctime>
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <stack>
+#include <map>
+#include <cmath>
+#include <ctime>
 #include <cstdlib>
 
 //SFML

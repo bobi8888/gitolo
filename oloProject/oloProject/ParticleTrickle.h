@@ -13,11 +13,11 @@ private:
 	std::vector<TrickleParticle> particles;
 	sf::VertexArray vertices;
 	sf::Texture texture;
-	float minAngle;
-	float maxAngle;
-	sf::Time minLifetime;
-	sf::Time maxLifetime;
-	float particleSize;
+	float minAngle, maxAngle;
+	sf::Time minLifetime, maxLifetime;
+	float texturePixelSize;
+	float speedMin;
+	int speedMax;
 	
 //private methods
 	virtual void draw(
@@ -30,10 +30,9 @@ private:
 public:
 //Constructors & Deconstructor
 	explicit ParticleTrickle (
-		unsigned int count,
-		const std::string& textureFile,
-		float minAngle = 0.f,
-		float maxAngle = 360.f,
+		const std::string& textureFile, unsigned int count,
+		float speedMin = 1.f, int speedMax = 5,
+		float minAngle = 0.f, float maxAngle = 360.f,
 		sf::Time minLifetime = sf::seconds(1.5f),
 		sf::Time maxLifetime = sf::seconds(5.f)
 		);
