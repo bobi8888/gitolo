@@ -23,9 +23,7 @@ void GameState::initDeferredRender()
 }
 
 void GameState::initView()
-{
-	this->testView = new sf::View();
-	
+{	
 	this->view.setSize(
 		static_cast<float>(this->stateData->graphicsSettings->Resolution.width),
 		static_cast<float>(this->stateData->graphicsSettings->Resolution.height)
@@ -88,79 +86,24 @@ void GameState::initPauseMenu()
 
 void GameState::initShaders()
 {
-	//Make this work 
-	const std::string vertexShaderCode = R"(
-        uniform vec2 texSize; //texture size (in pixels)
+	if (!dustShader.loadFromFile("dust_particle_shader.frag", sf::Shader::Fragment))
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD DUST_PARTICLE_SHADER.FRAG" << "\n";
 
-        void main()
-        {            
-            vec2 normTexCoord = gl_MultiTexCoord0.xy / texSize; // Normalize texture coords by dividing by the texture size.
-            gl_TexCoord[0] = vec4(normTexCoord, 0.0, 1.0);
+	//mainRenderState.blendMode = sf::BlendAdd;
 
-            gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex; // Standard vertex position transformation.
-        }
-    )";
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-	const std::string fragmentShaderCode = R"(
-        uniform sampler2D texture; // A declaration needed to work
-
-        uniform vec2 lightPos; // SET IN UPDATE: Light position in normalized texture coordinate space [0, 1]
-           
-        uniform float lightRadius; // Light radius in texture coordinate space
-
-        uniform vec3 playerLightColor; // Color of the light coming from the player
-		            
-        uniform vec3 ambientLight;  
-
-        void main()
-        {
-            vec4 texColor = texture2D(texture, gl_TexCoord[0].xy); // Sample the sprite's texture color.
-
-            float dist = distance(gl_TexCoord[0].xy, lightPos); // Compute dist from current fragment to light's pos.
-
-            float attenuation = clamp(1.0 - (dist / lightRadius), 0.0, 1.0); // Calc attenuation: 
-			                                                                 // fragments closer than the light 
-																			 // radius are lit more intensely.
-
-            vec3 diffuse = playerLightColor * attenuation; // Diffuse component scales with the attenuation.
-
-            vec3 finalLight = ambientLight + diffuse; // Combine ambient lighting with the diffuse component.
-
-            gl_FragColor = vec4(texColor.rgb * finalLight, texColor.a); // Multiply the texture color by the final light value.
-        }
-    )";
-
-	if (!mainShader.loadFromMemory(vertexShaderCode, fragmentShaderCode))
-	{
-		std::cerr << "Error: Could not load shader" << std::endl;
-	}
-
-		if (!this->testTexture.loadFromFile("rock.png"))
-		{
-			std::cerr << "Error: Could not load sprite.png" << std::endl;
-		}
-
-		this->testSprite.setTexture(this->testTexture);
-
-		this->testSprite.setPosition(500.f, 500.f);
-
-	//this is what is getting the light applied to it
-		sf::Vector2u texSize = this->testSprite.getTexture()->getSize();
-		//sf::Vector2u texSize = sf::Vector2u(
-		//	static_cast<unsigned>(this->tileMap->getGridMaxSizeInt().x),
-		//	static_cast<unsigned>(this->tileMap->getGridMaxSizeInt().y)
-		//);
-
-	mainShader.setUniform("texSize", sf::Glsl::Vec2(static_cast<float>(texSize.x), static_cast<float>(texSize.y)));
-	mainShader.setUniform("lightRadius", 0.5f);
-	mainShader.setUniform("playerLightColor", sf::Glsl::Vec3(0.9f, 0.9f, 0.9f));
-	mainShader.setUniform("ambientLight", sf::Glsl::Vec3(0.5f, 0.5f, 0.5f));
-
+	dustParticles = ParticleTrickle(
+		"dust.png", 3,
+		30.f, 60,
+		160.f, 200.f,
+		sf::seconds(1.5f), sf::seconds(2.f)
+	);
 }
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->texturesMap["ROBO_100"], 0, 0);
+	this->player = new Player(this->texturesMap["ROBO_100"], 500.f, 500.f);
 }
 
 void GameState::initPlayerGUI()
@@ -244,12 +187,36 @@ GameState::~GameState()
 	std::cout << "GameState deleted" << "\n";
 }
 
+//Update Methods
 void GameState::updateTransitions(const float& deltaTime)
 {
 	//how are states launched in main menu?
 }
 
-//Methods
+void GameState::updateShaders()
+{
+	sf::Time elapsed = gameClock.restart();
+
+	dustParticles.update(elapsed);
+
+	dustShader.setUniform("time", gameClock.getElapsedTime().asSeconds());
+	dustShader.setUniform("viewTransform", &this->view.getTransform());
+
+	sf::Vector2i screenPos = this->stateWindow->mapCoordsToPixel(this->player->getSpritePosition(), this->view);
+	//std::cout << "screenPos: " << screenPos.x << " " << screenPos.y << "\n";
+
+	sf::Vector2i windowPosition = this->stateWindow->mapCoordsToPixel(this->player->getSpritePosition(), this->view);
+	//std::cout << "windowPostion: " << windowPosition.x << " " << windowPosition.y << "\n";
+
+	dustParticles.setPosition(sf::Vector2f(
+		static_cast<float>(windowPosition.y),
+		static_cast<float>(windowPosition.x)
+		)
+	);
+
+	mainRenderState.shader = &dustShader;
+}
+
  
 //void GameState::updateView(const float& deltaTime)
 void GameState::updateView()
@@ -292,6 +259,8 @@ void GameState::updateView()
 	this->viewGridPosition.y = static_cast<int>(
 		this->view.getCenter().y / this->stateData->gridSize
 	);
+
+	//std::cout << viewGridPosition.x << " " << viewGridPosition.y << "\n";
 }
 
 //void GameState::updateInput(const float& deltaTime)
@@ -338,29 +307,10 @@ void GameState::updateTileMap(const float& deltaTime)
 	this->tileMap->updateCollision(this->player, deltaTime);
 }
 
-void GameState::updateShader()
-{
-	//start by putting the test sprite in the center of the map and make the light position be the player
-
-	//Whats getting lit
-	sf::FloatRect spriteBounds = this->testSprite.getGlobalBounds();
-
-	//Light position
-	sf::Vector2i mousePos = sf::Mouse::getPosition(*this->stateWindow);
-
-	// Convert mouse window coordinates to sprite-local normalized coordinates.
-	float localX = (mousePos.x - spriteBounds.left) / spriteBounds.width;
-
-	float localY = (mousePos.y - spriteBounds.top) / spriteBounds.height;
-
-	std::cout << localX << " " << localY <<  "\n";
-
-	mainShader.setUniform("lightPos", sf::Glsl::Vec2(localX, localY));
-}
-
 void GameState::update(const float& deltaTime)
 {
-	this->updateShader();
+	//Mine w/ AI
+	this->updateShaders();
 		
 	this->updateMousePositions(&this->view);
 
@@ -368,6 +318,8 @@ void GameState::update(const float& deltaTime)
 
 	//this->updateInput(deltaTime);
 	this->updateInput();
+
+	this->transitionComponent->update(this->player->getHitboxGlobalBounds());
 
 	//DEBUG
 	this->cursorText.setPosition(
@@ -403,7 +355,6 @@ void GameState::update(const float& deltaTime)
 		this->updatePauseMenuButtons();
 	}
 		
-		this->transitionComponent->update(this->player->getHitboxGlobalBounds());
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -415,28 +366,26 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.setView(this->view);
 
-	sf::RenderStates test;
-
 	this->tileMap->render(
 		this->renderTexture, 
 		this->viewGridPosition,
 		this->mainShader,
-		test,
+		mainRenderState,
 		this->player->getSpriteCenter(),
 		false
 		);
 	
 	//this->player->render(this->renderTexture, &this->mainShader, true);
-	this->player->render(this->renderTexture, NULL, true);
+	//this->player->render(this->renderTexture);
+	this->renderTexture.draw(this->player->getSprite(), mainRenderState);
+
 
 	this->tileMap->renderDeferred(
 		this->renderTexture, 
 		this->mainShader,
-		test,
+		mainRenderState,
 		this->player->getSpriteCenter()
 	);
-
-		
 
 	this->transitionComponent->render(this->renderTexture);
 
@@ -457,7 +406,8 @@ void GameState::render(sf::RenderTarget* target)
 
 	target->draw(this->renderSprite);
 		
-target->draw(this->testSprite, &mainShader);
+	target->draw(dustParticles, mainRenderState);
+
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && sf::Keyboard::isKeyPressed(sf::Keyboard::T))

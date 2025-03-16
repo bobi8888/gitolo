@@ -93,5 +93,7 @@ public:
 
 	virtual void update(const float& delta_Time) = 0;
 
-	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_Hitbox) = 0;
+	//virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_Hitbox) = 0;
+	
+	virtual void render(sf::RenderTarget& target, const bool show_Hitboxes) = 0;
 };

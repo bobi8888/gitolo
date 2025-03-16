@@ -27,10 +27,11 @@ private:
 	
 protected:
 	StateData* stateData;
+
 	std::stack<State*>* statesStack;
 
 	sf::RenderWindow* stateWindow;
-	sf::RenderWindow* testWindow;
+
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keybinds;
 

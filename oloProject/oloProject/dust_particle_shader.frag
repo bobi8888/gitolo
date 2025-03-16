@@ -1,9 +1,12 @@
 uniform float time;
+uniform mat3 viewTransform;
 
 void main() {
-    vec4 texColor = texture2D(texture, gl_TexCoord[0].xy);
+    vec3 textureCoords = viewTransform * vec3(gl_TexCoord[0].xy, 1.0);
 
-    // Create a pulsating alpha effect.
+    vec4 texColor = texture2D(texture, textureCoords.xy);
+
+    // Create a pulsating alpha effect. or should this be described as a fading effect?
     texColor.a *= abs(sin(time));
 
     gl_FragColor = texColor;

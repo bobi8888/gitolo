@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "TransitionComponent.h"
+#include "ParticleTrickle.h"
 
 class State;
 class PauseMenu;
@@ -24,13 +25,17 @@ private:
 	std::string name;
 
 	sf::View view;
-	sf::View* testView;
 	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
 
 	sf::Sprite renderSprite;
 
+	//sf::RenderStates mainRenderState;
 	sf::Shader mainShader;
+	sf::Shader dustShader;
+	ParticleTrickle dustParticles;
+	sf::Clock gameClock;
+	sf::RenderStates mainRenderState;
 
 	sf::Font font;
 	sf::Text cursorText;
@@ -70,8 +75,10 @@ public:
 
 	virtual ~GameState();
 
-	//Methods
+	//Update Methods
 	void updateTransitions(const float& deltaTime);
+
+	void updateShaders();
 
 	//void updateView(const float& deltaTime);
 	void updateView();
@@ -86,8 +93,6 @@ public:
 	void updatePauseMenuButtons();
 
 	void updateTileMap(const float& deltaTime);
-
-	void updateShader();
 
 	void update(const float& deltaTime);
 

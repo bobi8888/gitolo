@@ -55,10 +55,10 @@ void ParticleTrickle::resetParticle(std::size_t i)
 
     // Set texture coordinates.
     sf::Vector2u texSize = texture.getSize();
-    vertices[index + 0].texCoords = sf::Vector2f(0, 0);
-    vertices[index + 1].texCoords = sf::Vector2f(texSize.x, 0);
-    vertices[index + 2].texCoords = sf::Vector2f(texSize.x, texSize.y);
-    vertices[index + 3].texCoords = sf::Vector2f(0, texSize.y);
+    vertices[index + static_cast<size_t>(0)].texCoords = sf::Vector2f(0.f, 0.f);
+    vertices[index + static_cast<size_t>(1)].texCoords = sf::Vector2f(static_cast<float>(texSize.x), 0.f);
+    vertices[index + static_cast<size_t>(2)].texCoords = sf::Vector2f(texSize.x, texSize.y);
+    vertices[index + static_cast<size_t>(3)].texCoords = sf::Vector2f(0.f, texSize.y);
 
     // Set initial color to white (full opacity).
     vertices[index + 0].color = sf::Color::White;
@@ -68,6 +68,9 @@ void ParticleTrickle::resetParticle(std::size_t i)
 }
 
 //Constructors & Deconstructor
+
+ParticleTrickle::ParticleTrickle(){}
+
 ParticleTrickle::ParticleTrickle(
     const std::string& textureFile,	unsigned int count, 
 	float speedMin,int speedMax,
@@ -108,6 +111,8 @@ void ParticleTrickle::update(sf::Time elapsed)
         
         // Fade the particle based on its remaining lifetime.
         float ratio = p.lifetime.asSeconds() / p.initLifetime.asSeconds();
+       // ratio < 0.5f ? ratio = 0.5f : ratio;
+
         std::size_t index = i * 4;
 
         float halfSize = texturePixelSize / 2.f;
@@ -120,10 +125,10 @@ void ParticleTrickle::update(sf::Time elapsed)
 
         // Set texture coordinates based on the entire texture.
         sf::Vector2u texSize = texture.getSize();
-        vertices[index + 0].texCoords = sf::Vector2f(0, 0);
-        vertices[index + 1].texCoords = sf::Vector2f(texSize.x, 0);
-        vertices[index + 2].texCoords = sf::Vector2f(texSize.x, texSize.y);
-        vertices[index + 3].texCoords = sf::Vector2f(0, texSize.y);
+        vertices[index + 0].texCoords = sf::Vector2f(0.f, 0.f);
+        vertices[index + 1].texCoords = sf::Vector2f(static_cast<float>(texSize.x), 0.f);
+        vertices[index + 2].texCoords = sf::Vector2f(static_cast<float>(texSize.x), static_cast<float>(texSize.y));
+        vertices[index + 3].texCoords = sf::Vector2f(0.f, static_cast<float>(texSize.y));
 
         // Apply fading to the particle color.
         sf::Color col = sf::Color::White;

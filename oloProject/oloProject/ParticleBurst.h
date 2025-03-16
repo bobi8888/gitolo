@@ -1,7 +1,7 @@
 #pragma once
 
-sf::Drawable;
-sf::Transformable;
+//sf::Drawable;
+//sf::Transformable;
 
 struct Particle {
 	sf::Vector2f velo;

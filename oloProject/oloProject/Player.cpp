@@ -207,22 +207,11 @@ void Player::update(const float& deltaTime)
 	this->weaponHitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitboxs)
+void Player::render(sf::RenderTarget& target, const bool showHitboxes)
 {
-	if (shader)
-	{
-		shader->setUniform("hasTexture", true);
+	target.draw(this->sprite);
 
-		shader->setUniform("lightPos", this->getSpriteCenter());
-
-		target.draw(this->sprite, shader);
-	}
-	else
-	{
-		target.draw(this->sprite);
-	}
-
-	if (showHitboxs)
+	if (showHitboxes)
 	{
 		this->hitboxComponent->render(target);
 

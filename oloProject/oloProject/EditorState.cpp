@@ -1,14 +1,5 @@
 #include "stdafx.h"
-
 #include "EditorState.h"
-
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <vector>
-
-std::vector<int> v{ 3, 1, -14, 1, 5, 9, -14, 9 };
-std::vector<int>::iterator result = std::max_element(v.begin(), v.end());
 
 //Initializer Methods
 void EditorState::initRender()
@@ -43,11 +34,11 @@ void EditorState::initVariables()
 
 	this->tileAddLock = false;
 	
-	this->renderState = new sf::RenderStates();
-	this->lightShader = new sf::Shader();
+		this->renderState = new sf::RenderStates();
+		this->lightShader = new sf::Shader();
 
-	//this->renderState->shader = this->lightShader;
-	this->renderState->shader = &particleShader;
+		//this->renderState->shader = this->lightShader;
+		this->renderState->shader = &particleShader;
 
 	this->renderState->blendMode = sf::BlendAdd;
 
@@ -434,6 +425,8 @@ void EditorState::update(const float& deltaTime)
 	this->particleTrickle->update(elapsed);
 
 	particleShader.setUniform("time", clock.getElapsedTime().asSeconds());
+
+	this->particleTrickle->setPosition(this->mousePositionView);
 
 }
 

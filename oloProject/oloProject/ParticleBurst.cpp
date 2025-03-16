@@ -16,7 +16,7 @@ void ParticleBurst::resetParticle(std::size_t index)
 	
 	float angleDeg = minAngle + randomFactor * (maxAngle - minAngle);
 
-	float angle = angleDeg * 3.14159265 / -180.f;
+	float angle = angleDeg * 3.14159265f / -180.f;
 
 	float speed = 50.f + std::rand() % 50;
 

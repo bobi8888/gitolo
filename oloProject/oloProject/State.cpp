@@ -16,8 +16,6 @@ State::State(StateData* stateData)
 	this->keytime = 0.f;
 	this->keytimeMax = 3.f;
 	this->gridSize = stateData->gridSize;
-
-	this->testWindow = new sf::RenderWindow();
 }
 
 State::~State()
